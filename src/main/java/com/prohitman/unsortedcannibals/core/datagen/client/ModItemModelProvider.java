@@ -25,6 +25,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         createSingle(ModItems.SEVERED_NOSE);
         createSingle(ModItems.REEKING_FLESH);
         createSingle(ModItems.BLOW_DART);
+        createSingle(ModItems.STURDY_BONES);
 
         //Blocks
         createSingleTextureCrossBlock(ModBlocks.BONE_BARRICADE);

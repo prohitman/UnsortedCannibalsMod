@@ -18,5 +18,6 @@ public class ModItems {
     public static final RegistryObject<Item> REEKING_FLESH = ITEMS.register("reeking_flesh", () -> new Item(new Item.Properties().food(ModFoods.REEKING_FLESH)));
     public static final RegistryObject<Item> SERRATED_SPEAR = ITEMS.register("serrated_spear", () -> new SerratedSpearItem(new Item.Properties().durability(175)));
     public static final RegistryObject<Item> BLOW_DART = ITEMS.register("blow_dart", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> STURDY_BONES = ITEMS.register("sturdy_bones", () -> new Item(new Item.Properties()));
 
 }

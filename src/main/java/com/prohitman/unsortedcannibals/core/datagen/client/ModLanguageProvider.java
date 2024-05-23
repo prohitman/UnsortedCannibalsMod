@@ -21,6 +21,7 @@ public class ModLanguageProvider extends LanguageProvider {
         addItem(ModItems.SERRATED_SPEAR);
         addItem(ModItems.REEKING_FLESH);
         addItem(ModItems.BLOW_DART);
+        addItem(ModItems.STURDY_BONES);
 
         addBlock(ModBlocks.BONE_BARRICADE);
         addBlock(ModBlocks.SHARPENED_BONES);
@@ -28,6 +29,7 @@ public class ModLanguageProvider extends LanguageProvider {
 
         add( "effect.unsortedcannibals.live_bait", "Live Bait");
         add( "effect.unsortedcannibals.visceral_pain", "Visceral Pain");
+        add( "effect.unsortedcannibals.shattered_bones", "Shattered Bones");
 
         add( "entity.unsortedcannibals.serrated_spear", "Serrated Spear");
 

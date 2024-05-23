@@ -5,20 +5,18 @@ import com.prohitman.unsortedcannibals.client.renderer.ThrownSpearRenderer;
 import com.prohitman.unsortedcannibals.core.init.ModBlocks;
 import com.prohitman.unsortedcannibals.core.init.ModEntities;
 import com.prohitman.unsortedcannibals.core.init.ModItems;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColors;
+import net.minecraft.client.model.TridentModel;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GrassColor;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -32,9 +30,9 @@ public class ClientEvents {
 
             EntityRenderers.register(ModEntities.SERRATED_SPEAR.get(), ThrownSpearRenderer::new);
 
-            ItemProperties.register(ModItems.SERRATED_SPEAR.get(), new ResourceLocation("throwing"), (stack, level, living, j) -> {
+           /* ItemProperties.register(ModItems.SERRATED_SPEAR.get(), new ResourceLocation("throwing"), (stack, level, living, j) -> {
                 return living != null && living.isUsingItem() && living.getUseItem() == stack ? 1.0F : 0.0F;
-            });
+            });*/
         });
     }
 

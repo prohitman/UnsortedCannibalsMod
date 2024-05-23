@@ -23,6 +23,8 @@ public class SpearItemRenderer extends GeoItemRenderer<SerratedSpearItem> {
 
     @Override
     public void renderByItem(ItemStack stack, ItemDisplayContext transformType, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
+        System.out.println("Called in Item Rendered!!");
+
         if (stack.is(ModItems.SERRATED_SPEAR.get()) && stack.getUseDuration() > 0 && (/*pDisplayContext == ItemDisplayContext.THIRD_PERSON_LEFT_HAND || */transformType == ItemDisplayContext.THIRD_PERSON_RIGHT_HAND)) {
             System.out.println("Spear Rendered!!");
             poseStack.pushPose();

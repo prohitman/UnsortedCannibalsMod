@@ -5,9 +5,12 @@ import com.prohitman.unsortedcannibals.core.init.ModEffects;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -17,8 +20,10 @@ public class CommonForgeEvents {
 
     @SubscribeEvent
     public static void livingTickEntity(LivingEvent.LivingTickEvent event){
+        LivingEntity entity = event.getEntity();
+
         if(event.getEntity().hasEffect(ModEffects.VISCERAL_PAIN.get())){
-            CompoundTag entityData = event.getEntity().getPersistentData();
+            CompoundTag entityData = entity.getPersistentData();
 
             CompoundTag position = entityData.getCompound("position");
 
@@ -27,17 +32,35 @@ public class CommonForgeEvents {
             double oldZ = position.getDouble("posZ");
 
             Vec3 oldPos = new Vec3(oldX, oldY, oldZ);
-            Vec3 currentPos = event.getEntity().position();
+            Vec3 currentPos = entity.position();
 
-            position.putDouble("posX", event.getEntity().position().x);
-            position.putDouble("posY", event.getEntity().position().y);
-            position.putDouble("posZ", event.getEntity().position().z);
+            position.putDouble("posX", entity.position().x);
+            position.putDouble("posY", entity.position().y);
+            position.putDouble("posZ", entity.position().z);
 
             entityData.put("position", position);
 
             if(!currentPos.equals(oldPos)){
-                event.getEntity().hurt(event.getEntity().damageSources().magic(), 1.5F);
+                entity.hurt(entity.damageSources().magic(), 1.5F);
             }
+        }
+        if(event.getEntity().hasEffect(ModEffects.SHATTERED_BONES.get())){
+            entity.setSprinting(false);
+
+            if (entity.getDeltaMovement().y > 0) {
+                entity.setDeltaMovement(entity.getDeltaMovement().multiply(1, 0.05D, 1));
+            }
+        }
+    }
+
+
+
+    private static void resetPositionInitialization(LivingEntity entity) {
+        CompoundTag entityData = entity.getPersistentData();
+
+        if (entityData.contains("fpos")) {
+            CompoundTag position = entityData.getCompound("fpos");
+            position.remove("initialized");
         }
     }
 }

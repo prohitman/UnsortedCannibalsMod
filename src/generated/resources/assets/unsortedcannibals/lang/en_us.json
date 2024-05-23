@@ -3,11 +3,13 @@
   "block.unsortedcannibals.fall_trap": "Fall Trap",
   "block.unsortedcannibals.sharpened_bones": "Sharpened Bones",
   "effect.unsortedcannibals.live_bait": "Live Bait",
+  "effect.unsortedcannibals.shattered_bones": "Shattered Bones",
   "effect.unsortedcannibals.visceral_pain": "Visceral Pain",
   "entity.unsortedcannibals.serrated_spear": "Serrated Spear",
   "item.unsortedcannibals.blow_dart": "Blow Dart",
   "item.unsortedcannibals.reeking_flesh": "Reeking Flesh",
   "item.unsortedcannibals.serrated_spear": "Serrated Spear",
   "item.unsortedcannibals.severed_nose": "Severed Nose",
+  "item.unsortedcannibals.sturdy_bones": "Sturdy Bones",
   "itemGroup.unsortedcannibals": "Unsorted Cannibals Mod"
 }
