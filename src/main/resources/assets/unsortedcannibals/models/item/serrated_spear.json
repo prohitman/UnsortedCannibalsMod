@@ -1,0 +1,18 @@
+{
+  "parent": "minecraft:item/handheld",
+  "loader": "forge:separate_transforms",
+  "base": {
+    "parent": "unsortedcannibals:item/serrated_spear_3d"
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "unsortedcannibals:item/serrated_spear_2d"
+    },
+    "ground": {
+      "parent": "unsortedcannibals:item/serrated_spear_2d"
+    },
+    "fixed": {
+      "parent": "unsortedcannibals:item/serrated_spear_2d"
+    }
+  }
+}

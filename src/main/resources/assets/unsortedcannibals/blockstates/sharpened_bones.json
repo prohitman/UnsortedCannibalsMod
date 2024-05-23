@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "is_bloody=false": {
+      "model": "unsortedcannibals:block/sharpened_bones"
+    },
+    "is_bloody=true": {
+      "model": "unsortedcannibals:block/bloody_sharpened_bones"
+    }
+  }
+}

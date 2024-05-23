@@ -1,0 +1,63 @@
+{
+	"parent": "block/block",
+	"texture_size": [32, 32],
+	"render_type": "minecraft:cutout_mipped",
+	"ambientocclusion": false,
+	"textures": {
+		"0": "unsortedcannibals:block/bloody_sharpened_bones",
+		"particle": "unsortedcannibals:block/bloody_sharpened_bones"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 2, 16],
+			"shade": false,
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 4.5, 8]},
+			"faces": {
+				"north": {"uv": [0, 15, 8, 16], "texture": "#0"},
+				"east": {"uv": [0, 15, 8, 16], "texture": "#0"},
+				"south": {"uv": [0, 15, 8, 16], "texture": "#0"},
+				"west": {"uv": [0, 15, 8, 16], "texture": "#0"},
+				"up": {"uv": [8, 8, 16, 16], "texture": "#0"},
+				"down": {"uv": [8, 8, 16, 16], "texture": "#0"}
+			}
+		},
+		{
+			"from": [0, 2, 8],
+			"to": [16, 14, 8],
+			"shade": false,
+			"rotation": {"angle": 45, "axis": "y", "origin": [8, 4.5, 8]},
+			"faces": {
+				"north": {"uv": [0, 9, 8, 15], "texture": "#0"},
+				"east": {"uv": [0, 0, 0, 8], "texture": "#0"},
+				"south": {"uv": [8, 9, 0, 15], "texture": "#0"},
+				"west": {"uv": [0, 0, 0, 8], "texture": "#0"},
+				"up": {"uv": [0, 0, 8, 0], "texture": "#0"},
+				"down": {"uv": [0, 0, 8, 0], "texture": "#0"}
+			}
+		},
+		{
+			"from": [0, 2, 8],
+			"to": [16, 14, 8],
+			"shade": false,
+			"rotation": {"angle": -45, "axis": "y", "origin": [8, 4.5, 8]},
+			"faces": {
+				"north": {"uv": [0, 9, 8, 15], "texture": "#0"},
+				"east": {"uv": [0, 0, 0, 8], "texture": "#0"},
+				"south": {"uv": [8, 9, 0, 15], "texture": "#0"},
+				"west": {"uv": [0, 0, 0, 8], "texture": "#0"},
+				"up": {"uv": [0, 0, 8, 0], "texture": "#0"},
+				"down": {"uv": [0, 0, 8, 0], "texture": "#0"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "group",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"nbt": "{}",
+			"children": [0, 1, 2]
+		}
+	]
+}

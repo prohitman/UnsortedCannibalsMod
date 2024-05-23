@@ -1,0 +1,56 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"textures": {
+		"0": "unsortedcannibals:block/fall_trap_scaffold",
+		"1": "minecraft:block/grass_block_top",
+		"particle": "unsortedcannibals:block/fall_trap_scaffold"
+	},
+	"elements": [
+		{
+			"from": [0, 14.5, 0],
+			"to": [16, 15.5, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 1, 0]},
+			"faces": {
+				"north": {"uv": [16, 0, 16, 1], "texture": "#0"},
+				"east": {"uv": [15, 0, 16, 0], "texture": "#0"},
+				"south": {"uv": [16, 0, 16, 1], "texture": "#0"},
+				"west": {"uv": [16, 0, 16, 1], "texture": "#0"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#0"}
+			}
+		},
+		{
+			"from": [0, 16, 0],
+			"to": [16, 16, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 1, 0]},
+			"color": 0,
+			"faces": {
+				"north": {"uv": [0, 0, 16, 0], "texture": "#1", "tintindex": 0},
+				"east": {"uv": [0, 0, 16, 0], "texture": "#1", "tintindex": 0},
+				"south": {"uv": [0, 0, 16, 0], "texture": "#1", "tintindex": 0},
+				"west": {"uv": [0, 0, 16, 0], "texture": "#1", "tintindex": 0},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#1", "tintindex": 0},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#1", "tintindex": 0}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "group",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"nbt": "{}",
+			"children": [
+				0,
+				{
+					"name": "Camo",
+					"origin": [0, 0, 0],
+					"color": 0,
+					"nbt": "{}",
+					"children": [1]
+				}
+			]
+		}
+	]
+}
