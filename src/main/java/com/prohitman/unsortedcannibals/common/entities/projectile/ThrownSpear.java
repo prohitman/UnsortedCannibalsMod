@@ -205,6 +205,6 @@ public class ThrownSpear extends AbstractArrow implements GeoAnimatable {
 
     @Override
     public double getTick(Object o) {
-        return 0;
+        return (double)((Entity)o).tickCount;
     }
 }

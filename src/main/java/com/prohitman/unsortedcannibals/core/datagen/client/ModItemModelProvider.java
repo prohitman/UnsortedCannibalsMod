@@ -26,6 +26,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         createSingle(ModItems.REEKING_FLESH);
         createSingle(ModItems.BLOW_DART);
         createSingle(ModItems.STURDY_BONES);
+        createSingleHandHeld(ModItems.DEATH_WHISTLE);
 
         //Blocks
         createSingleTextureCrossBlock(ModBlocks.BONE_BARRICADE);
@@ -77,5 +78,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         getBuilder(item.getId().getPath()).parent(generated).texture("layer0", modLoc( "item/" + item.getId().getPath()));
     }
 
-
+    private void createSingleHandHeld(RegistryObject<Item> item) {
+        ModelFile generated = getExistingFile(mcLoc("item/handheld"));
+        getBuilder(item.getId().getPath()).parent(generated).texture("layer0", modLoc( "item/" + item.getId().getPath()));
+    }
 }

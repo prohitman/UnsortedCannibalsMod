@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [48, 48],
 	"textures": {
-		"0": "unsortedcannibals:item/serrated_spear_texture",
-		"particle": "unsortedcannibals:item/serrated_spear_texture"
+		"0": "unsortedcannibals:item/serrated_spear",
+		"particle": "unsortedcannibals:item/serrated_spear"
 	},
 	"elements": [
 		{
@@ -33,7 +33,6 @@
 			}
 		}
 	],
-
 	"display": {
 		"thirdperson_righthand": {
 			"translation": [0, -1.25, 1.25]
@@ -49,14 +48,7 @@
 			"rotation": [-20, 0, 0],
 			"translation": [6, 0, 0]
 		}
-	},"overrides": [
-	{
-		"predicate": {
-			"throwing": 1
-		},
-		"model": "unsortedcannibals:item/serrated_spear_throwing"
-	}
-],
+	},
 	"groups": [
 		{
 			"name": "group",

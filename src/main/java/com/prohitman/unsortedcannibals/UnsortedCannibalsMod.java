@@ -20,5 +20,7 @@ public class UnsortedCannibalsMod
         ModCreativeTab.CREATIVE_MODE_TABS.register(modEventBus);
         ModEntities.ENTITY_TYPES.register(modEventBus);
         ModEffects.MOB_EFFECTS.register(modEventBus);
+        ModSounds.SOUND_EVENTS.register(modEventBus);
+
     }
 }

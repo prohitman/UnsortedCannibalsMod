@@ -24,8 +24,7 @@ public class ModCreativeTab {
         List<ItemStack> list = new LinkedList<>();
 
         list.addAll(ModItems.ITEMS.getEntries().stream().map(RegistryObject::get)
-                //.filter((item) -> (!(item instanceof BlockItem)
-                //        || item instanceof SignItem))
+                .filter((item) -> (item != ModItems.SERRATED_SPEAR_INVENTORY.get()))
                 .map(Item::getDefaultInstance).toList());
 
         return list;

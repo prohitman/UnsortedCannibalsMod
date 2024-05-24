@@ -1,0 +1,36 @@
+{
+  "death_whistle": {
+    "subtitles": "sounds.unsortedcannibals.death_whistle",
+    "sounds": [
+      "unsortedcannibals:frenzy_whistle_aggro"
+    ]
+  },
+  "frenzy_hurt": {
+    "subtitles": "sounds.unsortedcannibals.frenzy_hurt",
+    "sounds": [
+      "unsortedcannibals:frenzy_whistle_hurt_1",
+      "unsortedcannibals:frenzy_whistle_hurt_2"
+
+    ]
+  },
+  "yearn_death": {
+    "subtitles": "sounds.unsortedcannibals.yearn_death",
+    "sounds": [
+      "unsortedcannibals:yearn_death"
+    ]
+  },
+  "yearn_hurt": {
+    "subtitles": "sounds.unsortedcannibals.yearn_hurt",
+    "sounds": [
+      "unsortedcannibals:yearn_hurt",
+      "unsortedcannibals:yearn_hurt_2"
+    ]
+  },
+  "yearn_idle": {
+    "subtitles": "sounds.unsortedcannibals.yearn_idle",
+    "sounds": [
+      "unsortedcannibals:yearn_idle_1",
+      "unsortedcannibals:yearn_idle_2"
+    ]
+  }
+}

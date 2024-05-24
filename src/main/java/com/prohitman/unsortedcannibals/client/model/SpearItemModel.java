@@ -17,6 +17,6 @@ public class SpearItemModel extends DefaultedItemGeoModel<SerratedSpearItem> {
      * @param assetSubpath
      */
     public SpearItemModel() {
-        super(new ResourceLocation(UnsortedCannibalsMod.MODID, "entity/serrated_spear"));
+        super(new ResourceLocation(UnsortedCannibalsMod.MODID, "serrated_spear"));
     }
 }

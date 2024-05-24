@@ -22,7 +22,7 @@ public class CommonForgeEvents {
     public static void livingTickEntity(LivingEvent.LivingTickEvent event){
         LivingEntity entity = event.getEntity();
 
-        if(event.getEntity().hasEffect(ModEffects.VISCERAL_PAIN.get())){
+        if(entity.hasEffect(ModEffects.VISCERAL_PAIN.get())){
             CompoundTag entityData = entity.getPersistentData();
 
             CompoundTag position = entityData.getCompound("position");
@@ -44,7 +44,7 @@ public class CommonForgeEvents {
                 entity.hurt(entity.damageSources().magic(), 1.5F);
             }
         }
-        if(event.getEntity().hasEffect(ModEffects.SHATTERED_BONES.get())){
+        if(entity.hasEffect(ModEffects.SHATTERED_BONES.get())){
             entity.setSprinting(false);
 
             if (entity.getDeltaMovement().y > 0) {
@@ -54,13 +54,4 @@ public class CommonForgeEvents {
     }
 
 
-
-    private static void resetPositionInitialization(LivingEntity entity) {
-        CompoundTag entityData = entity.getPersistentData();
-
-        if (entityData.contains("fpos")) {
-            CompoundTag position = entityData.getCompound("fpos");
-            position.remove("initialized");
-        }
-    }
 }

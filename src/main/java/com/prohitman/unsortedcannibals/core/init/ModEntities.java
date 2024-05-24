@@ -1,6 +1,7 @@
 package com.prohitman.unsortedcannibals.core.init;
 
 import com.prohitman.unsortedcannibals.UnsortedCannibalsMod;
+import com.prohitman.unsortedcannibals.common.entities.projectile.BlowDart;
 import com.prohitman.unsortedcannibals.common.entities.projectile.ThrownSpear;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -15,5 +16,7 @@ public class ModEntities {
     public static final RegistryObject<EntityType<ThrownSpear>> SERRATED_SPEAR = ENTITY_TYPES.register("serrated_spear",
             () -> EntityType.Builder.<ThrownSpear>of(ThrownSpear::new, MobCategory.MISC).sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(20).build("serrated_spear"));
 
+    public static final RegistryObject<EntityType<BlowDart>> BLOW_DART = ENTITY_TYPES.register("blow_dart",
+            () -> EntityType.Builder.<BlowDart>of(BlowDart::new, MobCategory.MISC).sized(0.3F, 0.3F).clientTrackingRange(4).updateInterval(20).build("blow_dart"));
 
 }

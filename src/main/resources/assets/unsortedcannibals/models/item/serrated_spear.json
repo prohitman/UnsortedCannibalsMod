@@ -1,8 +1,17 @@
 {
   "parent": "minecraft:item/handheld",
   "loader": "forge:separate_transforms",
+
   "base": {
-    "parent": "unsortedcannibals:item/serrated_spear_3d"
+    "parent": "unsortedcannibals:item/serrated_spear_3d",
+    "overrides": [
+      {
+        "predicate": {
+          "unsortedcannibals:throwing": 1
+        },
+        "model": "unsortedcannibals:item/serrated_spear_throwing"
+      }
+    ]
   },
   "perspectives": {
     "gui": {

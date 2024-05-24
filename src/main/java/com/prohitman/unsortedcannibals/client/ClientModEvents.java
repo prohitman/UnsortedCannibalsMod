@@ -1,12 +1,12 @@
 package com.prohitman.unsortedcannibals.client;
 
 import com.prohitman.unsortedcannibals.UnsortedCannibalsMod;
+import com.prohitman.unsortedcannibals.client.renderer.BlowDartRenderer;
 import com.prohitman.unsortedcannibals.client.renderer.ThrownSpearRenderer;
 import com.prohitman.unsortedcannibals.core.init.ModBlocks;
 import com.prohitman.unsortedcannibals.core.init.ModEntities;
 import com.prohitman.unsortedcannibals.core.init.ModItems;
 import net.minecraft.client.color.block.BlockColors;
-import net.minecraft.client.model.TridentModel;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -16,25 +16,26 @@ import net.minecraft.world.level.GrassColor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 @Mod.EventBusSubscriber(modid = UnsortedCannibalsMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-public class ClientEvents {
+public class ClientModEvents {
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
 
             EntityRenderers.register(ModEntities.SERRATED_SPEAR.get(), ThrownSpearRenderer::new);
+            EntityRenderers.register(ModEntities.BLOW_DART.get(), BlowDartRenderer::new);
 
-           /* ItemProperties.register(ModItems.SERRATED_SPEAR.get(), new ResourceLocation("throwing"), (stack, level, living, j) -> {
+            ItemProperties.register(ModItems.SERRATED_SPEAR.get(), new ResourceLocation(UnsortedCannibalsMod.MODID, "throwing"), (stack, level, living, j) -> {
                 return living != null && living.isUsingItem() && living.getUseItem() == stack ? 1.0F : 0.0F;
-            });*/
+            });
         });
     }
+
 
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
