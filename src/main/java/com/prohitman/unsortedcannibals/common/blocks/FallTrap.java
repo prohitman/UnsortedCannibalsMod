@@ -20,9 +20,8 @@ public class FallTrap extends Block {
 
     public VoxelShape makeShape(){
         VoxelShape shape = Shapes.empty();
-        shape = Shapes.join(shape, Shapes.box(0, 0.84375, 0, 1, 0.90625, 1), BooleanOp.OR);
-        shape = Shapes.join(shape, Shapes.box(0, 0.9375, 0, 1, 0.9375, 1), BooleanOp.OR);
-        shape = Shapes.join(shape, Shapes.box(0, 0.8125, 0, 1, 0.9375, 1), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0, 0.90625, 0, 1, 0.96875, 1), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0, 1, 0, 1, 1, 1), BooleanOp.OR);
 
         return shape;
     }

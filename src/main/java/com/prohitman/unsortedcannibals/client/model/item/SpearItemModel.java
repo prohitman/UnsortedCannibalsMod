@@ -1,4 +1,4 @@
-package com.prohitman.unsortedcannibals.client.model;
+package com.prohitman.unsortedcannibals.client.model.item;
 
 import com.prohitman.unsortedcannibals.UnsortedCannibalsMod;
 import com.prohitman.unsortedcannibals.common.items.SerratedSpearItem;

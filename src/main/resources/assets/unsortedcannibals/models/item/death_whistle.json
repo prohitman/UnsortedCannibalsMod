@@ -1,0 +1,14 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "unsortedcannibals:item/death_whistle"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "unsortedcannibals:tooting": 1
+      },
+      "model": "unsortedcannibals:item/tooting_death_whistle"
+    }
+  ]
+}

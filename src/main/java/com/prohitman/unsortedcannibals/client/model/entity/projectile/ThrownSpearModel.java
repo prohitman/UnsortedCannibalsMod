@@ -1,4 +1,4 @@
-package com.prohitman.unsortedcannibals.client.model;
+package com.prohitman.unsortedcannibals.client.model.entity.projectile;
 
 import com.prohitman.unsortedcannibals.UnsortedCannibalsMod;
 import com.prohitman.unsortedcannibals.common.entities.projectile.ThrownSpear;

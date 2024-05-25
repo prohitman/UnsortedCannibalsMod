@@ -1,6 +1,7 @@
 package com.prohitman.unsortedcannibals.core.init;
 
 import com.prohitman.unsortedcannibals.UnsortedCannibalsMod;
+import com.prohitman.unsortedcannibals.common.items.InventoryItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
@@ -24,7 +25,7 @@ public class ModCreativeTab {
         List<ItemStack> list = new LinkedList<>();
 
         list.addAll(ModItems.ITEMS.getEntries().stream().map(RegistryObject::get)
-                .filter((item) -> (item != ModItems.SERRATED_SPEAR_INVENTORY.get()))
+                .filter((item) -> (!(item instanceof InventoryItem)))
                 .map(Item::getDefaultInstance).toList());
 
         return list;

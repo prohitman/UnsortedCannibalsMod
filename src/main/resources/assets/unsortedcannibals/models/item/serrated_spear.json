@@ -1,27 +1,26 @@
 {
   "parent": "minecraft:item/handheld",
   "loader": "forge:separate_transforms",
-
+  "overrides": [
+    {
+      "predicate": {
+        "unsortedcannibals:throwing": 1
+      },
+      "model": "unsortedcannibals:item/serrated_spear_throwing"
+    }
+  ],
   "base": {
-    "parent": "unsortedcannibals:item/serrated_spear_3d",
-    "overrides": [
-      {
-        "predicate": {
-          "unsortedcannibals:throwing": 1
-        },
-        "model": "unsortedcannibals:item/serrated_spear_throwing"
-      }
-    ]
+    "parent": "unsortedcannibals:item/serrated_spear_3d"
   },
   "perspectives": {
     "gui": {
-      "parent": "unsortedcannibals:item/serrated_spear_2d"
+      "parent": "unsortedcannibals:item/serrated_spear_inventory"
     },
     "ground": {
-      "parent": "unsortedcannibals:item/serrated_spear_2d"
+      "parent": "unsortedcannibals:item/serrated_spear_inventory"
     },
     "fixed": {
-      "parent": "unsortedcannibals:item/serrated_spear_2d"
+      "parent": "unsortedcannibals:item/serrated_spear_inventory"
     }
   }
 }

@@ -1,17 +1,14 @@
-package com.prohitman.unsortedcannibals.client.renderer;
+package com.prohitman.unsortedcannibals.client.renderer.entity.projectile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import com.prohitman.unsortedcannibals.client.model.BlowDartModel;
-import com.prohitman.unsortedcannibals.client.model.ThrownSpearModel;
+import com.prohitman.unsortedcannibals.client.model.entity.projectile.BlowDartModel;
 import com.prohitman.unsortedcannibals.common.entities.projectile.BlowDart;
-import com.prohitman.unsortedcannibals.common.entities.projectile.ThrownSpear;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.util.Mth;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
-import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 public class BlowDartRenderer extends GeoEntityRenderer<BlowDart> {

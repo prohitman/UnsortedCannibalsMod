@@ -1,23 +1,15 @@
-package com.prohitman.unsortedcannibals.client.renderer;
+package com.prohitman.unsortedcannibals.client.renderer.entity.projectile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import com.prohitman.unsortedcannibals.client.model.ThrownSpearModel;
+import com.prohitman.unsortedcannibals.client.model.entity.projectile.ThrownSpearModel;
 import com.prohitman.unsortedcannibals.common.entities.projectile.ThrownSpear;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.ArrowRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.Mth;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.TridentItem;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
-import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
-import software.bernie.geckolib.util.RenderUtils;
 
 public class ThrownSpearRenderer extends GeoEntityRenderer<ThrownSpear> {
     public ThrownSpearRenderer(EntityRendererProvider.Context renderManager) {

@@ -1,32 +1,41 @@
 package com.prohitman.unsortedcannibals.common.items;
 
+import com.prohitman.unsortedcannibals.client.renderer.item.BlowgunItemRenderer;
+import com.prohitman.unsortedcannibals.client.renderer.item.SpearItemRenderer;
 import com.prohitman.unsortedcannibals.common.entities.projectile.BlowDart;
-import com.prohitman.unsortedcannibals.common.entities.projectile.ThrownSpear;
 import com.prohitman.unsortedcannibals.core.init.ModItems;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib.animatable.GeoItem;
+import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public class BlowGunItem extends ProjectileWeaponItem implements Vanishable {
+public class BlowGunItem extends ProjectileWeaponItem implements Vanishable, GeoItem {
     public static final Predicate<ItemStack> DART_ONLY = (itemStack) -> {
         return itemStack.is(ModItems.BLOW_DART.get());
     };
 
+    public final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+
     public BlowGunItem(Properties pProperties) {
         super(pProperties);
+
+        SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }
 
     public @NotNull Predicate<ItemStack> getAllSupportedProjectiles() {
@@ -81,6 +90,20 @@ public class BlowGunItem extends ProjectileWeaponItem implements Vanishable {
         }
     }
 
+    @Override
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+        consumer.accept(new IClientItemExtensions() {
+            private BlowgunItemRenderer renderer = null;
+            // Don't instantiate until ready. This prevents race conditions breaking things
+            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                if (this.renderer == null)
+                    this.renderer = new BlowgunItemRenderer();
+
+                return renderer;
+            }
+        });
+    }
+
     /**
      * How long it takes to use or consume an item
      */
@@ -92,7 +115,7 @@ public class BlowGunItem extends ProjectileWeaponItem implements Vanishable {
      * Returns the action that specifies what animation to play when the item is being used.
      */
     public UseAnim getUseAnimation(ItemStack pStack) {
-        return UseAnim.SPYGLASS;
+        return UseAnim.CROSSBOW;
     }
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pHand) {
         ItemStack itemstack = pPlayer.getItemInHand(pHand);
@@ -104,5 +127,15 @@ public class BlowGunItem extends ProjectileWeaponItem implements Vanishable {
             pPlayer.startUsingItem(pHand);
             return InteractionResultHolder.consume(itemstack);
         }
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return this.cache;
     }
 }

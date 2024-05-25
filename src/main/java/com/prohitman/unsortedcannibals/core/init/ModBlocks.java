@@ -22,7 +22,7 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> BONE_BARRICADE = createRegistry("bone_barricade", () -> new BoneBarricade(BlockBehaviour.Properties.of().sound(SoundType.BONE_BLOCK).dynamicShape().noCollission().offsetType(BlockBehaviour.OffsetType.XZ).strength(2.5F)), new Item.Properties());
     public static final RegistryObject<Block> SHARPENED_BONES = createRegistry("sharpened_bones", () -> new SharpenedBones(BlockBehaviour.Properties.of().sound(SoundType.BAMBOO_WOOD).strength(2)), new Item.Properties());
-    public static final RegistryObject<Block> FALL_TRAP = createRegistry("fall_trap", () -> new FallTrap(BlockBehaviour.Properties.of().sound(SoundType.GRASS)), new Item.Properties());
+    public static final RegistryObject<Block> FALL_TRAP = createRegistry("fall_trap", () -> new FallTrap(BlockBehaviour.Properties.of().sound(SoundType.BAMBOO_WOOD)), new Item.Properties());
 
     public static <T extends Block> RegistryObject<Block> createRegistry(String name, Supplier<T> block, Item.Properties properties) {
         RegistryObject<Block> object = BLOCKS.register(name, block);

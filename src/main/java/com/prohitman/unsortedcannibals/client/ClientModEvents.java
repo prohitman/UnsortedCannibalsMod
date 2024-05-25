@@ -1,8 +1,8 @@
 package com.prohitman.unsortedcannibals.client;
 
 import com.prohitman.unsortedcannibals.UnsortedCannibalsMod;
-import com.prohitman.unsortedcannibals.client.renderer.BlowDartRenderer;
-import com.prohitman.unsortedcannibals.client.renderer.ThrownSpearRenderer;
+import com.prohitman.unsortedcannibals.client.renderer.entity.projectile.BlowDartRenderer;
+import com.prohitman.unsortedcannibals.client.renderer.entity.projectile.ThrownSpearRenderer;
 import com.prohitman.unsortedcannibals.core.init.ModBlocks;
 import com.prohitman.unsortedcannibals.core.init.ModEntities;
 import com.prohitman.unsortedcannibals.core.init.ModItems;
@@ -31,6 +31,14 @@ public class ClientModEvents {
             EntityRenderers.register(ModEntities.BLOW_DART.get(), BlowDartRenderer::new);
 
             ItemProperties.register(ModItems.SERRATED_SPEAR.get(), new ResourceLocation(UnsortedCannibalsMod.MODID, "throwing"), (stack, level, living, j) -> {
+                return living != null && living.isUsingItem() && living.getUseItem() == stack ? 1.0F : 0.0F;
+            });
+
+            ItemProperties.register(ModItems.DEATH_WHISTLE.get(), new ResourceLocation(UnsortedCannibalsMod.MODID, "tooting"), (stack, level, living, j) -> {
+                return living != null && living.isUsingItem() && living.getUseItem() == stack ? 1.0F : 0.0F;
+            });
+
+            ItemProperties.register(ModItems.BLOWGUN.get(), new ResourceLocation(UnsortedCannibalsMod.MODID, "blowing"), (stack, level, living, j) -> {
                 return living != null && living.isUsingItem() && living.getUseItem() == stack ? 1.0F : 0.0F;
             });
         });

@@ -1,0 +1,32 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "unsortedcannibals:item/blowgun",
+		"particle": "unsortedcannibals:item/blowgun"
+	},
+	"elements": [
+		{
+			"from": [7, 0, 7],
+			"to": [9, 12, 9],
+			"rotation": {"angle": 0, "axis": "x", "origin": [8, 6, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 2, 12], "rotation": 180, "texture": "#0"},
+				"east": {"uv": [0, 12, 12, 14], "rotation": 90, "texture": "#0"},
+				"south": {"uv": [2, 12, 4, 0], "texture": "#0"},
+				"west": {"uv": [0, 14, 12, 16], "rotation": 270, "texture": "#0"},
+				"up": {"uv": [12, 14, 14, 16], "texture": "#0"},
+				"down": {"uv": [14, 12, 16, 14], "rotation": 180, "texture": "#0"}
+			}
+		}
+	],
+	"display": {},
+	"groups": [
+		{
+			"name": "group",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"nbt": "{}",
+			"children": [0]
+		}
+	]
+}

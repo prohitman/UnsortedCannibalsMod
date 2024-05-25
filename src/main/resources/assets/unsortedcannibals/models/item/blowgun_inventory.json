@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "unsortedcannibals:item/serrated_spear_item"
+    "layer0": "unsortedcannibals:item/blowgun_item"
   }
 }
