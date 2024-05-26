@@ -1,1 +1,5 @@
-// 1.20.1	2024-05-23T16:32:47.7983062	Tags for minecraft:item mod id unsortedcannibals
+// 1.20.1	2024-05-26T16:43:26.266358	Tags for minecraft:item mod id unsortedcannibals
+5d4cc635ca23a5d7557b80717c9fceec6c7aa14d data/forge/tags/items/armors/chestplates.json
+a0dbc32eda6762d8f405efeda970078f6c2de2d9 data/forge/tags/items/armors/helmets.json
+4aabf7455c7c5d9598dc611ac00f84f6aa112be9 data/minecraft/tags/items/axes.json
+3137efa112555535ec9db7263a831df61bb997e1 data/minecraft/tags/items/swords.json

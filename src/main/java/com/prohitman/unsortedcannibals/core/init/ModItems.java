@@ -1,13 +1,11 @@
 package com.prohitman.unsortedcannibals.core.init;
 
 import com.prohitman.unsortedcannibals.UnsortedCannibalsMod;
-import com.prohitman.unsortedcannibals.common.items.BlowGunItem;
-import com.prohitman.unsortedcannibals.common.items.DeathWhistleItem;
-import com.prohitman.unsortedcannibals.common.items.InventoryItem;
-import com.prohitman.unsortedcannibals.common.items.SerratedSpearItem;
+import com.prohitman.unsortedcannibals.common.items.*;
+import com.prohitman.unsortedcannibals.common.items.armor.BoneArmorItem;
+import com.prohitman.unsortedcannibals.common.items.armor.ModArmorMaterials;
 import net.minecraft.world.entity.projectile.ThrownTrident;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -26,6 +24,13 @@ public class ModItems {
 
     public static final RegistryObject<Item> BLOW_DART = ITEMS.register("blow_dart", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> STURDY_BONES = ITEMS.register("sturdy_bones", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> RAZOR_SWORD = ITEMS.register("razor_sword", () -> new RazorSwordItem(ModItemTiers.BONE, 3, -2.2f, new Item.Properties()));
+    public static final RegistryObject<Item> CRUSHER_AXE = ITEMS.register("crusher_axe", () -> new CrusherAxeItem(ModItemTiers.BONE, 4, -3.0f, new Item.Properties()));
+
+    public static final RegistryObject<Item> BONE_HELMET = ITEMS.register("bone_helmet", () -> new
+            BoneArmorItem(ModArmorMaterials.BONE, ArmorItem.Type.HELMET, new Item.Properties()));
+    public static final RegistryObject<Item> BONE_CHESTPLATE = ITEMS.register("bone_chestplate", () -> new
+            BoneArmorItem(ModArmorMaterials.BONE, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
     public static final RegistryObject<Item> DEATH_WHISTLE = ITEMS.register("death_whistle", () -> new DeathWhistleItem(new Item.Properties()));
 
 }

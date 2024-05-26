@@ -20,7 +20,7 @@ public class BlowDartRenderer extends GeoEntityRenderer<BlowDart> {
     public void preRender(PoseStack poseStack, BlowDart animatable, BakedGeoModel model, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         poseStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(partialTick, animatable.yRotO, animatable.getYRot()) + 180F));
         poseStack.mulPose(Axis.XP.rotationDegrees(Mth.lerp(partialTick, animatable.xRotO, animatable.getXRot()) - 180.0F));
-        poseStack.translate(0, -0.25, 0);
+        poseStack.translate(0, -0.15, 0);
 
     }
 }

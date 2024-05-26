@@ -3,7 +3,6 @@ package com.prohitman.unsortedcannibals.client.renderer.item;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.prohitman.unsortedcannibals.client.model.item.BlowgunItemModel;
 import com.prohitman.unsortedcannibals.common.items.BlowGunItem;
-import com.prohitman.unsortedcannibals.common.items.SerratedSpearItem;
 import com.prohitman.unsortedcannibals.core.init.ModItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -23,7 +22,6 @@ public class BlowgunItemRenderer extends GeoItemRenderer<BlowGunItem> {
         ClientLevel level = Minecraft.getInstance().level;
         boolean heldIn3d = transformType == ItemDisplayContext.THIRD_PERSON_LEFT_HAND || transformType == ItemDisplayContext.THIRD_PERSON_RIGHT_HAND || transformType == ItemDisplayContext.FIRST_PERSON_RIGHT_HAND || transformType == ItemDisplayContext.FIRST_PERSON_LEFT_HAND;
 
-
         if (stack.is(ModItems.BLOWGUN.get())) {
             poseStack.translate(0.5F, 0.5f, 0.5f);
             ItemStack spriteItem = new ItemStack(ModItems.BLOWGUN_INVENTORY.get());
@@ -34,7 +32,8 @@ public class BlowgunItemRenderer extends GeoItemRenderer<BlowGunItem> {
 
                 poseStack.popPose();
 
-            } else {
+            }
+            else {
 
                 Minecraft.getInstance().getItemRenderer().renderStatic(spriteItem, transformType, transformType == ItemDisplayContext.GROUND ? packedLight : 240, packedOverlay, poseStack, bufferSource, level, 0);
             }

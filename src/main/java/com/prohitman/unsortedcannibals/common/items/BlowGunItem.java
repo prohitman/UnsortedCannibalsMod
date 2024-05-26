@@ -32,7 +32,7 @@ public class BlowGunItem extends ProjectileWeaponItem implements Vanishable, Geo
 
     public final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    public BlowGunItem(Properties pProperties) {
+    public BlowGunItem(Item.Properties pProperties) {
         super(pProperties);
 
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
@@ -69,9 +69,9 @@ public class BlowGunItem extends ProjectileWeaponItem implements Vanishable, Geo
                         BlowDart throwntrident = new BlowDart(pLevel, player);
                         throwntrident.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 1.0F, 0.5F);
 
-                        pStack.hurtAndBreak(1, player, (p_289501_) -> {
+                        /*pStack.hurtAndBreak(1, player, (p_289501_) -> {
                             p_289501_.broadcastBreakEvent(player.getUsedItemHand());
-                        });
+                        });*/
 
                         pLevel.addFreshEntity(throwntrident);
                     }
@@ -108,14 +108,14 @@ public class BlowGunItem extends ProjectileWeaponItem implements Vanishable, Geo
      * How long it takes to use or consume an item
      */
     public int getUseDuration(ItemStack pStack) {
-        return 32000;
+        return 42000;
     }
 
     /**
      * Returns the action that specifies what animation to play when the item is being used.
      */
     public UseAnim getUseAnimation(ItemStack pStack) {
-        return UseAnim.CROSSBOW;
+        return UseAnim.SPEAR;
     }
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pHand) {
         ItemStack itemstack = pPlayer.getItemInHand(pHand);

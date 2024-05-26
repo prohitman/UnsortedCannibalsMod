@@ -1,5 +1,6 @@
 package com.prohitman.unsortedcannibals.common.effects;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffects;
@@ -14,6 +15,31 @@ public class VisceralPainEffect extends MobEffect {
 
     @Override
     public void applyEffectTick(LivingEntity pLivingEntity, int pAmplifier) {
-        super.applyEffectTick(pLivingEntity, pAmplifier);
+        CompoundTag entityData = pLivingEntity.getPersistentData();
+
+        CompoundTag position = entityData.getCompound("position");
+
+        double oldX = position.getDouble("posX");
+        double oldY = position.getDouble("posY");
+        double oldZ = position.getDouble("posZ");
+
+        Vec3 oldPos = new Vec3(oldX, oldY, oldZ);
+        Vec3 currentPos = pLivingEntity.position();
+
+        position.putDouble("posX", pLivingEntity.position().x);
+        position.putDouble("posY", pLivingEntity.position().y);
+        position.putDouble("posZ", pLivingEntity.position().z);
+
+        entityData.put("position", position);
+
+        if(!currentPos.equals(oldPos)){
+            pLivingEntity.hurt(pLivingEntity.damageSources().magic(), 1.5F);
+        }
     }
+
+    @Override
+    public boolean isDurationEffectTick(int pDuration, int pAmplifier) {
+        return true;
+    }
+
 }

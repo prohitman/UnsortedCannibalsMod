@@ -35,6 +35,11 @@ public class BlowDart extends AbstractArrow implements GeoAnimatable {
         super(ModEntities.BLOW_DART.get(), pX, pY, pZ, pLevel);
     }
 
+    @Override
+    protected boolean tryPickup(Player pPlayer) {
+        return false;
+    }
+
     /**
      * Called to update the entity's position/logic.
      */

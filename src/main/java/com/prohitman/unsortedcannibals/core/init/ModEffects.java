@@ -2,11 +2,9 @@ package com.prohitman.unsortedcannibals.core.init;
 
 import com.prohitman.unsortedcannibals.UnsortedCannibalsMod;
 import com.prohitman.unsortedcannibals.common.effects.LiveBaitEffect;
-import com.prohitman.unsortedcannibals.common.effects.ShatteredBones;
+import com.prohitman.unsortedcannibals.common.effects.ShatteredBonesEffect;
 import com.prohitman.unsortedcannibals.common.effects.VisceralPainEffect;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraftforge.registries.DeferredRegister;
@@ -24,6 +22,6 @@ public class ModEffects {
             LiveBaitEffect::new);
 
     public static final RegistryObject<MobEffect> SHATTERED_BONES = MOB_EFFECTS.register("shattered_bones", () ->
-            new ShatteredBones().addAttributeModifier(Attributes.MOVEMENT_SPEED, "7107DE5E-7CE8-4030-940E-514C1F160890", (double)-3F, AttributeModifier.Operation.MULTIPLY_TOTAL));
+            new ShatteredBonesEffect().addAttributeModifier(Attributes.MOVEMENT_SPEED, "7107DE5E-7CE8-4030-940E-514C1F160890", (double)-3F, AttributeModifier.Operation.MULTIPLY_TOTAL));
 
 }

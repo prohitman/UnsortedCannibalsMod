@@ -9,10 +9,19 @@
   "entity.unsortedcannibals.serrated_spear": "Serrated Spear",
   "item.unsortedcannibals.blow_dart": "Blow Dart",
   "item.unsortedcannibals.blowgun": "Blowgun",
+  "item.unsortedcannibals.bone_chestplate": "Bone Chestplate",
+  "item.unsortedcannibals.bone_helmet": "Bone Helmet",
+  "item.unsortedcannibals.crusher_axe": "Crusher Axe",
   "item.unsortedcannibals.death_whistle": "Death Whistle",
+  "item.unsortedcannibals.razor_sword": "Razor Sword",
   "item.unsortedcannibals.reeking_flesh": "Reeking Flesh",
   "item.unsortedcannibals.serrated_spear": "Serrated Spear",
   "item.unsortedcannibals.severed_nose": "Severed Nose",
   "item.unsortedcannibals.sturdy_bones": "Sturdy Bones",
-  "itemGroup.unsortedcannibals": "Unsorted Cannibals Mod"
+  "itemGroup.unsortedcannibals": "Unsorted Cannibals Mod",
+  "sounds.unsortedcannibals.death_whistle": "Death Whistle",
+  "sounds.unsortedcannibals.frenzy_hurt": "Frenzy Hurt",
+  "sounds.unsortedcannibals.yearn_death": "Yearn Death",
+  "sounds.unsortedcannibals.yearn_hurt": "Yearn Hurt",
+  "sounds.unsortedcannibals.yearn_idle": "Yearn Idle"
 }

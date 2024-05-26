@@ -24,7 +24,6 @@ public class SpearItemRenderer extends GeoItemRenderer<SerratedSpearItem> {
 
 
         if (stack.is(ModItems.SERRATED_SPEAR.get())) {
-            this.animatable = (SerratedSpearItem) stack.getItem();
             poseStack.translate(0.5F, 0.5f, 0.5f);
             ItemStack spriteItem = new ItemStack(ModItems.SERRATED_SPEAR_INVENTORY.get());
             spriteItem.setTag(stack.getTag());
@@ -35,7 +34,6 @@ public class SpearItemRenderer extends GeoItemRenderer<SerratedSpearItem> {
                 poseStack.popPose();
 
             } else {
-
                 Minecraft.getInstance().getItemRenderer().renderStatic(spriteItem, transformType, transformType == ItemDisplayContext.GROUND ? packedLight : 240, packedOverlay, poseStack, bufferSource, level, 0);
             }
 
