@@ -1,6 +1,7 @@
 {
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
+	"render_type": "minecraft:cutout_mipped",
 	"textures": {
 		"0": "unsortedcannibals:block/fall_trap_scaffold",
 		"missing": "minecraft:block/grass_block_top",

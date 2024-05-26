@@ -15,7 +15,7 @@ public class ModCreativeTab {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, UnsortedCannibalsMod.MODID);
 
     public static RegistryObject<CreativeModeTab> UC_TAB = CREATIVE_MODE_TABS.register("uc_tab", () ->
-            CreativeModeTab.builder().icon(ModItems.SEVERED_NOSE.get()::getDefaultInstance)
+            CreativeModeTab.builder().icon(ModItems.BONE_HELMET.get()::getDefaultInstance)
                     .title(Component.translatable("itemGroup.unsortedcannibals"))
                     .displayItems((featureFlags, output) -> {
                         output.acceptAll(getTabItems());

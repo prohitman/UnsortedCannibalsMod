@@ -115,7 +115,7 @@ public class BlowGunItem extends ProjectileWeaponItem implements Vanishable, Geo
      * Returns the action that specifies what animation to play when the item is being used.
      */
     public UseAnim getUseAnimation(ItemStack pStack) {
-        return UseAnim.SPEAR;
+        return UseAnim.TOOT_HORN;
     }
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pHand) {
         ItemStack itemstack = pPlayer.getItemInHand(pHand);
