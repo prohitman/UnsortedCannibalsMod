@@ -3,7 +3,7 @@
 	"parent": "block/block",
 	"render_type": "minecraft:cutout_mipped",
 	"textures": {
-		"0": "unsortedcannibals:block/fall_trap_scaffold",
+		"1": "unsortedcannibals:block/fall_trap_scaffold",
 		"missing": "minecraft:block/grass_block_top",
 		"particle": "unsortedcannibals:block/fall_trap_scaffold"
 	},
@@ -13,12 +13,25 @@
 			"to": [16, 15.5, 16],
 			"rotation": {"angle": 0, "axis": "y", "origin": [0, 1, 0]},
 			"faces": {
-				"north": {"uv": [0, 0, 16, 1], "texture": "#0"},
-				"east": {"uv": [0, 0, 16, 1], "texture": "#0"},
-				"south": {"uv": [0, 0, 16, 1], "texture": "#0"},
-				"west": {"uv": [16, 0, 0, 1], "texture": "#0"},
-				"up": {"uv": [0, 0, 16, 16], "texture": "#0"},
-				"down": {"uv": [0, 0, 16, 16], "texture": "#0"}
+				"north": {"uv": [0, 0, 16, 1], "texture": "#1"},
+				"east": {"uv": [0, 0, 16, 1], "texture": "#1"},
+				"south": {"uv": [0, 0, 16, 1], "texture": "#1"},
+				"west": {"uv": [16, 0, 0, 1], "texture": "#1"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#1"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#1"}
+			}
+		},
+		{
+			"from": [16, 15.5, 16],
+			"to": [0, 14.5, 0],
+			"rotation": {"angle": 0, "axis": "y", "origin": [16, 2, 16]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 1], "texture": "#1"},
+				"east": {"uv": [0, 0, 16, 1], "texture": "#1"},
+				"south": {"uv": [0, 0, 16, 1], "texture": "#1"},
+				"west": {"uv": [16, 0, 0, 1], "texture": "#1"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#1"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#1"}
 			}
 		},
 		{
@@ -27,29 +40,30 @@
 			"rotation": {"angle": 0, "axis": "y", "origin": [0, 1, 0]},
 			"color": 0,
 			"faces": {
-				"north": {"uv": [0, 0, 16, 0], "texture": "#missing", "tintindex":  0},
-				"east": {"uv": [0, 0, 16, 0], "texture": "#missing", "tintindex":  0},
-				"south": {"uv": [0, 0, 16, 0], "texture": "#missing", "tintindex":  0},
-				"west": {"uv": [0, 0, 16, 0], "texture": "#missing", "tintindex":  0},
-				"up": {"uv": [0, 0, 16, 16], "texture": "#missing", "tintindex":  0},
-				"down": {"uv": [0, 0, 16, 16], "texture": "#missing", "tintindex":  0}
+				"north": {"uv": [0, 0, 16, 0], "texture": "#missing", "tintindex": 0},
+				"east": {"uv": [0, 0, 16, 0], "texture": "#missing", "tintindex": 0},
+				"south": {"uv": [0, 0, 16, 0], "texture": "#missing", "tintindex": 0},
+				"west": {"uv": [0, 0, 16, 0], "texture": "#missing", "tintindex": 0},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#missing", "tintindex": 0},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#missing", "tintindex": 0}
 			}
 		}
 	],
+	"display": {
+	},
 	"groups": [
 		{
 			"name": "group",
 			"origin": [8, 8, 8],
 			"color": 0,
-			"nbt": "{}",
 			"children": [
 				0,
+				1,
 				{
 					"name": "Camo",
 					"origin": [0, 0, 0],
 					"color": 0,
-					"nbt": "{}",
-					"children": [1]
+					"children": [2]
 				}
 			]
 		}

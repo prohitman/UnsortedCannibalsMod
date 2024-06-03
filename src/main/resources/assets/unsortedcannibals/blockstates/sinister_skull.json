@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "unsortedcannibals:block/sinister_skull",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "unsortedcannibals:block/sinister_skull",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "unsortedcannibals:block/sinister_skull"
+    },
+    "facing=west": {
+      "model": "unsortedcannibals:block/sinister_skull",
+      "y": 90
+    }
+  }
+}

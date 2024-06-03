@@ -22,8 +22,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.spongepowered.asm.service.mojang.Blackboard;
 
 public class SharpenedBones extends Block {
-    protected static final VoxelShape SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 15.0D, 15.0D);
-
     public static final BooleanProperty IS_BLOODY = BooleanProperty.create("is_bloody");
     public SharpenedBones(Properties pProperties) {
         super(pProperties);
@@ -55,7 +53,7 @@ public class SharpenedBones extends Block {
         }
 
         if(pFallDistance > 2.0 && !isCreative && pEntity instanceof LivingEntity){
-            pEntity.causeFallDamage(pFallDistance + 2.0F, 5.0F, pLevel.damageSources().fall());
+            pEntity.causeFallDamage(pFallDistance + 2.0F, 2.5F, pLevel.damageSources().fall());
 
             BlockState newState = pState.setValue(IS_BLOODY, true);
 

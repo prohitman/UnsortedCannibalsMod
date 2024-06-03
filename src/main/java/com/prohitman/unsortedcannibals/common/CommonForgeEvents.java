@@ -12,17 +12,29 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.behavior.AnimalMakeLove;
+import net.minecraft.world.entity.ai.util.DefaultRandomPos;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Ocelot;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+
+import java.util.List;
 
 @Mod.EventBusSubscriber(modid = UnsortedCannibalsMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class CommonForgeEvents {
@@ -46,6 +58,29 @@ public class CommonForgeEvents {
             }
         }
     }
+
+    @SubscribeEvent
+    public static void livingUseItemEvent(LivingEntityUseItemEvent.Tick event){
+        if(event.getItem().is(ModItems.DEATH_WHISTLE.get())){
+            List<PathfinderMob> mobs = event.getEntity().level().getEntitiesOfClass(PathfinderMob.class, event.getEntity().getBoundingBox().inflate(15, 5, 15));
+            for(PathfinderMob entityIn : mobs){
+                if(entityIn != null){
+                    if(entityIn instanceof Animal || entityIn instanceof Monster){
+                        ((Mob) entityIn).setAggressive(false);
+                        Vec3 vec3 = DefaultRandomPos.getPosAway(entityIn, 16, 7, event.getEntity().position());
+                        if (vec3 != null && event.getEntity().distanceToSqr(vec3.x, vec3.y, vec3.z) >= event.getEntity().distanceToSqr(entityIn)) {
+                            Path path = ((Mob) entityIn).getNavigation().createPath(vec3.x, vec3.y, vec3.z, 0);
+                            if(path != null){
+                                entityIn.getNavigation().moveTo(path, 1.25);
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
     @SubscribeEvent
     public static void onCritHit(CriticalHitEvent event){
         if(event.getTarget() instanceof LivingEntity livingEntity && event.isVanillaCritical() && event.getEntity().getMainHandItem().is(ModItems.CRUSHER_AXE.get())){

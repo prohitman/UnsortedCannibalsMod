@@ -7,7 +7,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import java.util.function.Supplier;
 
 public enum ModItemTiers implements Tier {
-    BONE(2, 800, 6.0F, 2.5F, 12, () -> {
+    BONE(2, 175, 6.0F, 2F, 12, () -> {
         return Ingredient.of(ModItems.STURDY_BONES.get());
     });
     private final int harvestLevel;

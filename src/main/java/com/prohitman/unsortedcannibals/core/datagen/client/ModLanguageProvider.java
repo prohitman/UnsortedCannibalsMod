@@ -37,10 +37,7 @@ public class ModLanguageProvider extends LanguageProvider {
         addBlock(ModBlocks.BONE_BARRICADE);
         addBlock(ModBlocks.SHARPENED_BONES);
         addBlock(ModBlocks.FALL_TRAP);
-
-        //add( "effect.unsortedcannibals.live_bait", "Live Bait");
-        //add( "effect.unsortedcannibals.visceral_pain", "Visceral Pain");
-        //add( "effect.unsortedcannibals.shattered_bones", "Shattered Bones");
+        addBlock(ModBlocks.SINISTER_SKULL);
 
         addEffect(ModEffects.LIVE_BAIT);
         addEffect(ModEffects.VISCERAL_PAIN);
@@ -61,6 +58,7 @@ public class ModLanguageProvider extends LanguageProvider {
         add("item.tooltip.bone_armor", "\u00A77Grants immunity against \u00A7cVisceral Pain\u00A77.");
         add("item.tooltip.razor_sword", "\u00A77Deals extra damage when enemy has below \u00A7c50% health\u00A77.");
         add("item.tooltip.crusher_axe", "\u00A7cShatters bones \u00A77when dealing a critical hit.");
+        add("item.tooltip.serrated_spear", "\u00A77Inflicts \u00A7cVisceral Pain\u00A77.");
         add("item.tooltip.press_shift", "\u00A7b[+SHIFT]");
 
 

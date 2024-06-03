@@ -34,6 +34,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         createSingleTextureCrossBlock(ModBlocks.BONE_BARRICADE);
         createParent(ModBlocks.SHARPENED_BONES);
         createParent(ModBlocks.FALL_TRAP);
+        createParent(ModBlocks.SINISTER_SKULL);
 
     }
 

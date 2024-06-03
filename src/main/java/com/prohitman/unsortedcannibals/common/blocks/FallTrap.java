@@ -32,8 +32,8 @@ public class FallTrap extends Block {
     }
 
     @Override
-    public void stepOn(Level pLevel, BlockPos pPos, BlockState pState, Entity pEntity) {
-        pLevel.playSound(pEntity, pPos, SoundEvents.WITHER_BREAK_BLOCK, SoundSource.BLOCKS, 1, 1);
+    public void entityInside(BlockState pState, Level pLevel, BlockPos pPos, Entity entity) {
+        pLevel.playSound(entity, pPos, SoundEvents.WITHER_BREAK_BLOCK, SoundSource.BLOCKS, 1, 1);
         pLevel.destroyBlock(pPos, false);
     }
 }

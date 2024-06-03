@@ -2,11 +2,14 @@ package com.prohitman.unsortedcannibals.common.items;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import com.prohitman.unsortedcannibals.client.UCKeyHandler;
+import com.prohitman.unsortedcannibals.client.keybindings.ModKeyBindings;
 import com.prohitman.unsortedcannibals.client.renderer.item.SpearItemRenderer;
 import com.prohitman.unsortedcannibals.common.entities.projectile.ThrownSpear;
 import com.prohitman.unsortedcannibals.core.init.ModEffects;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -25,12 +28,14 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 public class SerratedSpearItem extends Item implements Vanishable, GeoItem {
@@ -44,8 +49,8 @@ public class SerratedSpearItem extends Item implements Vanishable, GeoItem {
     public SerratedSpearItem(Item.Properties pProperties) {
         super(pProperties);
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", 8.0D, AttributeModifier.Operation.ADDITION));
-        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", (double)-2.9F, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", 6.0D, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", (double)-2.6F, AttributeModifier.Operation.ADDITION));
         this.defaultModifiers = builder.build();
 
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
@@ -185,5 +190,15 @@ public class SerratedSpearItem extends Item implements Vanishable, GeoItem {
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return this.cache;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+        super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
+        if(UCKeyHandler.isKeyPressed(ModKeyBindings.INSTANCE.detailsKey)){
+            pTooltipComponents.add(Component.translatable("item.tooltip.serrated_spear"));
+        } else {
+            pTooltipComponents.add(Component.translatable("item.tooltip.press_shift"));
+        }
     }
 }
