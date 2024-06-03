@@ -59,6 +59,7 @@ public class ModLanguageProvider extends LanguageProvider {
         add("item.tooltip.razor_sword", "\u00A77Deals extra damage when enemy has below \u00A7c50% health\u00A77.");
         add("item.tooltip.crusher_axe", "\u00A7cShatters bones \u00A77when dealing a critical hit.");
         add("item.tooltip.serrated_spear", "\u00A77Inflicts \u00A7cVisceral Pain\u00A77.");
+        add("item.tooltip.death_whistle", "\u00A77Causes panic to nearby creatures.");
         add("item.tooltip.press_shift", "\u00A7b[+SHIFT]");
 
 

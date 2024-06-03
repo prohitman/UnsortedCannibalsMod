@@ -10,6 +10,7 @@
   "entity.unsortedcannibals.serrated_spear": "Serrated Spear",
   "item.tooltip.bone_armor": "§7Grants immunity against §cVisceral Pain§7.",
   "item.tooltip.crusher_axe": "§cShatters bones §7when dealing a critical hit.",
+  "item.tooltip.death_whistle": "§7Causes panic to nearby creatures.",
   "item.tooltip.press_shift": "§b[+SHIFT]",
   "item.tooltip.razor_sword": "§7Deals extra damage when enemy has below §c50% health§7.",
   "item.tooltip.serrated_spear": "§7Inflicts §cVisceral Pain§7.",

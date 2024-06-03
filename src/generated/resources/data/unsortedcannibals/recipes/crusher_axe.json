@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": {
+      "item": "unsortedcannibals:sturdy_bones"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "BB",
+    "BS",
+    " S"
+  ],
+  "result": {
+    "item": "unsortedcannibals:crusher_axe"
+  },
+  "show_notification": true
+}

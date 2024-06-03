@@ -1,6 +1,9 @@
 package com.prohitman.unsortedcannibals.common.items;
 
+import com.prohitman.unsortedcannibals.client.UCKeyHandler;
+import com.prohitman.unsortedcannibals.client.keybindings.ModKeyBindings;
 import com.prohitman.unsortedcannibals.core.init.ModSounds;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -10,6 +13,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class DeathWhistleItem extends Item {
     public DeathWhistleItem(Properties pProperties) {
@@ -46,5 +52,15 @@ public class DeathWhistleItem extends Item {
 
         pLevel.playSound(pPlayer, pPlayer, soundevent, SoundSource.RECORDS, 1.5f, 1.0F);
         pLevel.gameEvent(GameEvent.INSTRUMENT_PLAY, pPlayer.position(), GameEvent.Context.of(pPlayer));
+    }
+
+    @Override
+    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+        super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
+        if(UCKeyHandler.isKeyPressed(ModKeyBindings.INSTANCE.detailsKey)){
+            pTooltipComponents.add(Component.translatable("item.tooltip.death_whistle"));
+        } else {
+            pTooltipComponents.add(Component.translatable("item.tooltip.press_shift"));
+        }
     }
 }
