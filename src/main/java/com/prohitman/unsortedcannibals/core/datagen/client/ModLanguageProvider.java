@@ -55,6 +55,15 @@ public class ModLanguageProvider extends LanguageProvider {
         add("sounds.unsortedcannibals.yearn_hurt", "Yearn Hurt");
         add("sounds.unsortedcannibals.yearn_idle", "Yearn Idle");
 
+        add("key.unsortedcannibals.detailskey", "More Tooltip Details");
+        add("key.categories.unsortedcannibals", "Unsorted Cannibals");
+
+        add("item.tooltip.bone_armor", "\u00A77Grants immunity against \u00A7cVisceral Pain\u00A77.");
+        add("item.tooltip.razor_sword", "\u00A77Deals extra damage when enemy has below \u00A7c50% health\u00A77.");
+        add("item.tooltip.crusher_axe", "\u00A7cShatters bones \u00A77when dealing a critical hit.");
+        add("item.tooltip.press_shift", "\u00A7b[+SHIFT]");
+
+
         add("itemGroup.unsortedcannibals", "Unsorted Cannibals Mod");
     }
 

@@ -4,6 +4,7 @@ import com.prohitman.unsortedcannibals.UnsortedCannibalsMod;
 import com.prohitman.unsortedcannibals.common.effects.LiveBaitEffect;
 import com.prohitman.unsortedcannibals.common.effects.ShatteredBonesEffect;
 import com.prohitman.unsortedcannibals.common.effects.VisceralPainEffect;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;

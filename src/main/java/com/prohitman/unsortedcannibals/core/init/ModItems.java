@@ -19,7 +19,7 @@ public class ModItems {
     public static final RegistryObject<Item> REEKING_FLESH = ITEMS.register("reeking_flesh", () -> new Item(new Item.Properties().food(ModFoods.REEKING_FLESH)));
     public static final RegistryObject<Item> SERRATED_SPEAR = ITEMS.register("serrated_spear", () -> new SerratedSpearItem(new Item.Properties().durability(175)));
     public static final RegistryObject<Item> SERRATED_SPEAR_INVENTORY = ITEMS.register("serrated_spear_inventory", () -> new InventoryItem(new Item.Properties()));
-    public static final RegistryObject<Item> BLOWGUN = ITEMS.register("blowgun", () -> new BlowGunItem(new Item.Properties()));
+    public static final RegistryObject<Item> BLOWGUN = ITEMS.register("blowgun", () -> new BlowGunItem(new Item.Properties().rarity(Rarity.RARE)));
     public static final RegistryObject<Item> BLOWGUN_INVENTORY = ITEMS.register("blowgun_inventory", () -> new InventoryItem(new Item.Properties()));
 
     public static final RegistryObject<Item> BLOW_DART = ITEMS.register("blow_dart", () -> new Item(new Item.Properties()));
@@ -28,9 +28,9 @@ public class ModItems {
     public static final RegistryObject<Item> CRUSHER_AXE = ITEMS.register("crusher_axe", () -> new CrusherAxeItem(ModItemTiers.BONE, 4, -3.0f, new Item.Properties()));
 
     public static final RegistryObject<Item> BONE_HELMET = ITEMS.register("bone_helmet", () -> new
-            BoneArmorItem(ModArmorMaterials.BONE, ArmorItem.Type.HELMET, new Item.Properties()));
+            BoneArmorItem(ModArmorMaterials.BONE, ArmorItem.Type.HELMET, new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<Item> BONE_CHESTPLATE = ITEMS.register("bone_chestplate", () -> new
-            BoneArmorItem(ModArmorMaterials.BONE, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
-    public static final RegistryObject<Item> DEATH_WHISTLE = ITEMS.register("death_whistle", () -> new DeathWhistleItem(new Item.Properties()));
+            BoneArmorItem(ModArmorMaterials.BONE, ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> DEATH_WHISTLE = ITEMS.register("death_whistle", () -> new DeathWhistleItem(new Item.Properties().rarity(Rarity.EPIC)));
 
 }

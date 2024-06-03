@@ -13,6 +13,8 @@ public class VisceralPainEffect extends MobEffect {
         super(MobEffectCategory.HARMFUL, 0xA41825);
     }
 
+
+
     @Override
     public void applyEffectTick(LivingEntity pLivingEntity, int pAmplifier) {
         CompoundTag entityData = pLivingEntity.getPersistentData();
@@ -32,7 +34,7 @@ public class VisceralPainEffect extends MobEffect {
 
         entityData.put("position", position);
 
-        if(!currentPos.equals(oldPos)){
+        if(!currentPos.equals(oldPos) && pLivingEntity.getHealth() > 1){
             pLivingEntity.hurt(pLivingEntity.damageSources().magic(), 1.5F);
         }
     }
