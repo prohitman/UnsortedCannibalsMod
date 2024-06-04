@@ -7,6 +7,7 @@ import com.prohitman.unsortedcannibals.common.items.armor.ModArmorMaterials;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -33,5 +34,7 @@ public class ModItems {
     public static final RegistryObject<Item> BONE_CHESTPLATE = ITEMS.register("bone_chestplate", () -> new
             BoneArmorItem(ModArmorMaterials.BONE, ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<Item> DEATH_WHISTLE = ITEMS.register("death_whistle", () -> new DeathWhistleItem(new Item.Properties().rarity(Rarity.EPIC)));
+
+    public static final RegistryObject<Item> CRAVE_SPAWN_EGG = ITEMS.register("crave_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.CRAVE, 8880765, 12999733, new Item.Properties()));
 
 }

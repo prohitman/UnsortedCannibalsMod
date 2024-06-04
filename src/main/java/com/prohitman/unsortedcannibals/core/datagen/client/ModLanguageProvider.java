@@ -34,6 +34,7 @@ public class ModLanguageProvider extends LanguageProvider {
         addItem(ModItems.RAZOR_SWORD);
         addItem(ModItems.CRUSHER_AXE);
         addItem(ModItems.SERRATED_SPEARHEAD);
+        addItem(ModItems.CRAVE_SPAWN_EGG);
 
         addBlock(ModBlocks.BONE_BARRICADE);
         addBlock(ModBlocks.SHARPENED_BONES);

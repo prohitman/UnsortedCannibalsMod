@@ -1,6 +1,7 @@
 package com.prohitman.unsortedcannibals.core.init;
 
 import com.prohitman.unsortedcannibals.UnsortedCannibalsMod;
+import com.prohitman.unsortedcannibals.common.entities.living.CraveCannibal;
 import com.prohitman.unsortedcannibals.common.entities.living.DummyCannibal;
 import com.prohitman.unsortedcannibals.common.entities.projectile.BlowDart;
 import com.prohitman.unsortedcannibals.common.entities.projectile.ThrownSpear;
@@ -23,6 +24,9 @@ public class ModEntities {
 
     public static final RegistryObject<EntityType<BlowDart>> BLOW_DART = ENTITY_TYPES.register("blow_dart",
             () -> EntityType.Builder.<BlowDart>of(BlowDart::new, MobCategory.MISC).sized(0.3F, 0.3F).clientTrackingRange(4).updateInterval(20).build("blow_dart"));
+
+    public static final RegistryObject<EntityType<CraveCannibal>> CRAVE = ENTITY_TYPES.register("crave",
+            () -> EntityType.Builder.of(CraveCannibal::new, MobCategory.MONSTER).sized(0.82F, 2.68F).clientTrackingRange(20).build("crave"));
 
     public static final RegistryObject<EntityType<DummyCannibal>> DUMMY_CANNIBAL = ENTITY_TYPES.register("dummy_cannibal",
             () -> EntityType.Builder.of(DummyCannibal::new, MobCategory.CREATURE).sized(1.5F, 1.5F).clientTrackingRange(4).updateInterval(20).build("dummy_cannibal"));

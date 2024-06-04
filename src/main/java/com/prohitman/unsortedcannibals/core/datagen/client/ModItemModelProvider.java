@@ -31,6 +31,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         createSingleHandHeld(ModItems.RAZOR_SWORD);
         createSingle(ModItems.SERRATED_SPEARHEAD);
 
+        withExistingParent(ModItems.CRAVE_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+
         //Blocks
         createSingleTextureCrossBlock(ModBlocks.BONE_BARRICADE);
         createParent(ModBlocks.SHARPENED_BONES);

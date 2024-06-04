@@ -3,9 +3,11 @@ package com.prohitman.unsortedcannibals.client;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.prohitman.unsortedcannibals.UnsortedCannibalsMod;
 import com.prohitman.unsortedcannibals.client.keybindings.ModKeyBindings;
+import com.prohitman.unsortedcannibals.client.renderer.entity.living.CraveRenderer;
 import com.prohitman.unsortedcannibals.client.renderer.entity.living.DummyCannibalRenderer;
 import com.prohitman.unsortedcannibals.client.renderer.entity.projectile.BlowDartRenderer;
 import com.prohitman.unsortedcannibals.client.renderer.entity.projectile.ThrownSpearRenderer;
+import com.prohitman.unsortedcannibals.common.entities.living.CraveCannibal;
 import com.prohitman.unsortedcannibals.common.entities.living.DummyCannibal;
 import com.prohitman.unsortedcannibals.core.init.ModBlocks;
 import com.prohitman.unsortedcannibals.core.init.ModEffects;
@@ -45,6 +47,7 @@ public class ClientModEvents {
             EntityRenderers.register(ModEntities.SERRATED_SPEAR.get(), ThrownSpearRenderer::new);
             EntityRenderers.register(ModEntities.BLOW_DART.get(), BlowDartRenderer::new);
             EntityRenderers.register(ModEntities.DUMMY_CANNIBAL.get(), DummyCannibalRenderer::new);
+            EntityRenderers.register(ModEntities.CRAVE.get(), CraveRenderer::new);
 
             ItemProperties.register(ModItems.SERRATED_SPEAR.get(), new ResourceLocation(UnsortedCannibalsMod.MODID, "throwing"), (stack, level, living, j) -> {
                 return living != null && living.isUsingItem() && living.getUseItem() == stack ? 1.0F : 0.0F;
