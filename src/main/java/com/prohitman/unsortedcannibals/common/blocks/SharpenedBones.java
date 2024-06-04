@@ -63,7 +63,6 @@ public class SharpenedBones extends Block {
 
     @Override
     public void stepOn(Level pLevel, BlockPos pPos, BlockState pState, Entity pEntity) {
-
         if(pEntity instanceof LivingEntity){
             pEntity.hurt(pLevel.damageSources().generic(), 1.5F);
         }

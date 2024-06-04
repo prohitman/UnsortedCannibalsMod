@@ -80,7 +80,6 @@ public class ClientModEvents {
                 long currentTime = gui.getMinecraft().player.tickCount;
                 float alpha = getAlpha(currentTime, partialTick, fade_duration);
 
-                //gui.renderTextureOverlay(guiGraphics, POWDER_SNOW_OUTLINE_LOCATION, gui.getMinecraft().player.getPercentFrozen());
                 RenderSystem.disableDepthTest();
                 RenderSystem.depthMask(false);
                 guiGraphics.setColor(1.0F, 1.0F, 1.0F, alpha);
@@ -89,7 +88,7 @@ public class ClientModEvents {
                 RenderSystem.enableDepthTest();
                 guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
             } else{
-                effectStartTime = -1; // Reset the effect start time when the effect is not active
+                effectStartTime = -1;
 
             }
         });

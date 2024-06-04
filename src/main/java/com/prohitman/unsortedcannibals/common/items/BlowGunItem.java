@@ -67,7 +67,7 @@ public class BlowGunItem extends ProjectileWeaponItem implements Vanishable, Geo
                     boolean flag1 = player.getAbilities().instabuild;
                     if (!pLevel.isClientSide) {
                         BlowDart throwntrident = new BlowDart(pLevel, player);
-                        throwntrident.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 1.0F, 0.5F);
+                        throwntrident.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 1.75F, 0.5F);
 
                         /*pStack.hurtAndBreak(1, player, (p_289501_) -> {
                             p_289501_.broadcastBreakEvent(player.getUsedItemHand());
