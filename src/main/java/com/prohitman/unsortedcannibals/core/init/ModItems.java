@@ -17,6 +17,7 @@ public class ModItems {
 
     public static final RegistryObject<Item> SEVERED_NOSE = ITEMS.register("severed_nose", () -> new Item(new Item.Properties().food(ModFoods.SEVERED_NOSE)));
     public static final RegistryObject<Item> REEKING_FLESH = ITEMS.register("reeking_flesh", () -> new Item(new Item.Properties().food(ModFoods.REEKING_FLESH)));
+    public static final RegistryObject<Item> SERRATED_SPEARHEAD = ITEMS.register("serrated_spearhead", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> SERRATED_SPEAR = ITEMS.register("serrated_spear", () -> new SerratedSpearItem(new Item.Properties().durability(110).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<Item> SERRATED_SPEAR_INVENTORY = ITEMS.register("serrated_spear_inventory", () -> new InventoryItem(new Item.Properties()));
     public static final RegistryObject<Item> BLOWGUN = ITEMS.register("blowgun", () -> new BlowGunItem(new Item.Properties().rarity(Rarity.RARE)));

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": {
+      "item": "unsortedcannibals:serrated_spearhead"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "  B",
+    " S ",
+    "S  "
+  ],
+  "result": {
+    "item": "unsortedcannibals:serrated_spear"
+  },
+  "show_notification": true
+}

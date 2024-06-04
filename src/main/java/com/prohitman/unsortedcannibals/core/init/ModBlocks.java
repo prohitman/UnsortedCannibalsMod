@@ -5,6 +5,8 @@ import com.prohitman.unsortedcannibals.common.blocks.BoneBarricade;
 import com.prohitman.unsortedcannibals.common.blocks.FallTrap;
 import com.prohitman.unsortedcannibals.common.blocks.SharpenedBones;
 import com.prohitman.unsortedcannibals.common.blocks.SinisterSkull;
+import net.minecraft.world.entity.monster.PatrollingMonster;
+import net.minecraft.world.entity.monster.Pillager;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;

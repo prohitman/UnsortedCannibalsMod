@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": {
+      "item": "unsortedcannibals:sturdy_bones"
+    },
+    "L": {
+      "item": "minecraft:leather"
+    }
+  },
+  "pattern": [
+    "BBB",
+    "BLB"
+  ],
+  "result": {
+    "item": "unsortedcannibals:bone_helmet"
+  },
+  "show_notification": true
+}

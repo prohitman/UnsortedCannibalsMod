@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "unsortedcannibals:sturdy_bones"
+    },
+    "O": {
+      "item": "minecraft:bone"
+    }
+  },
+  "pattern": [
+    "O O",
+    " B ",
+    "O O"
+  ],
+  "result": {
+    "item": "unsortedcannibals:bone_barricade"
+  },
+  "show_notification": true
+}
