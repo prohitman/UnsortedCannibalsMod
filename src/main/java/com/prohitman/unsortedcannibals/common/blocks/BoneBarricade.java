@@ -1,5 +1,6 @@
 package com.prohitman.unsortedcannibals.common.blocks;
 
+import com.prohitman.unsortedcannibals.common.entities.ModMobTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -28,7 +29,9 @@ public class BoneBarricade extends Block {
                 double d0 = Math.abs(pEntity.getX() - pEntity.xOld);
                 double d1 = Math.abs(pEntity.getZ() - pEntity.zOld);
                 if (d0 >= (double)0.003F || d1 >= (double)0.003F) {
-                    pEntity.hurt(pLevel.damageSources().generic(), 2.0F);
+                    if(!(((LivingEntity) pEntity).getMobType() == ModMobTypes.CANNIBAL)){
+                        pEntity.hurt(pLevel.damageSources().generic(), 2.0F);
+                    }
                 }
             }
 
