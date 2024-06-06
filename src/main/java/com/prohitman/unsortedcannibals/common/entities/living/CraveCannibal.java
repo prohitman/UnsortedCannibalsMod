@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.prohitman.unsortedcannibals.common.entities.ModMobTypes;
 import com.prohitman.unsortedcannibals.common.entities.living.goals.CraveAvoidPlayerGoal;
 import com.prohitman.unsortedcannibals.common.entities.living.goals.FollowCannibalGoal;
+import com.prohitman.unsortedcannibals.core.init.ModEffects;
 import com.prohitman.unsortedcannibals.core.init.ModItems;
 import net.minecraft.Util;
 import net.minecraft.client.resources.sounds.Sound;
@@ -17,17 +18,21 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.animal.Parrot;
+import net.minecraft.world.entity.animal.camel.Camel;
 import net.minecraft.world.entity.monster.*;
+import net.minecraft.world.entity.monster.piglin.PiglinBrute;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -65,10 +70,11 @@ public class CraveCannibal extends PathfinderMob implements GeoEntity, Enemy {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new FollowCannibalGoal(this, 0.55D, 8.0F, 12.0F));
+        this.goalSelector.addGoal(1, new FollowCannibalGoal(this, 0.55D, 10.0F, 25f));
         this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 0.5D));
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(4, new CraveCannibal.CraveMeleeAttackGoal(this));
+        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Camel.class, 10, true, false, (livingEntity -> true)));
         this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 20, 0.5f));
 
         this.goalSelector.addGoal(9, new CraveAvoidPlayerGoal(this));
@@ -114,6 +120,19 @@ public class CraveCannibal extends PathfinderMob implements GeoEntity, Enemy {
             this.setClimbing(this.horizontalCollision);
         }
 
+    }
+
+    @Override
+    public boolean doHurtTarget(Entity pEntity) {
+        if(pEntity instanceof LivingEntity livingEntity && this.getItemBySlot(EquipmentSlot.MAINHAND).is(ModItems.SERRATED_SPEAR.get())){
+            livingEntity.addEffect(new MobEffectInstance(ModEffects.VISCERAL_PAIN.get(), 90 + random.nextInt(20)), livingEntity);
+        }
+        return super.doHurtTarget(pEntity);
+    }
+
+    @Override
+    protected float getEquipmentDropChance(EquipmentSlot pSlot) {
+        return 0;
     }
 
     @Override
@@ -216,7 +235,7 @@ public class CraveCannibal extends PathfinderMob implements GeoEntity, Enemy {
         }
 
         protected double getAttackReachSqr(LivingEntity pAttackTarget) {
-           return super.getAttackReachSqr(pAttackTarget) + 2.0f;
+           return super.getAttackReachSqr(pAttackTarget) + 3.0f;
         }
     }
 }

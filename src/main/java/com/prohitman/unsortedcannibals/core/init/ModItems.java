@@ -21,7 +21,7 @@ public class ModItems {
     public static final RegistryObject<Item> SERRATED_SPEARHEAD = ITEMS.register("serrated_spearhead", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> SERRATED_SPEAR = ITEMS.register("serrated_spear", () -> new SerratedSpearItem(new Item.Properties().durability(110).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<Item> SERRATED_SPEAR_INVENTORY = ITEMS.register("serrated_spear_inventory", () -> new InventoryItem(new Item.Properties()));
-    public static final RegistryObject<Item> BLOWGUN = ITEMS.register("blowgun", () -> new BlowGunItem(new Item.Properties().rarity(Rarity.RARE)));
+    public static final RegistryObject<Item> BLOWGUN = ITEMS.register("blowgun", () -> new BlowGunItem(new Item.Properties().rarity(Rarity.RARE).stacksTo(1)));
     public static final RegistryObject<Item> BLOWGUN_INVENTORY = ITEMS.register("blowgun_inventory", () -> new InventoryItem(new Item.Properties()));
 
     public static final RegistryObject<Item> BLOW_DART = ITEMS.register("blow_dart", () -> new Item(new Item.Properties()));
@@ -33,7 +33,7 @@ public class ModItems {
             BoneArmorItem(ModArmorMaterials.BONE, ArmorItem.Type.HELMET, new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<Item> BONE_CHESTPLATE = ITEMS.register("bone_chestplate", () -> new
             BoneArmorItem(ModArmorMaterials.BONE, ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<Item> DEATH_WHISTLE = ITEMS.register("death_whistle", () -> new DeathWhistleItem(new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> DEATH_WHISTLE = ITEMS.register("death_whistle", () -> new DeathWhistleItem(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1)));
 
     public static final RegistryObject<Item> CRAVE_SPAWN_EGG = ITEMS.register("crave_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.CRAVE, 8880765, 12999733, new Item.Properties()));
     public static final RegistryObject<Item> YEARN_SPAWN_EGG = ITEMS.register("yearn_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.YEARN, 8880765, 2302754, new Item.Properties()));

@@ -1,7 +1,9 @@
 package com.prohitman.unsortedcannibals.common.blocks;
 
+import com.prohitman.unsortedcannibals.core.init.ModEffects;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -52,11 +54,11 @@ public class SharpenedBones extends Block {
             isCreative = player.isCreative();
         }
 
-        if(pFallDistance > 2.0 && !isCreative && pEntity instanceof LivingEntity){
+        if(pFallDistance > 2.0 && !isCreative && pEntity instanceof LivingEntity livingEntity){
             pEntity.causeFallDamage(pFallDistance + 2.0F, 2.5F, pLevel.damageSources().fall());
+            livingEntity.addEffect(new MobEffectInstance(ModEffects.LIVE_BAIT.get(), 400), livingEntity);
 
             BlockState newState = pState.setValue(IS_BLOODY, true);
-
             pLevel.setBlock(pPos, newState, 2);
         }
     }
