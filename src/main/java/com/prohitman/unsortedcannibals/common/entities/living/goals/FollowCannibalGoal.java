@@ -12,6 +12,7 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 public class FollowCannibalGoal extends Goal {
@@ -31,9 +32,7 @@ public class FollowCannibalGoal extends Goal {
      */
     public FollowCannibalGoal(Mob pMob, double pSpeedModifier, float pStopDistance, float pAreaSize) {
         this.mob = pMob;
-        this.followPredicate = (p_25278_) -> {
-            return p_25278_ != null && pMob.getClass() != p_25278_.getClass();
-        };
+        this.followPredicate = Objects::nonNull;
         this.speedModifier = pSpeedModifier;
         this.navigation = pMob.getNavigation();
         this.stopDistance = pStopDistance;
@@ -53,8 +52,10 @@ public class FollowCannibalGoal extends Goal {
         if (!list.isEmpty()) {
             for(Mob mob : list) {
                 if (!mob.isInvisible() && mob.getMobType() == ModMobTypes.CANNIBAL && mob != this.mob) {
-                    this.followingMob = mob;
-                    return true;
+                    if (mob.distanceToSqr(this.mob) > (double)(this.stopDistance * this.stopDistance)) {
+                        this.followingMob = mob;
+                        return true;
+                    }
                 }
             }
         }
@@ -66,7 +67,7 @@ public class FollowCannibalGoal extends Goal {
      * Returns whether an in-progress EntityAIBase should continue executing
      */
     public boolean canContinueToUse() {
-        return this.followingMob != null && !this.navigation.isDone() && this.mob.distanceToSqr(this.followingMob) > (double)(this.stopDistance * this.stopDistance);
+        return this.followingMob != null /*&& !this.navigation.isDone()*/ && this.mob.distanceToSqr(this.followingMob) > (double)(this.stopDistance * this.stopDistance);
     }
 
     /**

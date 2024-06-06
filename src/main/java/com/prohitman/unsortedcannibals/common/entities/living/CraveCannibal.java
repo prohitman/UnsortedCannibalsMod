@@ -4,8 +4,10 @@ import com.google.common.collect.Maps;
 import com.prohitman.unsortedcannibals.common.entities.ModMobTypes;
 import com.prohitman.unsortedcannibals.common.entities.living.goals.CraveAvoidPlayerGoal;
 import com.prohitman.unsortedcannibals.common.entities.living.goals.FollowCannibalGoal;
+import com.prohitman.unsortedcannibals.core.init.ModItems;
 import net.minecraft.Util;
 import net.minecraft.client.resources.sounds.Sound;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -14,6 +16,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -24,23 +27,24 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.animal.Parrot;
-import net.minecraft.world.entity.monster.EnderMan;
-import net.minecraft.world.entity.monster.Spider;
+import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
-public class CraveCannibal extends PathfinderMob implements GeoEntity {
+public class CraveCannibal extends PathfinderMob implements GeoEntity, Enemy {
     private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(Spider.class, EntityDataSerializers.BYTE);
 
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
@@ -61,9 +65,10 @@ public class CraveCannibal extends PathfinderMob implements GeoEntity {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new FollowCannibalGoal(this, 0.7D, 6.0F, 12.0F));
+        this.goalSelector.addGoal(1, new FollowCannibalGoal(this, 0.55D, 8.0F, 12.0F));
         this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 0.5D));
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(4, new CraveCannibal.CraveMeleeAttackGoal(this));
         this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 20, 0.5f));
 
         this.goalSelector.addGoal(9, new CraveAvoidPlayerGoal(this));
@@ -76,6 +81,14 @@ public class CraveCannibal extends PathfinderMob implements GeoEntity {
                 .add(Attributes.ARMOR_TOUGHNESS, 0.1f)
                 .add(Attributes.ATTACK_DAMAGE, 4f)
                 .add(Attributes.ATTACK_KNOCKBACK, 0.5f);
+    }
+
+    @Nullable
+    @Override
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
+        this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(ModItems.SERRATED_SPEAR.get()));
+
+        return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
     }
 
     protected PathNavigation createNavigation(Level pLevel) {
@@ -105,7 +118,7 @@ public class CraveCannibal extends PathfinderMob implements GeoEntity {
 
     @Override
     public void aiStep() {
-        if (this.level().random.nextInt(150) == 0) {
+        if (this.level().random.nextInt(200) == 0) {
             imitateNearbyMobs(this.level(), this);
         }
 
@@ -195,5 +208,15 @@ public class CraveCannibal extends PathfinderMob implements GeoEntity {
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return this.cache;
+    }
+
+    class CraveMeleeAttackGoal extends MeleeAttackGoal {
+        public CraveMeleeAttackGoal(CraveCannibal crave) {
+            super(crave, 1.0D, true);
+        }
+
+        protected double getAttackReachSqr(LivingEntity pAttackTarget) {
+           return super.getAttackReachSqr(pAttackTarget) + 2.0f;
+        }
     }
 }

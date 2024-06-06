@@ -33,6 +33,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         withExistingParent(ModItems.CRAVE_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.YEARN_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.FRENZY_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
 
         //Blocks
         createSingleTextureCrossBlock(ModBlocks.BONE_BARRICADE);

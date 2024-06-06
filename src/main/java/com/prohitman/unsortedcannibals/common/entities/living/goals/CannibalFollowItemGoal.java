@@ -26,8 +26,6 @@ public class CannibalFollowItemGoal extends Goal {
     public boolean canUse() {
         if (!cannibal.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty()) {
             return false;
-        } else if (cannibal.getRandom().nextInt(reducedTickDelay(10)) != 0){
-            return false;
         } else {
             List<ItemEntity> list = cannibal.level().getEntitiesOfClass(ItemEntity.class, cannibal.getBoundingBox().inflate(8.0D, 8.0D, 8.0D), YearnCannibal.ALLOWED_ITEMS);
             return !list.isEmpty() && cannibal.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty();
@@ -41,7 +39,7 @@ public class CannibalFollowItemGoal extends Goal {
         List<ItemEntity> list = cannibal.level().getEntitiesOfClass(ItemEntity.class, cannibal.getBoundingBox().inflate(8.0D, 8.0D, 8.0D), YearnCannibal.ALLOWED_ITEMS);
         ItemStack itemstack = cannibal.getItemBySlot(EquipmentSlot.MAINHAND);
         if (itemstack.isEmpty() && !list.isEmpty()) {
-            cannibal.getNavigation().moveTo(list.get(0), (double)1.2F);
+            cannibal.getNavigation().moveTo(list.get(0), (double)1.015F);
         }
 
     }
@@ -52,7 +50,7 @@ public class CannibalFollowItemGoal extends Goal {
     public void start() {
         List<ItemEntity> list = cannibal.level().getEntitiesOfClass(ItemEntity.class, cannibal.getBoundingBox().inflate(8.0D, 8.0D, 8.0D), YearnCannibal.ALLOWED_ITEMS);
         if (!list.isEmpty()) {
-            cannibal.getNavigation().moveTo(list.get(0), (double)1.2F);
+            cannibal.getNavigation().moveTo(list.get(0), (double)1.015F);
         }
 
     }

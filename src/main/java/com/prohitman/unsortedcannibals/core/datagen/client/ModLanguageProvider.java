@@ -36,6 +36,7 @@ public class ModLanguageProvider extends LanguageProvider {
         addItem(ModItems.SERRATED_SPEARHEAD);
         addItem(ModItems.CRAVE_SPAWN_EGG);
         addItem(ModItems.YEARN_SPAWN_EGG);
+        addItem(ModItems.FRENZY_SPAWN_EGG);
 
         addBlock(ModBlocks.BONE_BARRICADE);
         addBlock(ModBlocks.SHARPENED_BONES);
@@ -50,6 +51,7 @@ public class ModLanguageProvider extends LanguageProvider {
         add( "entity.unsortedcannibals.blow_dart", "Blow Dart");
         add( "entity.unsortedcannibals.crave", "Crave");
         add( "entity.unsortedcannibals.yearn", "Yearn");
+        add( "entity.unsortedcannibals.frenzy", "Frenzy");
 
         add("sounds.unsortedcannibals.death_whistle", "Death Whistle");
         add("sounds.unsortedcannibals.frenzy_hurt", "Frenzy Hurt");

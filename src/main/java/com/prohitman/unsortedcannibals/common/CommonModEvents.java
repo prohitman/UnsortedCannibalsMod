@@ -15,6 +15,7 @@ public class CommonModEvents {
         event.put(ModEntities.DUMMY_CANNIBAL.get(), DummyCannibal.createAttributes().build());
         event.put(ModEntities.CRAVE.get(), CraveCannibal.createAttributes().build());
         event.put(ModEntities.YEARN.get(), CraveCannibal.createAttributes().build());
+        event.put(ModEntities.FRENZY.get(), CraveCannibal.createAttributes().build());
 
     }
 }
