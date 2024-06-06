@@ -69,19 +69,19 @@ public class ClientModEvents {
     }
 
     @SubscribeEvent
-    public static void registerGuiOverlays(RegisterGuiOverlaysEvent event){
+    public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
         event.registerBelowAll("visceral_pain", (gui, guiGraphics, partialTick, screenWidth, screenHeight) -> {
             gui.setupOverlayRenderState(true, false);
-            if (gui.getMinecraft().player.hasEffect(ModEffects.VISCERAL_PAIN.get()))
-            {
+            if (gui.getMinecraft().player.hasEffect(ModEffects.VISCERAL_PAIN.get())) {
                 if (effectStartTime == -1) {
                     effectStartTime = gui.getMinecraft().player.tickCount;
                 }
 
-                int fade_duration = gui.getMinecraft().player.getEffect(ModEffects.VISCERAL_PAIN.get()).getDuration() / 3;
+                int totalDuration = gui.getMinecraft().player.getEffect(ModEffects.VISCERAL_PAIN.get()).getDuration();
+                int fadeDuration = totalDuration / 3;
 
                 long currentTime = gui.getMinecraft().player.tickCount;
-                float alpha = getAlpha(currentTime, partialTick, fade_duration);
+                float alpha = getAlpha(currentTime, partialTick, fadeDuration, totalDuration);
 
                 RenderSystem.disableDepthTest();
                 RenderSystem.depthMask(false);
@@ -90,11 +90,33 @@ public class ClientModEvents {
                 RenderSystem.depthMask(true);
                 RenderSystem.enableDepthTest();
                 guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
-            } else{
+            } else {
                 effectStartTime = -1;
-
             }
         });
+    }
+
+    private static float getAlpha(long currentTime, float partialTicks, int fadeDuration, int totalDuration) {
+        if (effectStartTime == -1) {
+            return 0.0F;
+        }
+
+        long elapsedTime = currentTime - effectStartTime;
+        float totalElapsedTicks = elapsedTime + partialTicks;
+
+        // Fade in
+        if (totalElapsedTicks < fadeDuration) {
+            return totalElapsedTicks / fadeDuration;
+        }
+
+        // Fade out
+        float remainingTime = totalDuration - totalElapsedTicks;
+        if (totalElapsedTicks > fadeDuration*2) {
+            return remainingTime / (float) fadeDuration;
+        }
+
+        // Fully visible
+        return 1.0F;
     }
 
 
@@ -126,18 +148,5 @@ public class ClientModEvents {
         }, ModBlocks.FALL_TRAP.get().asItem());
     }
 
-    private static float getAlpha(long currentTime, float partialTicks, int fade_duration) {
-        if (effectStartTime == -1) {
-            return 0.0F;
-        }
 
-        long elapsedTime = currentTime - effectStartTime;
-        float totalElapsedTicks = elapsedTime + partialTicks;
-
-        if (totalElapsedTicks < fade_duration) {
-            return totalElapsedTicks / fade_duration;
-        } else {
-            return 1.0F;
-        }
-    }
 }
