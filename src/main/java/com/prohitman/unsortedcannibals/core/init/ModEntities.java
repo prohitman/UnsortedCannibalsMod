@@ -3,6 +3,7 @@ package com.prohitman.unsortedcannibals.core.init;
 import com.prohitman.unsortedcannibals.UnsortedCannibalsMod;
 import com.prohitman.unsortedcannibals.common.entities.living.CraveCannibal;
 import com.prohitman.unsortedcannibals.common.entities.living.DummyCannibal;
+import com.prohitman.unsortedcannibals.common.entities.living.YearnCannibal;
 import com.prohitman.unsortedcannibals.common.entities.projectile.BlowDart;
 import com.prohitman.unsortedcannibals.common.entities.projectile.ThrownSpear;
 import net.minecraft.client.particle.FireworkParticles;
@@ -27,6 +28,9 @@ public class ModEntities {
 
     public static final RegistryObject<EntityType<CraveCannibal>> CRAVE = ENTITY_TYPES.register("crave",
             () -> EntityType.Builder.of(CraveCannibal::new, MobCategory.MONSTER).sized(0.82F, 2.68F).clientTrackingRange(20).build("crave"));
+
+    public static final RegistryObject<EntityType<YearnCannibal>> YEARN = ENTITY_TYPES.register("yearn",
+            () -> EntityType.Builder.of(YearnCannibal::new, MobCategory.MONSTER).sized(1.65F, 2.85F).clientTrackingRange(20).build("yearn"));
 
     public static final RegistryObject<EntityType<DummyCannibal>> DUMMY_CANNIBAL = ENTITY_TYPES.register("dummy_cannibal",
             () -> EntityType.Builder.of(DummyCannibal::new, MobCategory.CREATURE).sized(1.5F, 1.5F).clientTrackingRange(4).updateInterval(20).build("dummy_cannibal"));

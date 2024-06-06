@@ -36,5 +36,6 @@ public class ModItems {
     public static final RegistryObject<Item> DEATH_WHISTLE = ITEMS.register("death_whistle", () -> new DeathWhistleItem(new Item.Properties().rarity(Rarity.EPIC)));
 
     public static final RegistryObject<Item> CRAVE_SPAWN_EGG = ITEMS.register("crave_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.CRAVE, 8880765, 12999733, new Item.Properties()));
+    public static final RegistryObject<Item> YEARN_SPAWN_EGG = ITEMS.register("yearn_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.YEARN, 8880765, 2302754, new Item.Properties()));
 
 }

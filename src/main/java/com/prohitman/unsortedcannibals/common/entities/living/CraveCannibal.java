@@ -61,7 +61,7 @@ public class CraveCannibal extends PathfinderMob implements GeoEntity {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(3, new FollowCannibalGoal(this, 0.25D, 4.0F, 10.0F));
+        this.goalSelector.addGoal(1, new FollowCannibalGoal(this, 0.7D, 6.0F, 12.0F));
         this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 0.5D));
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 20, 0.5f));
@@ -108,7 +108,7 @@ public class CraveCannibal extends PathfinderMob implements GeoEntity {
         if (this.level().random.nextInt(150) == 0) {
             imitateNearbyMobs(this.level(), this);
         }
-        
+
         super.aiStep();
     }
 
