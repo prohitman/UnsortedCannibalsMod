@@ -1,5 +1,5 @@
 {
-	"parent": "block/block",
+	"parent": "block/thin_block",
 	"texture_size": [32, 32],
 	"render_type": "minecraft:cutout_mipped",
 	"ambientocclusion": false,
@@ -51,6 +51,13 @@
 			}
 		}
 	],
+	"display": {
+		"gui": {
+			"rotation": [ 30, 225, 0 ],
+			"translation": [ 0, 1, 0],
+			"scale":[ 0.625, 0.625, 0.625 ]
+		}
+	},
 	"groups": [
 		{
 			"name": "group",
