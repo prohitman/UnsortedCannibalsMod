@@ -2,8 +2,10 @@ package com.prohitman.unsortedcannibals.common.entities.projectile;
 
 import com.prohitman.unsortedcannibals.core.init.ModEntities;
 import com.prohitman.unsortedcannibals.core.init.ModItems;
+import com.prohitman.unsortedcannibals.core.init.ModSounds;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -15,6 +17,7 @@ import net.minecraft.world.entity.projectile.SpectralArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -33,6 +36,11 @@ public class BlowDart extends AbstractArrow implements GeoAnimatable {
 
     public BlowDart(Level pLevel, double pX, double pY, double pZ) {
         super(ModEntities.BLOW_DART.get(), pX, pY, pZ, pLevel);
+    }
+
+    @Override
+    protected @NotNull SoundEvent getDefaultHitGroundSoundEvent() {
+        return super.getDefaultHitGroundSoundEvent();
     }
 
     @Override

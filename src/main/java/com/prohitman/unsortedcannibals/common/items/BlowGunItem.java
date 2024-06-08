@@ -4,6 +4,7 @@ import com.prohitman.unsortedcannibals.client.renderer.item.BlowgunItemRenderer;
 import com.prohitman.unsortedcannibals.client.renderer.item.SpearItemRenderer;
 import com.prohitman.unsortedcannibals.common.entities.projectile.BlowDart;
 import com.prohitman.unsortedcannibals.core.init.ModItems;
+import com.prohitman.unsortedcannibals.core.init.ModSounds;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -76,7 +77,7 @@ public class BlowGunItem extends ProjectileWeaponItem implements Vanishable, Geo
                         pLevel.addFreshEntity(throwntrident);
                     }
 
-                    pLevel.playSound((Player)null, player.getX(), player.getY(), player.getZ(), SoundEvents.ARROW_SHOOT, SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + f * 0.5F);
+                    pLevel.playSound((Player)null, player.getX(), player.getY(), player.getZ(), ModSounds.BLOWGUN_SHOOT.get(), SoundSource.PLAYERS, 1.35F, 1.0F /*/ (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + f * 0.5F*/);
                     if (!flag1 && !player.getAbilities().instabuild) {
                         itemstack.shrink(1);
                         if (itemstack.isEmpty()) {

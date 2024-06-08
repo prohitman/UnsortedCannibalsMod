@@ -40,6 +40,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 @Mod.EventBusSubscriber(modid = UnsortedCannibalsMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientModEvents {
     private static long effectStartTime = -1;
+    private static int totalDuration = -1;
+    private static int fadeDuration = -1;
 
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
@@ -76,16 +78,17 @@ public class ClientModEvents {
     public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
         event.registerBelowAll("visceral_pain", (gui, guiGraphics, partialTick, screenWidth, screenHeight) -> {
             gui.setupOverlayRenderState(true, false);
+
             if (gui.getMinecraft().player.hasEffect(ModEffects.VISCERAL_PAIN.get())) {
                 if (effectStartTime == -1) {
                     effectStartTime = gui.getMinecraft().player.tickCount;
+
+                    totalDuration = gui.getMinecraft().player.getEffect(ModEffects.VISCERAL_PAIN.get()).getDuration();
+                    fadeDuration = totalDuration / 3;
                 }
 
-                int totalDuration = gui.getMinecraft().player.getEffect(ModEffects.VISCERAL_PAIN.get()).getDuration();
-                int fadeDuration = totalDuration / 3;
-
                 long currentTime = gui.getMinecraft().player.tickCount;
-                float alpha = getAlpha(currentTime, partialTick, fadeDuration, totalDuration);
+                float alpha = getAlpha(currentTime, partialTick);
 
                 RenderSystem.disableDepthTest();
                 RenderSystem.depthMask(false);
@@ -96,31 +99,34 @@ public class ClientModEvents {
                 guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
             } else {
                 effectStartTime = -1;
+                totalDuration = -1;
+                fadeDuration = -1;
             }
         });
     }
 
-    private static float getAlpha(long currentTime, float partialTicks, int fadeDuration, int totalDuration) {
-        if (effectStartTime == -1) {
+    private static float getAlpha(long currentTime, float partialTicks) {
+        if (effectStartTime == -1 || totalDuration == -1 || fadeDuration == -1) {
             return 0.0F;
         }
 
         long elapsedTime = currentTime - effectStartTime;
         float totalElapsedTicks = elapsedTime + partialTicks;
 
-        // Fade in
         if (totalElapsedTicks < fadeDuration) {
             return totalElapsedTicks / fadeDuration;
         }
 
-        // Fade out
-        float remainingTime = totalDuration - totalElapsedTicks;
-        if (totalElapsedTicks > fadeDuration*2) {
-            return remainingTime / (float) fadeDuration;
+        if (totalElapsedTicks < totalDuration - fadeDuration) {
+            return 1.0F;
         }
 
-        // Fully visible
-        return 1.0F;
+        if (totalElapsedTicks <= totalDuration) {
+            float fadeOutElapsedTicks = totalElapsedTicks - (totalDuration - fadeDuration);
+            return 1.0F - (fadeOutElapsedTicks / fadeDuration);
+        }
+
+        return 0.0F;
     }
 
 

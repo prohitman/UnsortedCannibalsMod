@@ -6,6 +6,7 @@ import com.prohitman.unsortedcannibals.common.entities.living.goals.CraveAvoidPl
 import com.prohitman.unsortedcannibals.common.entities.living.goals.FollowCannibalGoal;
 import com.prohitman.unsortedcannibals.core.init.ModEffects;
 import com.prohitman.unsortedcannibals.core.init.ModItems;
+import com.prohitman.unsortedcannibals.core.init.ModSounds;
 import net.minecraft.Util;
 import net.minecraft.client.resources.sounds.Sound;
 import net.minecraft.nbt.CompoundTag;
@@ -18,6 +19,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -74,18 +76,23 @@ public class CraveCannibal extends PathfinderMob implements GeoEntity, Enemy {
         this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 0.5D));
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(4, new CraveCannibal.CraveMeleeAttackGoal(this));
-        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Camel.class, 10, true, false, (livingEntity -> true)));
+        this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Mob.class, 0, true, false, (livingEntity -> {
+            if(livingEntity instanceof Mob mob){
+                return mob.getMobType() != ModMobTypes.CANNIBAL;
+            }
+            return false;
+        })));
         this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 20, 0.5f));
 
         this.goalSelector.addGoal(9, new CraveAvoidPlayerGoal(this));
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createLivingAttributes().add(Attributes.MAX_HEALTH, 20D)
+        return Animal.createLivingAttributes().add(Attributes.MAX_HEALTH, 30D)
                 .add(Attributes.MOVEMENT_SPEED, 0.4D)
                 .add(Attributes.FOLLOW_RANGE, 24D)
                 .add(Attributes.ARMOR_TOUGHNESS, 0.1f)
-                .add(Attributes.ATTACK_DAMAGE, 4f)
+                .add(Attributes.ATTACK_DAMAGE, 8f)
                 .add(Attributes.ATTACK_KNOCKBACK, 0.5f);
     }
 
@@ -160,6 +167,29 @@ public class CraveCannibal extends PathfinderMob implements GeoEntity, Enemy {
         } else {
             return false;
         }
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return ModSounds.CRAVE_IDLE.get();
+    }
+
+    @Override
+    public int getAmbientSoundInterval() {
+        return 500;
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getDeathSound() {
+        return ModSounds.CRAVE_DEATH.get();
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
+        return ModSounds.CRAVE_HURT.get();
     }
 
     public static float getPitch(RandomSource pRandom) {

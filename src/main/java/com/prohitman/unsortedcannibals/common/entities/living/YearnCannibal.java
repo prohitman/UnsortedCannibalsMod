@@ -32,6 +32,8 @@ import net.minecraft.world.entity.animal.camel.Camel;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.CaveSpider;
 import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.monster.Pillager;
+import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -103,25 +105,30 @@ public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
         this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 0.5D));
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 5, 0.25f));
-        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Camel.class, 10, true, false, (livingEntity -> true)));
-        this.goalSelector.addGoal(5, new MoveToBlockGoal(this, 0.75F, 10, 3) {
+        this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Mob.class, 0, true, false, (livingEntity -> {
+            if(livingEntity instanceof Mob mob){
+                return mob.getMobType() != ModMobTypes.CANNIBAL;
+            }
+            return false;
+        })));
+        this.goalSelector.addGoal(7, new MoveToBlockGoal(this, 0.5F, 10, 3) {
             @Override
             protected boolean isValidTarget(LevelReader pLevel, BlockPos pPos) {
                 BlockState state = pLevel.getBlockState(pPos);
-                return state.getLightEmission(pLevel, pPos) > 4;
+                return state.getLightEmission(pLevel, pPos) > 4 && this.mob.distanceToSqr(pPos.getX(), pPos.getY(), pPos.getZ()) > 16;
             }
         });
-        this.goalSelector.addGoal(7, new TemptGoal(this, 0.85D, FOOD_ITEMS, false));
-        this.goalSelector.addGoal(7, new CannibalFollowItemGoal(this));
+        this.goalSelector.addGoal(9, new TemptGoal(this, 0.85D, FOOD_ITEMS, false));
+        this.goalSelector.addGoal(9, new CannibalFollowItemGoal(this));
 
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createLivingAttributes().add(Attributes.MAX_HEALTH, 50D)
+        return Animal.createLivingAttributes().add(Attributes.MAX_HEALTH, 100D)
                 .add(Attributes.MOVEMENT_SPEED, 0.25D)
                 .add(Attributes.FOLLOW_RANGE, 24D)
                 .add(Attributes.ARMOR_TOUGHNESS, 6f)
-                .add(Attributes.ATTACK_DAMAGE, 10f)
+                .add(Attributes.ATTACK_DAMAGE, 20f)
                 .add(Attributes.ATTACK_KNOCKBACK, 0.5f);
     }
 
@@ -161,7 +168,7 @@ public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
 
     private void addEatingParticles() {
         if (this.getEatCounter() % 5 == 0) {
-            this.playSound(SoundEvents.PANDA_EAT, 0.5F + 0.5F * (float)this.random.nextInt(2), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+            this.playSound(ModSounds.YEARN_EATING.get(), 0.2F + 0.1F * (float)this.random.nextInt(2), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
 
             for(int i = 0; i < 6; ++i) {
                 Vec3 vec3 = new Vec3(((double)this.random.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, ((double)this.random.nextFloat() - 0.5D) * 0.1D);
@@ -224,7 +231,7 @@ public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
 
     @Override
     public int getAmbientSoundInterval() {
-        return 200;
+        return 400;
     }
 
     @Nullable

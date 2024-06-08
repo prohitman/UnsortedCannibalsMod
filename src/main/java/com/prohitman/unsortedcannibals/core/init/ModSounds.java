@@ -17,6 +17,21 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> YEARN_IDLE = registerSoundEvents("yearn_idle");
     public static final RegistryObject<SoundEvent> YEARN_HURT = registerSoundEvents("yearn_hurt");
     public static final RegistryObject<SoundEvent> YEARN_DEATH = registerSoundEvents("yearn_death");
+    public static final RegistryObject<SoundEvent> LIVE_BAIT = registerSoundEvents("live_bait");
+    public static final RegistryObject<SoundEvent> BLOWGUN_SHOOT = registerSoundEvents("blowgun_shoot");
+    public static final RegistryObject<SoundEvent> BLOW_DART_HIT = registerSoundEvents("blow_dart_hit");
+    public static final RegistryObject<SoundEvent> SINISTER_SKULL = registerSoundEvents("sinister_skull");
+    public static final RegistryObject<SoundEvent> YEARN_EATING = registerSoundEvents("yearn_eating");
+    public static final RegistryObject<SoundEvent> CRAVE_IDLE = registerSoundEvents("crave_idle");
+    public static final RegistryObject<SoundEvent> CRAVE_HURT = registerSoundEvents("crave_hurt");
+    public static final RegistryObject<SoundEvent> CRAVE_DEATH = registerSoundEvents("crave_death");
+    public static final RegistryObject<SoundEvent> FRENZY_IDLE = registerSoundEvents("frenzy_idle");
+    public static final RegistryObject<SoundEvent> FRENZY_DEATH = registerSoundEvents("frenzy_death");
+
+    public static final RegistryObject<SoundEvent> BONE_CRACK = registerSoundEvents("bone_crack");
+    public static final RegistryObject<SoundEvent> SPEAR_THROW = registerSoundEvents("spear_throw");
+    public static final RegistryObject<SoundEvent> SPEAR_HIT = registerSoundEvents("spear_hit");
+    public static final RegistryObject<SoundEvent> CANNIBAL_AMBIENT = registerSoundEvents("cannibal_ambient");
 
     private static RegistryObject<SoundEvent> registerSoundEvents(String name) {
         return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(UnsortedCannibalsMod.MODID, name)));

@@ -4,10 +4,13 @@ import com.prohitman.unsortedcannibals.UnsortedCannibalsMod;
 import com.prohitman.unsortedcannibals.common.items.armor.BoneArmorItem;
 import com.prohitman.unsortedcannibals.core.init.ModEffects;
 import com.prohitman.unsortedcannibals.core.init.ModItems;
+import com.prohitman.unsortedcannibals.core.init.ModSounds;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -31,6 +34,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -59,6 +63,12 @@ public class CommonForgeEvents {
             if (entity.getDeltaMovement().y > 0) {
                 entity.setDeltaMovement(entity.getDeltaMovement().multiply(1, 0.05D, 1));
             }
+        }
+        if(entity instanceof Player player && entity.level().getBiome(entity.blockPosition()).is(BiomeTags.IS_FOREST)){
+            if(entity.level().random.nextFloat() < 0.0005f){
+                player.playSound(ModSounds.CANNIBAL_AMBIENT.get(), 0.5F + entity.level().random.nextInt(3)*0.2F, 1);
+            }
+
         }
     }
 
@@ -94,8 +104,10 @@ public class CommonForgeEvents {
     }
 
     @SubscribeEvent
-    public static void livingAttackEvent(LivingAttackEvent event){
-
+    public static void onLiveBaitExpire(MobEffectEvent.Expired event){
+        if(event.getEffectInstance().getEffect() == ModEffects.LIVE_BAIT.get()){
+            event.getEntity().level().playSound(null, event.getEntity().blockPosition(), ModSounds.LIVE_BAIT.get(), SoundSource.HOSTILE, 1.3F, 1.3F);
+        }
     }
 
 }

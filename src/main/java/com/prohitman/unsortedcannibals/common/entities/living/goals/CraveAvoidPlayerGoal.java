@@ -29,7 +29,7 @@ public class CraveAvoidPlayerGoal extends AvoidEntityGoal<Player> {
 
 
     public CraveAvoidPlayerGoal(CraveCannibal pMob) {
-        super(pMob, Player.class, 10, 1.25f, 1.25F);
+        super(pMob, Player.class, 15, 1.25f, 1.25F);
 
         //this.cannibal = pMob;
     }

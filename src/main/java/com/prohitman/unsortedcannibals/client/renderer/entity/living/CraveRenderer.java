@@ -12,9 +12,11 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EndermanRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import software.bernie.example.client.renderer.entity.GremlinRenderer;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.renderer.DynamicGeoEntityRenderer;
@@ -26,6 +28,7 @@ import javax.annotation.Nullable;
 public class CraveRenderer extends DynamicGeoEntityRenderer<CraveCannibal> {
     private static final String RIGHT_HAND = "RArm";
     protected ItemStack mainHandItem;
+    private static final RenderType CRAVE_EYES = RenderType.eyes(new ResourceLocation(UnsortedCannibalsMod.MODID, "textures/entity/crave_glow_layer.png"));
 
 
     public CraveRenderer(EntityRendererProvider.Context renderManager) {
@@ -63,9 +66,19 @@ public class CraveRenderer extends DynamicGeoEntityRenderer<CraveCannibal> {
 
                 super.renderStackForBone(poseStack, bone, stack, animatable, bufferSource, partialTick, packedLight, packedOverlay);
             }
+
+            /*@Override
+            public void render(PoseStack poseStack, CraveCannibal animatable, BakedGeoModel bakedModel, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay) {
+                VertexConsumer vertexconsumer = bufferSource.getBuffer(CRAVE_EYES);
+
+                getRenderer().reRender(getDefaultBakedModel(animatable), poseStack, bufferSource, animatable, CRAVE_EYES, vertexconsumer, partialTick, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+
+                super.render(poseStack, animatable, bakedModel, renderType, bufferSource, buffer, partialTick, packedLight, packedOverlay);
+
+            }*/
         });
 
-        addRenderLayer(new CraveGlowLayerRenderer(this));
+        //addRenderLayer(new CraveGlowLayerRenderer(this));
 
     }
 

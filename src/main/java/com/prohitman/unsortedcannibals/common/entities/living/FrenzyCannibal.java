@@ -8,10 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -52,16 +49,20 @@ public class FrenzyCannibal extends PathfinderMob implements GeoEntity, RangedAt
         this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 0.5D));
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 5, 0.25f));
-        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Camel.class, 10, true, false, (livingEntity -> true)));
-
+        this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Mob.class, 0, true, false, (livingEntity -> {
+            if(livingEntity instanceof Mob mob){
+                return mob.getMobType() != ModMobTypes.CANNIBAL;
+            }
+            return false;
+        })));
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createLivingAttributes().add(Attributes.MAX_HEALTH, 15D)
+        return Animal.createLivingAttributes().add(Attributes.MAX_HEALTH, 20D)
                 .add(Attributes.MOVEMENT_SPEED, 0.5D)
                 .add(Attributes.FOLLOW_RANGE, 30D)
                 .add(Attributes.ARMOR_TOUGHNESS, 1f)
-                .add(Attributes.ATTACK_DAMAGE, 4f)
+                .add(Attributes.ATTACK_DAMAGE, 5f)
                 .add(Attributes.ATTACK_KNOCKBACK, 0.25f);
     }
 
@@ -88,6 +89,10 @@ public class FrenzyCannibal extends PathfinderMob implements GeoEntity, RangedAt
         return ModSounds.FRENZY_HURT.get();
     }
 
+    @Override
+    protected boolean shouldDespawnInPeaceful() {
+        return true;
+    }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
@@ -108,7 +113,7 @@ public class FrenzyCannibal extends PathfinderMob implements GeoEntity, RangedAt
         double d3 = pTarget.getZ() - this.getZ();
         double d4 = Math.sqrt(d1 * d1 + d3 * d3) * (double)0.2F;
         dart.shoot(d1, d2 + d4, d3, 1.75F, 12.0F);
-        this.playSound(SoundEvents.ARROW_SHOOT, 1.0F, 0.4F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
+        this.playSound(ModSounds.BLOWGUN_SHOOT.get(), 1.35F, 1/*0.4F / (this.getRandom().nextFloat() * 0.4F + 0.8F)*/);
         this.level().addFreshEntity(dart);
     }
 }

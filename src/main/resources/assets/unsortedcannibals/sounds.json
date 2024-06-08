@@ -1,4 +1,99 @@
-{
+  {
+  "cannibal_ambient": {
+    "subtitles": "sounds.unsortedcannibals.cannibal_ambient",
+    "sounds": [
+      "unsortedcannibals:tree_crack_1",
+      "unsortedcannibals:tree_crack_2",
+      "unsortedcannibals:owl_1",
+      "unsortedcannibals:owl_2"
+    ]
+  },
+  "frenzy_idle": {
+    "subtitles": "sounds.unsortedcannibals.frenzy_idle",
+    "sounds": [
+    ]
+  },
+  "frenzy_death": {
+    "subtitles": "sounds.unsortedcannibals.frenzy_death",
+    "sounds": [
+    ]
+  },
+  "crave_idle": {
+    "subtitles": "sounds.unsortedcannibals.crave_idle",
+    "sounds": [
+      {
+        "name": "unsortedcannibals:crave_idle",
+        "volume": 0.125
+      }
+    ]
+  },
+  "crave_hurt": {
+    "subtitles": "sounds.unsortedcannibals.crave_hurt",
+    "sounds": [
+
+      {
+        "name": "unsortedcannibals:crave_hurt",
+        "volume": 0.25
+      }
+    ]
+  },
+  "crave_death": {
+    "subtitles": "sounds.unsortedcannibals.crave_death",
+    "sounds": [
+      {
+        "name": "unsortedcannibals:crave_death",
+        "volume": 0.25
+      }
+    ]
+  },
+  "spear_throw": {
+    "subtitles": "sounds.unsortedcannibals.spear_throw",
+    "sounds": [
+      "unsortedcannibals:spear_throw"
+    ]
+  },
+    "spear_hit": {
+    "subtitles": "sounds.unsortedcannibals.spear_hit",
+    "sounds": [
+      "unsortedcannibals:spear_hit"
+    ]
+  },
+  "bone_crack": {
+    "subtitles": "sounds.unsortedcannibals.bone_crack",
+    "sounds": [
+      "unsortedcannibals:bone_crack"
+    ]
+  },
+  "yearn_eating": {
+    "subtitles": "sounds.unsortedcannibals.yearn_eating",
+    "sounds": [
+      "unsortedcannibals:yearn_eating"
+    ]
+  },
+  "sinister_skull": {
+    "subtitles": "sounds.unsortedcannibals.sinister_skull",
+    "sounds": [
+      "unsortedcannibals:sinister_skull"
+    ]
+  },
+  "blow_dart_hit": {
+    "subtitles": "sounds.unsortedcannibals.blow_dart_hit",
+    "sounds": [
+      "unsortedcannibals:blow_dart_hit"
+    ]
+  },
+  "blowgun_shoot": {
+    "subtitles": "sounds.unsortedcannibals.blowgun_shoot",
+    "sounds": [
+      "unsortedcannibals:blowgun_shoot"
+    ]
+  },
+  "live_bait": {
+    "subtitles": "sounds.unsortedcannibals.live_bait",
+    "sounds": [
+      "unsortedcannibals:live_bait"
+    ]
+  },
   "death_whistle": {
     "subtitles": "sounds.unsortedcannibals.death_whistle",
     "sounds": [
