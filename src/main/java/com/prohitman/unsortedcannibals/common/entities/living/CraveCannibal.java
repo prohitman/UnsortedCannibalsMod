@@ -28,18 +28,22 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
+import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.animal.Parrot;
 import net.minecraft.world.entity.animal.camel.Camel;
-import net.minecraft.world.entity.monster.*;
+import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.monster.Pillager;
 import net.minecraft.world.entity.monster.piglin.PiglinBrute;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.pathfinder.Path;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -47,13 +51,16 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
-public class CraveCannibal extends PathfinderMob implements GeoEntity, Enemy {
-    private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(Spider.class, EntityDataSerializers.BYTE);
-
+public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enemy {
+    private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(CraveCannibal.class, EntityDataSerializers.BYTE);
+    private static final EntityDataAccessor<Boolean> IS_ALONE = SynchedEntityData.defineId(CraveCannibal.class, EntityDataSerializers.BOOLEAN);
+    private static final Predicate<Mob> CANNIBAL_PREDICATE =
+            mob -> mob != null && mob.getMobType() == ModMobTypes.CANNIBAL;
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     static final Map<Integer, SoundEvent> MOB_SOUND_MAP = Util.make(Maps.newHashMap(), (map) -> {
         map.put(0, SoundEvents.PIG_AMBIENT);
@@ -68,30 +75,40 @@ public class CraveCannibal extends PathfinderMob implements GeoEntity, Enemy {
         super(pEntityType, pLevel);
     }
 
+    public boolean isAlone() {
+        return this.entityData.get(IS_ALONE);
+    }
+
+    private void setAlone(boolean is_lonely) {
+        this.entityData.set(IS_ALONE, is_lonely);
+    }
 
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new FollowCannibalGoal(this, 0.55D, 10.0F, 25f));
+        this.goalSelector.addGoal(1, new FollowCannibalGoal(this, 0.55D, 6.0F, 25f));
         this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 0.5D));
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(4, new CraveCannibal.CraveMeleeAttackGoal(this));
         this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Mob.class, 0, true, false, (livingEntity -> {
+            if(livingEntity instanceof Player){
+                return !this.isAlone();
+            }
             if(livingEntity instanceof Mob mob){
                 return mob.getMobType() != ModMobTypes.CANNIBAL;
             }
             return false;
         })));
-        this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 20, 0.5f));
+        this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 50, 0.75f));
         this.targetSelector.addGoal(9, new NearestAttackableTargetGoal<>(this, Player.class, 0, false, false, (livingEntity -> {
-            return !livingEntity.isSpectator() && !((Player)livingEntity).isCreative();
+            return !livingEntity.isSpectator() && !((Player)livingEntity).isCreative() && !this.isAlone();
         })));
-        this.goalSelector.addGoal(9, new CraveAvoidPlayerGoal(this));
+        //this.goalSelector.addGoal(9, new CraveAvoidPlayerGoal(this));
     }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createLivingAttributes().add(Attributes.MAX_HEALTH, 30D)
-                .add(Attributes.MOVEMENT_SPEED, 0.4D)
+                .add(Attributes.MOVEMENT_SPEED, 0.45D)
                 .add(Attributes.FOLLOW_RANGE, 40D)
                 .add(Attributes.ARMOR_TOUGHNESS, 0.1f)
                 .add(Attributes.ATTACK_DAMAGE, 8f)
@@ -101,15 +118,17 @@ public class CraveCannibal extends PathfinderMob implements GeoEntity, Enemy {
     @Nullable
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
+        SpawnGroupData spawngroupdata = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
+
         RandomSource randomsource = pLevel.getRandom();
 
         this.populateDefaultEquipmentSlots(randomsource, pDifficulty);
 
-        return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
+        return spawngroupdata;
     }
 
     protected void populateDefaultEquipmentSlots(RandomSource pRandom, DifficultyInstance pDifficulty) {
-        super.populateDefaultEquipmentSlots(pRandom, pDifficulty);
+
         this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(ModItems.SERRATED_SPEAR.get()));
     }
 
@@ -120,6 +139,7 @@ public class CraveCannibal extends PathfinderMob implements GeoEntity, Enemy {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_FLAGS_ID, (byte)0);
+        this.entityData.define(IS_ALONE, false);
     }
 
     @Override
@@ -136,6 +156,43 @@ public class CraveCannibal extends PathfinderMob implements GeoEntity, Enemy {
             this.setClimbing(this.horizontalCollision);
         }
 
+        List<PathfinderMob> list = this.level().getEntitiesOfClass(PathfinderMob.class, this.getBoundingBox().inflate(20.0D), CANNIBAL_PREDICATE);
+        list.remove(this);
+        if(list.isEmpty()){
+            this.setAlone(true);
+            if(this.getTarget() instanceof Player){
+                this.setTarget(null);
+                this.setAggressive(false);
+                /*Vec3 vec3 = DefaultRandomPos.getPosAway(this, 16, 7, player.position());
+                if (vec3 != null && player.distanceToSqr(vec3.x, vec3.y, vec3.z) >= player.distanceToSqr(this)) {
+                    Path path = this.getNavigation().createPath(vec3.x, vec3.y, vec3.z, 0);
+                    if(path != null){
+                        this.getNavigation().moveTo(path, 1.1);
+                    }
+                }*/
+            }
+        } else {
+            this.setAlone(false);
+        }
+
+        List<Player> players = this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(20.0D), EntitySelector.NO_CREATIVE_OR_SPECTATOR);
+
+        if(!players.isEmpty() && this.isAlone()){
+            for(Player player : players){
+                Vec3 vec3 = DefaultRandomPos.getPosAway(this, 16, 7, player.position());
+                if (vec3 != null && player.distanceToSqr(vec3.x, vec3.y, vec3.z) >= player.distanceToSqr(this)) {
+                    Path path = this.getNavigation().createPath(vec3.x, vec3.y, vec3.z, 0);
+                    if(path != null){
+                        this.getNavigation().moveTo(path, 1.1);
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public boolean canAttack(LivingEntity pTarget) {
+        return (!(pTarget instanceof Player) || !this.isAlone()) && super.canAttack(pTarget);
     }
 
     @Override
@@ -186,7 +243,7 @@ public class CraveCannibal extends PathfinderMob implements GeoEntity, Enemy {
 
     @Override
     public int getAmbientSoundInterval() {
-        return 500;
+        return 600;
     }
 
     @Nullable

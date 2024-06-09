@@ -39,12 +39,15 @@ public class CraveAvoidPlayerGoal extends AvoidEntityGoal<Player> {
             return true;
         }), avoidEntityTargeting, this.mob, this.mob.getX(), this.mob.getY(), this.mob.getZ());
 
-        List<Mob> list = mob.level().getEntitiesOfClass(Mob.class, mob.getBoundingBox().inflate(20.0D));
+        /*List<Mob> list = mob.level().getEntitiesOfClass(Mob.class, mob.getBoundingBox().inflate(20.0D));
 
         for(Mob mob1 : list){
             if(mob1.getMobType() == ModMobTypes.CANNIBAL && mob1 != mob){
                 return false;
             }
+        }*/
+        if(!((CraveCannibal)this.mob).isAlone()){
+            return false;
         }
 
         if (this.toAvoid == null) {
@@ -74,12 +77,16 @@ public class CraveAvoidPlayerGoal extends AvoidEntityGoal<Player> {
      * Returns whether an in-progress EntityAIBase should continue executing
      */
     public boolean canContinueToUse() {
-        List<Mob> list = mob.level().getEntitiesOfClass(Mob.class, mob.getBoundingBox().inflate(20.0D), CANNIBAL_PREDICATE);
+        /*List<Mob> list = mob.level().getEntitiesOfClass(Mob.class, mob.getBoundingBox().inflate(20.0D), CANNIBAL_PREDICATE);
 
         for(Mob mob1 : list){
             if(mob1.getMobType() == ModMobTypes.CANNIBAL){
                 return false;
             }
+        }
+        */
+        if(!((CraveCannibal)this.mob).isAlone()){
+            return false;
         }
 
         return !this.pathNav.isDone();

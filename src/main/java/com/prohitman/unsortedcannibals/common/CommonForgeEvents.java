@@ -11,6 +11,7 @@ import com.prohitman.unsortedcannibals.core.init.ModSounds;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -19,25 +20,20 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.behavior.AnimalMakeLove;
 import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.animal.Ocelot;
-import net.minecraft.world.entity.monster.AbstractIllager;
-import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.entity.monster.Enemy;
-import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.npc.Npc;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
@@ -124,8 +120,8 @@ public class CommonForgeEvents {
             RandomSource random = level.random;
             int craveSize = 3 + random.nextInt(3);
             int frenzySize = 2 + random.nextInt(2);
-            int minDistance = 4;
-            int spawnRadius = 15;
+            int minDistance = 7;
+            int spawnRadius = 13;
 
             level.playSound(null, playerPos, ModSounds.LIVE_BAIT.get(), SoundSource.HOSTILE, 1.3F, 1.3F);
 
@@ -143,9 +139,9 @@ public class CommonForgeEvents {
         PathfinderMob cannibal;
         if (isCrave) {
             cannibal = ModEntities.CRAVE.get().create(level);
-            if (cannibal != null) {
-                cannibal.setItemSlot(EquipmentSlot.MAINHAND, ModItems.SERRATED_SPEAR.get().getDefaultInstance());
-            }
+            //if (cannibal != null) {
+             //   cannibal.setItemSlot(EquipmentSlot.MAINHAND, ModItems.SERRATED_SPEAR.get().getDefaultInstance());
+            //}
         } else {
             cannibal = ModEntities.FRENZY.get().create(level);
         }
@@ -170,7 +166,9 @@ public class CommonForgeEvents {
                     cannibal.setTarget(target);
                 }
             }
-
+            if(!level.isClientSide){
+                cannibal.finalizeSpawn((ServerLevel) level, level.getCurrentDifficultyAt(cannibal.blockPosition()), MobSpawnType.EVENT, null, null);
+            }
             level.addFreshEntity(cannibal);
         }
     }

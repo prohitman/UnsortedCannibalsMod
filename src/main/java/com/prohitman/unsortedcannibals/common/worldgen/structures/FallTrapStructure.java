@@ -7,7 +7,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.NoiseColumn;
 import net.minecraft.world.level.biome.FeatureSorter;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.WorldGenerationContext;
 import net.minecraft.world.level.levelgen.heightproviders.HeightProvider;
@@ -85,15 +87,24 @@ public class FallTrapStructure extends Structure {
      */
     private static boolean extraSpawningChecks(Structure.GenerationContext context) {
         // Grabs the chunk position we are at
-        ChunkPos chunkpos = context.chunkPos();
+        ChunkPos chunkPos = context.chunkPos();
+
+        BlockPos blockPos = new BlockPos(chunkPos.getMinBlockX(), 0, chunkPos.getMinBlockZ());
+        int landHeight = context.chunkGenerator().getFirstOccupiedHeight(blockPos.getX(), blockPos.getZ(), Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState());
+        NoiseColumn columnOfBlocks = context.chunkGenerator().getBaseColumn(blockPos.getX(), blockPos.getZ(), context.heightAccessor(), context.randomState());
+        BlockState topBlock = columnOfBlocks.getBlock(blockPos.getY() + landHeight);
+
+        if(!topBlock.getFluidState().isEmpty()) {
+            return false;
+        }
 
         // Checks to make sure our structure does not spawn above land that's higher than y = 150
         // to demonstrate how this method is good for checking extra conditions for spawning
 
         return context.chunkGenerator().getFirstOccupiedHeight(
-                chunkpos.getMinBlockX(),
-                chunkpos.getMinBlockZ(),
-                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                chunkPos.getMinBlockX(),
+                chunkPos.getMinBlockZ(),
+                Heightmap.Types.OCEAN_FLOOR_WG,
                 context.heightAccessor(),
                 context.randomState()) < 150;
     }

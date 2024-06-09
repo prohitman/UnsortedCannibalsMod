@@ -45,11 +45,11 @@ public class FrenzyCannibal extends PathfinderMob implements GeoEntity, RangedAt
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new RangedFrenzyAttackGoal<>(this, 1.1D, 12, 8.5F));
-        this.goalSelector.addGoal(1, new FollowCannibalGoal(this, 0.65D, 8.0F, 12.0F));
+        //this.goalSelector.addGoal(1, new FollowCannibalGoal(this, 0.65D, 8.0F, 12.0F));
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this, FrenzyCannibal.class, YearnCannibal.class, CraveCannibal.class));
         this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 0.5D));
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 5, 0.25f));
+        this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 25, 0.35f));
         this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Mob.class, 0, true, false, (livingEntity -> {
             if(livingEntity instanceof Mob mob){
                 return mob.getMobType() != ModMobTypes.CANNIBAL;

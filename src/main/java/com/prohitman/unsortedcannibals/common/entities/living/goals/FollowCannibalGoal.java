@@ -1,6 +1,7 @@
 package com.prohitman.unsortedcannibals.common.entities.living.goals;
 
 import com.prohitman.unsortedcannibals.common.entities.ModMobTypes;
+import com.prohitman.unsortedcannibals.common.entities.living.PatrollingCannibal;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.control.LookControl;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -16,10 +17,10 @@ import java.util.Objects;
 import java.util.function.Predicate;
 
 public class FollowCannibalGoal extends Goal {
-    private final Mob mob;
-    private final Predicate<Mob> followPredicate;
+    private final PatrollingCannibal mob;
+    private final Predicate<PatrollingCannibal> followPredicate;
     @Nullable
-    private Mob followingMob;
+    private PatrollingCannibal followingMob;
     private final double speedModifier;
     private final PathNavigation navigation;
     private int timeToRecalcPath;
@@ -30,9 +31,9 @@ public class FollowCannibalGoal extends Goal {
     /**
      * Constructs a goal allowing a mob to follow others. The mob must have Ground or Flying navigation.
      */
-    public FollowCannibalGoal(Mob pMob, double pSpeedModifier, float pStopDistance, float pAreaSize) {
+    public FollowCannibalGoal(PatrollingCannibal pMob, double pSpeedModifier, float pStopDistance, float pAreaSize) {
         this.mob = pMob;
-        this.followPredicate = Objects::nonNull;
+        this.followPredicate = PatrollingCannibal.LEADER_CANNIBAL_PREDICATE;
         this.speedModifier = pSpeedModifier;
         this.navigation = pMob.getNavigation();
         this.stopDistance = pStopDistance;
@@ -48,17 +49,22 @@ public class FollowCannibalGoal extends Goal {
      * method as well.
      */
     public boolean canUse() {
-        List<Mob> list = this.mob.level().getEntitiesOfClass(Mob.class, this.mob.getBoundingBox().inflate((double)this.areaSize), this.followPredicate);
+        if(this.mob.isLeader()){
+            return false;
+        }
+
+        List<PatrollingCannibal> list = this.mob.level().getEntitiesOfClass(PatrollingCannibal.class, this.mob.getBoundingBox().inflate((double)this.areaSize), this.followPredicate);
         if (!list.isEmpty()) {
-            for(Mob mob : list) {
+            for(PatrollingCannibal mob : list) {
                 if (!mob.isInvisible() && mob.getMobType() == ModMobTypes.CANNIBAL && mob != this.mob) {
-                    if (mob.distanceToSqr(this.mob) > (double)(this.stopDistance * this.stopDistance) && this.mob.getTarget() == null) {
+                    if (mob.distanceToSqr(this.mob) > (double)(this.stopDistance * this.stopDistance)) {
                         this.followingMob = mob;
                         return true;
                     }
                 }
             }
         }
+
 
         return false;
     }
@@ -67,7 +73,7 @@ public class FollowCannibalGoal extends Goal {
      * Returns whether an in-progress EntityAIBase should continue executing
      */
     public boolean canContinueToUse() {
-        return this.followingMob != null /*&& !this.navigation.isDone()*/ && this.mob.distanceToSqr(this.followingMob) > (double)(this.stopDistance * this.stopDistance) && this.mob.getTarget() == null;
+        return !this.mob.isLeader() && this.followingMob != null /*&& !this.navigation.isDone()*/ && this.mob.distanceToSqr(this.followingMob) > (double)(this.stopDistance * this.stopDistance);
     }
 
     /**
