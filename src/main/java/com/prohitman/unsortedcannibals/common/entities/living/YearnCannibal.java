@@ -28,11 +28,10 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.animal.Fox;
+import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.animal.camel.Camel;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.monster.CaveSpider;
-import net.minecraft.world.entity.monster.Enemy;
-import net.minecraft.world.entity.monster.Pillager;
+import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -101,7 +100,7 @@ public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.0D, true));
         //this.goalSelector.addGoal(1, new FollowCannibalGoal(this, 0.85D, 6.0F, 12.0F));
-        this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
+        this.targetSelector.addGoal(2, new HurtByTargetGoal(this, FrenzyCannibal.class, YearnCannibal.class, CraveCannibal.class));
         this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 0.5D));
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 5, 0.25f));
@@ -118,9 +117,11 @@ public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
                 return state.getLightEmission(pLevel, pPos) > 4 && this.mob.distanceToSqr(pPos.getX(), pPos.getY(), pPos.getZ()) > 16;
             }
         });
+        this.targetSelector.addGoal(9, new NearestAttackableTargetGoal<>(this, Player.class, 0, false, false, (livingEntity -> {
+            return !livingEntity.isSpectator() && !((Player)livingEntity).isCreative();
+        })));
         this.goalSelector.addGoal(9, new TemptGoal(this, 0.85D, FOOD_ITEMS, false));
         this.goalSelector.addGoal(9, new CannibalFollowItemGoal(this));
-
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -129,6 +130,7 @@ public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
                 .add(Attributes.FOLLOW_RANGE, 24D)
                 .add(Attributes.ARMOR_TOUGHNESS, 6f)
                 .add(Attributes.ATTACK_DAMAGE, 20f)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 1.0D)
                 .add(Attributes.ATTACK_KNOCKBACK, 0.5f);
     }
 

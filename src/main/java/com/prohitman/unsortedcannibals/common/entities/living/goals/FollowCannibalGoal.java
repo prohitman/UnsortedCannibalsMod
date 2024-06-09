@@ -52,7 +52,7 @@ public class FollowCannibalGoal extends Goal {
         if (!list.isEmpty()) {
             for(Mob mob : list) {
                 if (!mob.isInvisible() && mob.getMobType() == ModMobTypes.CANNIBAL && mob != this.mob) {
-                    if (mob.distanceToSqr(this.mob) > (double)(this.stopDistance * this.stopDistance)) {
+                    if (mob.distanceToSqr(this.mob) > (double)(this.stopDistance * this.stopDistance) && this.mob.getTarget() == null) {
                         this.followingMob = mob;
                         return true;
                     }
@@ -67,7 +67,7 @@ public class FollowCannibalGoal extends Goal {
      * Returns whether an in-progress EntityAIBase should continue executing
      */
     public boolean canContinueToUse() {
-        return this.followingMob != null /*&& !this.navigation.isDone()*/ && this.mob.distanceToSqr(this.followingMob) > (double)(this.stopDistance * this.stopDistance);
+        return this.followingMob != null /*&& !this.navigation.isDone()*/ && this.mob.distanceToSqr(this.followingMob) > (double)(this.stopDistance * this.stopDistance) && this.mob.getTarget() == null;
     }
 
     /**
@@ -77,11 +77,6 @@ public class FollowCannibalGoal extends Goal {
         this.timeToRecalcPath = 0;
         this.oldWaterCost = this.mob.getPathfindingMalus(BlockPathTypes.WATER);
         this.mob.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
-    }
-
-    @Override
-    public boolean isInterruptable() {
-        return true;
     }
 
     /**

@@ -57,6 +57,9 @@ public class CraveAvoidPlayerGoal extends AvoidEntityGoal<Player> {
                 return false;
             } else {
                 this.path = this.pathNav.createPath(vec3.x, vec3.y, vec3.z, 0);
+                if(this.path != null){
+                    this.mob.setTarget(null);
+                }
                 return this.path != null;
             }
         }
@@ -87,6 +90,7 @@ public class CraveAvoidPlayerGoal extends AvoidEntityGoal<Player> {
      */
     public void start() {
         this.pathNav.moveTo(this.path, this.walkSpeedModifier);
+        this.mob.setTarget(null);
     }
 
     /**
@@ -105,6 +109,6 @@ public class CraveAvoidPlayerGoal extends AvoidEntityGoal<Player> {
         } else {
             this.mob.getNavigation().setSpeedModifier(this.walkSpeedModifier);
         }
-
+        this.mob.setTarget(null);
     }
 }

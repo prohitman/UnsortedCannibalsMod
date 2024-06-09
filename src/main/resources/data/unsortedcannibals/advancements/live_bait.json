@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "unsortedcannibals:bone_helmet"
+    },
+    "title": "They Are Coming...",
+    "description": "Fall Victim to Hidden Dangers.",
+    "frame": "goal",
+    "announce_to_chat": false,
+    "hidden": true,
+    "background": "minecraft:textures/block/jungle_log.png"
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:effects_changed",
+      "conditions": {
+        "effects": {
+          "unsortedcannibals:live_bait": {}
+        }
+      }
+    }
+  }
+}

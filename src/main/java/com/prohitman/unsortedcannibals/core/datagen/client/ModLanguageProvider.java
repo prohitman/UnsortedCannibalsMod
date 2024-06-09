@@ -2,11 +2,9 @@ package com.prohitman.unsortedcannibals.core.datagen.client;
 
 import com.prohitman.unsortedcannibals.UnsortedCannibalsMod;
 import com.prohitman.unsortedcannibals.common.entities.projectile.BlowDart;
-import com.prohitman.unsortedcannibals.core.init.ModBlocks;
-import com.prohitman.unsortedcannibals.core.init.ModEffects;
-import com.prohitman.unsortedcannibals.core.init.ModEntities;
-import com.prohitman.unsortedcannibals.core.init.ModItems;
+import com.prohitman.unsortedcannibals.core.init.*;
 import net.minecraft.data.PackOutput;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
@@ -47,17 +45,31 @@ public class ModLanguageProvider extends LanguageProvider {
         addEffect(ModEffects.VISCERAL_PAIN);
         addEffect(ModEffects.SHATTERED_BONES);
 
+        addSound(ModSounds.BLOWGUN_SHOOT);
+        addSound(ModSounds.BLOW_DART_HIT);
+        addSound(ModSounds.BONE_CRACK);
+        addSound(ModSounds.CANNIBAL_AMBIENT);
+        addSound(ModSounds.CRAVE_DEATH);
+        addSound(ModSounds.CRAVE_HURT);
+        addSound(ModSounds.CRAVE_IDLE);
+        addSound(ModSounds.DEATH_WHISTLE);
+        addSound(ModSounds.FRENZY_DEATH);
+        addSound(ModSounds.FRENZY_HURT);
+        addSound(ModSounds.FRENZY_IDLE);
+        addSound(ModSounds.LIVE_BAIT);
+        addSound(ModSounds.SINISTER_SKULL);
+        addSound(ModSounds.SPEAR_HIT);
+        addSound(ModSounds.SPEAR_THROW);
+        addSound(ModSounds.YEARN_DEATH);
+        addSound(ModSounds.YEARN_EATING);
+        addSound(ModSounds.YEARN_HURT);
+        addSound(ModSounds.YEARN_IDLE);
+
         add( "entity.unsortedcannibals.serrated_spear", "Serrated Spear");
         add( "entity.unsortedcannibals.blow_dart", "Blow Dart");
         add( "entity.unsortedcannibals.crave", "Crave");
         add( "entity.unsortedcannibals.yearn", "Yearn");
         add( "entity.unsortedcannibals.frenzy", "Frenzy");
-
-        add("sounds.unsortedcannibals.death_whistle", "Death Whistle");
-        add("sounds.unsortedcannibals.frenzy_hurt", "Frenzy Hurt");
-        add("sounds.unsortedcannibals.yearn_death", "Yearn Death");
-        add("sounds.unsortedcannibals.yearn_hurt", "Yearn Hurt");
-        add("sounds.unsortedcannibals.yearn_idle", "Yearn Idle");
 
         add("key.unsortedcannibals.detailskey", "More Tooltip Details");
         add("key.categories.unsortedcannibals", "Unsorted Cannibals");
@@ -83,5 +95,9 @@ public class ModLanguageProvider extends LanguageProvider {
 
     public void addItem(RegistryObject<Item> key){
         add(key.get().getDescriptionId(), StringUtils.capitaliseAllWords(key.getId().getPath().replaceAll("_", " ")));
+    }
+
+    public void addSound(RegistryObject<SoundEvent> key){
+        add("sounds." + key.getId().toLanguageKey(), StringUtils.capitaliseAllWords(key.getId().getPath().replaceAll("_", " ")));
     }
 }

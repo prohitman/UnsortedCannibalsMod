@@ -83,14 +83,16 @@ public class CraveCannibal extends PathfinderMob implements GeoEntity, Enemy {
             return false;
         })));
         this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 20, 0.5f));
-
+        this.targetSelector.addGoal(9, new NearestAttackableTargetGoal<>(this, Player.class, 0, false, false, (livingEntity -> {
+            return !livingEntity.isSpectator() && !((Player)livingEntity).isCreative();
+        })));
         this.goalSelector.addGoal(9, new CraveAvoidPlayerGoal(this));
     }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createLivingAttributes().add(Attributes.MAX_HEALTH, 30D)
                 .add(Attributes.MOVEMENT_SPEED, 0.4D)
-                .add(Attributes.FOLLOW_RANGE, 24D)
+                .add(Attributes.FOLLOW_RANGE, 40D)
                 .add(Attributes.ARMOR_TOUGHNESS, 0.1f)
                 .add(Attributes.ATTACK_DAMAGE, 8f)
                 .add(Attributes.ATTACK_KNOCKBACK, 0.5f);
@@ -99,9 +101,16 @@ public class CraveCannibal extends PathfinderMob implements GeoEntity, Enemy {
     @Nullable
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
-        this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(ModItems.SERRATED_SPEAR.get()));
+        RandomSource randomsource = pLevel.getRandom();
+
+        this.populateDefaultEquipmentSlots(randomsource, pDifficulty);
 
         return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
+    }
+
+    protected void populateDefaultEquipmentSlots(RandomSource pRandom, DifficultyInstance pDifficulty) {
+        super.populateDefaultEquipmentSlots(pRandom, pDifficulty);
+        this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(ModItems.SERRATED_SPEAR.get()));
     }
 
     protected PathNavigation createNavigation(Level pLevel) {
