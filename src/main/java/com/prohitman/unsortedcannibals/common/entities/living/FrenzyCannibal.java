@@ -52,7 +52,7 @@ public class FrenzyCannibal extends PathfinderMob implements GeoEntity, RangedAt
         this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 25, 0.35f));
         this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Mob.class, 0, true, false, (livingEntity -> {
             if(livingEntity instanceof Mob mob){
-                return mob.getMobType() != ModMobTypes.CANNIBAL;
+                return mob.getMobType() != ModMobTypes.CANNIBAL && !mob.isUnderWater();
             }
             return false;
         })));

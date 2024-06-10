@@ -9,6 +9,7 @@ import com.prohitman.unsortedcannibals.core.init.ModItems;
 import com.prohitman.unsortedcannibals.core.init.ModSounds;
 import net.minecraft.Util;
 import net.minecraft.client.resources.sounds.Sound;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -17,7 +18,9 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BiomeTags;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -35,6 +38,7 @@ import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.animal.Parrot;
 import net.minecraft.world.entity.animal.camel.Camel;
 import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Pillager;
 import net.minecraft.world.entity.monster.piglin.PiglinBrute;
 import net.minecraft.world.entity.player.Player;
@@ -95,7 +99,7 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
                 return !this.isAlone();
             }
             if(livingEntity instanceof Mob mob){
-                return mob.getMobType() != ModMobTypes.CANNIBAL;
+                return mob.getMobType() != ModMobTypes.CANNIBAL && !mob.isUnderWater();
             }
             return false;
         })));
@@ -152,6 +156,9 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
         return true;
     }
 
+    public static boolean checkCraveSpawnRules(EntityType<? extends CraveCannibal> pType, ServerLevelAccessor pLevel, MobSpawnType pSpawnType, BlockPos pPos, RandomSource pRandom) {
+        return pLevel.getBlockState(pPos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON) && pLevel.getDifficulty() != Difficulty.PEACEFUL && checkMobSpawnRules(pType, pLevel, pSpawnType, pPos, pRandom);
+    }
     /**
      * Called to update the entity's position/logic.
      */
