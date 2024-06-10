@@ -1,0 +1,17 @@
+{
+  "structures": [
+    {
+      "structure": "unsortedcannibals:campsite",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+
+    "salt": 552407439,
+
+    "spacing": 16,
+
+    "separation": 8
+  }
+}

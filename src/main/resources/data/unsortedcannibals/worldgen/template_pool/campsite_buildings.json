@@ -1,0 +1,82 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 7,
+      "element": {
+
+        "location": "unsortedcannibals:cannibals_tent_1",
+
+        "processors": "unsortedcannibals:randomize_grass",
+
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "location": "unsortedcannibals:cannibals_tent_2",
+
+        "processors": "unsortedcannibals:randomize_grass",
+
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+
+        "location": "unsortedcannibals:cannibals_cage",
+
+        "processors": "unsortedcannibals:randomize_grass",
+
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+
+        "location": "unsortedcannibals:cannibals_tower",
+
+        "processors": "unsortedcannibals:randomize_grass",
+
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+
+        "location": "unsortedcannibals:cannibals_warehouse",
+
+        "processors": "unsortedcannibals:randomize_grass",
+
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+
+        "location": "unsortedcannibals:cannibals_shrine",
+
+        "processors": "unsortedcannibals:shrine_processor",
+
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "element": {
+        "element_type": "minecraft:empty_pool_element"
+      },
+      "weight": 12
+    }
+  ]
+}

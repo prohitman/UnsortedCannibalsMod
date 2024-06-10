@@ -127,6 +127,11 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
         return spawngroupdata;
     }
 
+    @Override
+    public boolean isPersistenceRequired() {
+        return true;//add despawning only when patrolling
+    }
+
     protected void populateDefaultEquipmentSlots(RandomSource pRandom, DifficultyInstance pDifficulty) {
 
         this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(ModItems.SERRATED_SPEAR.get()));

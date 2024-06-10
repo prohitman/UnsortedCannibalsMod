@@ -46,11 +46,8 @@ public abstract class PatrollingCannibal extends PathfinderMob {
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
         if(pReason != MobSpawnType.STRUCTURE){
             this.setPatrolling(true);
-        }
-
-        if (this.isLeader()) {
-            this.setItemSlot(EquipmentSlot.HEAD, Raid.getLeaderBannerInstance());
-            this.setDropChance(EquipmentSlot.HEAD, 2.0F);
+        } else {
+            this.setPatrolling(false);
         }
 
         return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
@@ -62,11 +59,11 @@ public abstract class PatrollingCannibal extends PathfinderMob {
 
         List<PatrollingCannibal> list = this.level().getEntitiesOfClass(PatrollingCannibal.class, this.getBoundingBox().inflate(35.0D), LEADER_CANNIBAL_PREDICATE);
 
-        if(list.isEmpty()){
+        if(list.isEmpty() && this.isPatrolling()){
             this.setIsLeader(true);
         }
         if(this.isLeader()){
-            this.addEffect(new MobEffectInstance(MobEffects.GLOWING, 3));
+           this.addEffect(new MobEffectInstance(MobEffects.GLOWING, 3));
         }
     }
 

@@ -135,7 +135,7 @@ public class FallTrapStructure extends Structure {
         for (int x = -radius; x <= radius; x++) {
             for (int z = -radius; z <= radius; z++) {
                 int height = context.chunkGenerator().getFirstFreeHeight(blockPos.getX() + x, blockPos.getZ() + z, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, context.heightAccessor(), context.randomState());
-                System.out.println("Start Y:" + startHeightY + "Height: " + height + "Chunk Pos: " + chunkPos);
+                //System.out.println("Start Y:" + startHeightY + "Height: " + height + "Chunk Pos: " + chunkPos);
 
                 if (Math.abs(height - startHeightY) > 0) {
                     return Optional.empty();

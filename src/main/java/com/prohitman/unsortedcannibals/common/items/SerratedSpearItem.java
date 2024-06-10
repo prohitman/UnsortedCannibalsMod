@@ -26,6 +26,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.Nullable;
@@ -55,6 +56,7 @@ public class SerratedSpearItem extends Item implements Vanishable, GeoItem {
 
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }
+
 
     public boolean canAttackBlock(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer) {
         return !pPlayer.isCreative();

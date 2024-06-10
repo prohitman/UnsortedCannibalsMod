@@ -73,6 +73,11 @@ public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
             return equipmentslot == EquipmentSlot.MAINHAND && super.canTakeItem(pItemstack);
         }
     }
+    @Override
+    public boolean isPersistenceRequired() {
+        return true;//add despawning only when patrolling
+    }
+
 
     public boolean isEating() {
         return this.entityData.get(EAT_COUNTER) > 0;

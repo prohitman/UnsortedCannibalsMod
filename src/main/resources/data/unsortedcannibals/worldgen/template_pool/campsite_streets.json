@@ -1,0 +1,41 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 12,
+      "element": {
+
+        "location": "unsortedcannibals:streets/street_0",
+
+        "processors": "unsortedcannibals:randomize_coarse",
+
+        "projection": "terrain_matching",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+
+        "location": "unsortedcannibals:streets/corner_0",
+
+        "processors": "unsortedcannibals:randomize_coarse",
+
+        "projection": "terrain_matching",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+
+        "location": "unsortedcannibals:streets/corner_1",
+
+        "processors": "unsortedcannibals:randomize_coarse",
+
+        "projection": "terrain_matching",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

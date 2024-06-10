@@ -23,6 +23,28 @@
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
+    },
+    {
+      "weight": 8,
+      "element": {
+
+        "location": "unsortedcannibals:falltrap_3",
+        "processors": "minecraft:empty",
+
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 8,
+      "element": {
+
+        "location": "unsortedcannibals:falltrap_4",
+        "processors": "minecraft:empty",
+
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
     }
   ]
 }

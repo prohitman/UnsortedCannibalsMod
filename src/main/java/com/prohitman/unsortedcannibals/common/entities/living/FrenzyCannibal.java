@@ -69,7 +69,10 @@ public class FrenzyCannibal extends PathfinderMob implements GeoEntity, RangedAt
                 .add(Attributes.ATTACK_DAMAGE, 5f)
                 .add(Attributes.ATTACK_KNOCKBACK, 0.25f);
     }
-
+    @Override
+    public boolean isPersistenceRequired() {
+        return true;//add despawning only when patrolling
+    }
     @Override
     public MobType getMobType() {
         return ModMobTypes.CANNIBAL;
