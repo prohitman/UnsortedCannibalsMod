@@ -1,21 +1,36 @@
   {
-  "cannibal_ambient": {
-    "subtitles": "sounds.unsortedcannibals.cannibal_ambient",
+  "cannibal_ambient_forest": {
+    "subtitles": "sounds.unsortedcannibals.cannibal_ambient_forest",
     "sounds": [
       "unsortedcannibals:tree_crack_1",
       "unsortedcannibals:tree_crack_2",
       "unsortedcannibals:owl_1",
-      "unsortedcannibals:owl_2"
+      "unsortedcannibals:owl_2",
+      "unsortedcannibals:pheasant"
+    ]
+  },
+  "cannibal_ambient_jungle": {
+    "subtitles": "sounds.unsortedcannibals.cannibal_ambient_jungle",
+    "sounds": [
+      "unsortedcannibals:bamboo_1",
+      "unsortedcannibals:bamboo_2",
+      "unsortedcannibals:cranes_1",
+      "unsortedcannibals:pheasant"
     ]
   },
   "frenzy_idle": {
     "subtitles": "sounds.unsortedcannibals.frenzy_idle",
     "sounds": [
+      {
+        "name": "unsortedcannibals:frenzy_idle",
+        "volume": 0.2
+      }
     ]
   },
   "frenzy_death": {
     "subtitles": "sounds.unsortedcannibals.frenzy_death",
     "sounds": [
+      "unsortedcannibals:frenzy_death"
     ]
   },
   "crave_idle": {

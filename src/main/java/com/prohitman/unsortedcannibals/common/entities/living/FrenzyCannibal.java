@@ -81,13 +81,18 @@ public class FrenzyCannibal extends PathfinderMob implements GeoEntity, RangedAt
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return super.getAmbientSound();
+        return ModSounds.FRENZY_IDLE.get();
+    }
+
+    @Override
+    public int getAmbientSoundInterval() {
+        return 100;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return super.getDeathSound();
+        return ModSounds.FRENZY_DEATH.get();
     }
 
     @Nullable

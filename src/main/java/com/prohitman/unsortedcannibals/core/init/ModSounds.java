@@ -3,8 +3,6 @@ package com.prohitman.unsortedcannibals.core.init;
 import com.prohitman.unsortedcannibals.UnsortedCannibalsMod;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -31,7 +29,8 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> BONE_CRACK = registerSoundEvents("bone_crack");
     public static final RegistryObject<SoundEvent> SPEAR_THROW = registerSoundEvents("spear_throw");
     public static final RegistryObject<SoundEvent> SPEAR_HIT = registerSoundEvents("spear_hit");
-    public static final RegistryObject<SoundEvent> CANNIBAL_AMBIENT = registerSoundEvents("cannibal_ambient");
+    public static final RegistryObject<SoundEvent> CANNIBAL_AMBIENT_FOREST = registerSoundEvents("cannibal_ambient_forest");
+    public static final RegistryObject<SoundEvent> CANNIBAL_AMBIENT_JUNGLE = registerSoundEvents("cannibal_ambient_jungle");
 
     private static RegistryObject<SoundEvent> registerSoundEvents(String name) {
         return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(UnsortedCannibalsMod.MODID, name)));

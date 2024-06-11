@@ -1,54 +1,38 @@
 package com.prohitman.unsortedcannibals.common;
 
 import com.prohitman.unsortedcannibals.UnsortedCannibalsMod;
-import com.prohitman.unsortedcannibals.common.entities.living.CraveCannibal;
-import com.prohitman.unsortedcannibals.common.entities.living.FrenzyCannibal;
 import com.prohitman.unsortedcannibals.common.items.armor.BoneArmorItem;
 import com.prohitman.unsortedcannibals.core.init.ModEffects;
 import com.prohitman.unsortedcannibals.core.init.ModEntities;
 import com.prohitman.unsortedcannibals.core.init.ModItems;
 import com.prohitman.unsortedcannibals.core.init.ModSounds;
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.behavior.AnimalMakeLove;
 import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.entity.animal.Ocelot;
 import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.npc.Npc;
-import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import java.util.List;
-import java.util.Random;
 
 @Mod.EventBusSubscriber(modid = UnsortedCannibalsMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class CommonForgeEvents {
@@ -71,11 +55,14 @@ public class CommonForgeEvents {
                 entity.setDeltaMovement(entity.getDeltaMovement().multiply(1, 0.05D, 1));
             }
         }
-        if(entity instanceof Player player && entity.level().getBiome(entity.blockPosition()).is(BiomeTags.IS_FOREST)){
+        if(entity instanceof Player player){
             if(entity.level().random.nextFloat() < 0.0005f){
-                player.playSound(ModSounds.CANNIBAL_AMBIENT.get(), 0.5F + entity.level().random.nextInt(3)*0.2F, 1);
+                if(entity.level().getBiome(entity.blockPosition()).is(BiomeTags.IS_FOREST)){
+                    player.playSound(ModSounds.CANNIBAL_AMBIENT_FOREST.get(), 0.5F + entity.level().random.nextInt(3)*0.2F, 1);
+                } else if(entity.level().getBiome(entity.blockPosition()).is(BiomeTags.IS_JUNGLE)){
+                    player.playSound(ModSounds.CANNIBAL_AMBIENT_JUNGLE.get(), 0.5F + entity.level().random.nextInt(3)*0.2F, 1);
+                }
             }
-
         }
     }
 
@@ -120,30 +107,37 @@ public class CommonForgeEvents {
             RandomSource random = level.random;
             int craveSize = 3 + random.nextInt(3);
             int frenzySize = 2 + random.nextInt(2);
+            int yearnSize = 1 + random.nextInt(1);
+            boolean isFromSkull = event.getEffectInstance().getAmplifier() == 1;
             int minDistance = 7;
             int spawnRadius = 13;
 
             level.playSound(null, playerPos, ModSounds.LIVE_BAIT.get(), SoundSource.HOSTILE, 1.3F, 1.3F);
 
             for (int i = 0; i < craveSize; i++) {
-                spawnCannibal(level, event.getEntity(), playerPos, random, minDistance, spawnRadius, true);
+                spawnCannibal(level, event.getEntity(), playerPos, random, minDistance, spawnRadius, 0);
             }
 
             for (int i = 0; i < frenzySize; i++) {
-                spawnCannibal(level, event.getEntity(), playerPos, random, minDistance, spawnRadius, false);
+                spawnCannibal(level, event.getEntity(), playerPos, random, minDistance, spawnRadius, 1);
+            }
+
+            if(isFromSkull){
+                for (int i = 0; i < yearnSize; i++) {
+                    spawnCannibal(level, event.getEntity(), playerPos, random, minDistance, spawnRadius, 2);
+                }
             }
         }
     }
 
-    private static void spawnCannibal(Level level, LivingEntity target, BlockPos playerPos, RandomSource random, int minDistance, int spawnRadius, boolean isCrave) {
+    private static void spawnCannibal(Level level, LivingEntity target, BlockPos playerPos, RandomSource random, int minDistance, int spawnRadius, int cannibalId) {
         PathfinderMob cannibal;
-        if (isCrave) {
-            cannibal = ModEntities.CRAVE.get().create(level);
-            //if (cannibal != null) {
-             //   cannibal.setItemSlot(EquipmentSlot.MAINHAND, ModItems.SERRATED_SPEAR.get().getDefaultInstance());
-            //}
-        } else {
+        if (cannibalId == 1){
             cannibal = ModEntities.FRENZY.get().create(level);
+        } else if(cannibalId == 2){
+            cannibal = ModEntities.YEARN.get().create(level);
+        } else {
+            cannibal = ModEntities.CRAVE.get().create(level);
         }
 
         if (cannibal != null) {

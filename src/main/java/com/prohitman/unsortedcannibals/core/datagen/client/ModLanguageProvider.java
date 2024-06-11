@@ -1,12 +1,10 @@
 package com.prohitman.unsortedcannibals.core.datagen.client;
 
 import com.prohitman.unsortedcannibals.UnsortedCannibalsMod;
-import com.prohitman.unsortedcannibals.common.entities.projectile.BlowDart;
 import com.prohitman.unsortedcannibals.core.init.*;
 import net.minecraft.data.PackOutput;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.LanguageProvider;
@@ -48,7 +46,7 @@ public class ModLanguageProvider extends LanguageProvider {
         addSound(ModSounds.BLOWGUN_SHOOT);
         addSound(ModSounds.BLOW_DART_HIT);
         addSound(ModSounds.BONE_CRACK);
-        addSound(ModSounds.CANNIBAL_AMBIENT);
+        addSound(ModSounds.CANNIBAL_AMBIENT_FOREST);
         addSound(ModSounds.CRAVE_DEATH);
         addSound(ModSounds.CRAVE_HURT);
         addSound(ModSounds.CRAVE_IDLE);
@@ -75,7 +73,7 @@ public class ModLanguageProvider extends LanguageProvider {
         add("key.categories.unsortedcannibals", "Unsorted Cannibals");
 
         add("item.tooltip.bone_armor", "\u00A77Grants immunity against \u00A7cVisceral Pain\u00A77.");
-        add("item.tooltip.razor_sword", "\u00A77Deals extra damage when enemy has below \u00A7c50% health\u00A77.");
+        add("item.tooltip.razor_sword", "\u00A77Deals more damage as the target's health \u00A7cdecreases\u00A77.");
         add("item.tooltip.crusher_axe", "\u00A7cShatters bones \u00A77when dealing a critical hit.");
         add("item.tooltip.serrated_spear", "\u00A77Inflicts \u00A7cVisceral Pain\u00A77.");
         add("item.tooltip.death_whistle", "\u00A77Causes panic to nearby creatures.");

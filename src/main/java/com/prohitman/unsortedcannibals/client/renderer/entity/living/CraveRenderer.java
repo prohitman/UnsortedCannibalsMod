@@ -25,11 +25,9 @@ import software.bernie.geckolib.renderer.layer.BlockAndItemGeoLayer;
 
 import javax.annotation.Nullable;
 
-public class CraveRenderer extends DynamicGeoEntityRenderer<CraveCannibal> {
+public class CraveRenderer extends GeoEntityRenderer<CraveCannibal> {
     private static final String RIGHT_HAND = "RArm";
     protected ItemStack mainHandItem;
-    private static final RenderType CRAVE_EYES = RenderType.eyes(new ResourceLocation(UnsortedCannibalsMod.MODID, "textures/entity/crave_glow_layer.png"));
-
 
     public CraveRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new CraveModel());
@@ -66,21 +64,12 @@ public class CraveRenderer extends DynamicGeoEntityRenderer<CraveCannibal> {
 
                 super.renderStackForBone(poseStack, bone, stack, animatable, bufferSource, partialTick, packedLight, packedOverlay);
             }
-
-            /*@Override
-            public void render(PoseStack poseStack, CraveCannibal animatable, BakedGeoModel bakedModel, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay) {
-                VertexConsumer vertexconsumer = bufferSource.getBuffer(CRAVE_EYES);
-
-                getRenderer().reRender(getDefaultBakedModel(animatable), poseStack, bufferSource, animatable, CRAVE_EYES, vertexconsumer, partialTick, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-
-                super.render(poseStack, animatable, bakedModel, renderType, bufferSource, buffer, partialTick, packedLight, packedOverlay);
-
-            }*/
         });
 
-        //addRenderLayer(new CraveGlowLayerRenderer(this));
+        addRenderLayer(new CraveGlowLayerRenderer(this));
 
     }
+
 
     @Override
     public void preRender(PoseStack poseStack, CraveCannibal animatable, BakedGeoModel model, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {

@@ -30,12 +30,18 @@ public class RazorSwordItem extends SwordItem {
 
     @Override
     public boolean hurtEnemy(ItemStack pStack, LivingEntity pTarget, LivingEntity pAttacker) {
-        pStack.hurtAndBreak(1, pAttacker, (p_43296_) -> {
-            p_43296_.broadcastBreakEvent(EquipmentSlot.MAINHAND);
+        pStack.hurtAndBreak(1, pAttacker, (entity) -> {
+            entity.broadcastBreakEvent(EquipmentSlot.MAINHAND);
         });
-        if(pTarget.getHealth() < (50 * pTarget.getMaxHealth())/100){
-            pTarget.hurt(pTarget.damageSources().mobAttack(pAttacker), 5.0f);
-        }
+
+        float maxHealth = pTarget.getMaxHealth();
+        float currentHealth = pTarget.getHealth();
+        float healthRatio = currentHealth / maxHealth;
+
+        float additionalDamage = (1.0f - healthRatio) * 15.0f;
+
+        pTarget.hurt(pTarget.damageSources().mobAttack(pAttacker), additionalDamage);
+
         return true;
     }
 

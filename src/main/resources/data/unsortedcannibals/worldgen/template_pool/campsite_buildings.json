@@ -37,7 +37,7 @@
       }
     },
     {
-      "weight": 2,
+      "weight": 3,
       "element": {
 
         "location": "unsortedcannibals:cannibals_tower",
@@ -49,7 +49,7 @@
       }
     },
     {
-      "weight": 2,
+      "weight": 3,
       "element": {
 
         "location": "unsortedcannibals:cannibals_warehouse",
@@ -61,7 +61,7 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 4,
       "element": {
 
         "location": "unsortedcannibals:cannibals_shrine",

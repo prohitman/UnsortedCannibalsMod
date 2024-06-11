@@ -196,6 +196,8 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
                     Path path = this.getNavigation().createPath(vec3.x, vec3.y, vec3.z, 0);
                     if(path != null){
                         this.getNavigation().moveTo(path, 1.1);
+                        this.setAggressive(false);
+                        this.setTarget(null);
                     }
                 }
             }
