@@ -30,6 +30,10 @@ public class ModItemModelProvider extends ItemModelProvider {
         createSingle(ModItems.BONE_HELMET);
         createSingleHandHeld(ModItems.RAZOR_SWORD);
         createSingle(ModItems.SERRATED_SPEARHEAD);
+        createSingle(ModItems.SERRATED_SPEARHEAD);
+
+        createSingle(ModItems.LIVE_BAIT);
+        createSingle(ModItems.VISCERAL_PAIN);
 
         withExistingParent(ModItems.CRAVE_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.YEARN_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
@@ -84,6 +88,11 @@ public class ModItemModelProvider extends ItemModelProvider {
     private void createSingle(RegistryObject<Item> item) {
         ModelFile generated = getExistingFile(mcLoc("item/generated"));
         getBuilder(item.getId().getPath()).parent(generated).texture("layer0", modLoc( "item/" + item.getId().getPath()));
+    }
+
+    private void createSingleEffectItem(RegistryObject<Item> item) {
+        ModelFile generated = getExistingFile(mcLoc("item/generated"));
+        getBuilder(item.getId().getPath()).parent(generated).texture("layer0", modLoc( "mob_effect/" + item.getId().getPath()));
     }
 
     private void createSingleHandHeld(RegistryObject<Item> item) {

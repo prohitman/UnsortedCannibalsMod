@@ -1,0 +1,25 @@
+{
+  "parent": "unsortedcannibals:root",
+  "display": {
+    "icon": {
+      "item": "unsortedcannibals:severed_nose"
+    },
+    "title": "title.unsortedcannibals.severed_nose",
+    "description": "description.unsortedcannibals.severed_nose",
+    "frame": "task",
+    "announce_to_chat": false,
+    "hidden": true
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": [
+            "unsortedcannibals:severed_nose"
+          ]
+        }
+      }
+    }
+  }
+}

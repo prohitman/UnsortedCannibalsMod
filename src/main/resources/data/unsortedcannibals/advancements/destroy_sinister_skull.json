@@ -1,0 +1,25 @@
+{
+  "parent": "unsortedcannibals:root",
+  "display": {
+    "icon": {
+      "item": "unsortedcannibals:sinister_skull"
+    },
+    "title": "title.unsortedcannibals.sinister_skull",
+    "description": "description.unsortedcannibals.sinister_skull",
+    "frame": "goal",
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:effects_changed",
+      "conditions": {
+        "effects": {
+          "unsortedcannibals:live_bait": {
+            "amplifier": 1
+          }
+        }
+      }
+    }
+  }
+}

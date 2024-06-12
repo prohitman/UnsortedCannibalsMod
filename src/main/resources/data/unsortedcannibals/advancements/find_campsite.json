@@ -1,0 +1,40 @@
+{
+  "parent": "unsortedcannibals:root",
+  "criteria": {
+    "campsite": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "unsortedcannibals:campsite"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "description.unsortedcannibals.find_campsite"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:campfire"
+    },
+    "title": {
+      "translate": "title.unsortedcannibals.find_campsite"
+    }
+  },
+  "requirements": [
+    [
+      "campsite"
+    ]
+  ]
+}

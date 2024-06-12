@@ -1,0 +1,25 @@
+{
+  "parent": "unsortedcannibals:root",
+  "display": {
+    "icon": {
+      "item": "unsortedcannibals:live_bait"
+    },
+    "title": "title.unsortedcannibals.live_bait",
+    "description": "description.unsortedcannibals.live_bait",
+    "frame": "goal",
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:effects_changed",
+      "conditions": {
+        "effects": {
+          "unsortedcannibals:live_bait": {
+            "amplifier": 0
+          }
+        }
+      }
+    }
+  }
+}

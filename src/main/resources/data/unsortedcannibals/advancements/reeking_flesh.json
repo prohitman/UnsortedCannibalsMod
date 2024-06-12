@@ -1,0 +1,25 @@
+{
+  "parent": "unsortedcannibals:root",
+  "display": {
+    "icon": {
+      "item": "unsortedcannibals:reeking_flesh"
+    },
+    "title": "title.unsortedcannibals.reeking_flesh",
+    "description": "description.unsortedcannibals.reeking_flesh",
+    "frame": "task",
+    "announce_to_chat": false,
+    "hidden": true
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": [
+            "unsortedcannibals:reeking_flesh"
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "parent": "unsortedcannibals:root",
+  "criteria": {
+    "bone_armor": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "unsortedcannibals:bone_helmet"
+            ]
+          },
+          {
+            "items": [
+              "unsortedcannibals:bone_chestplate"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "description.unsortedcannibals.bone_armor"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "unsortedcannibals:bone_chestplate",
+      "nbt": "{Damage:0}"
+    },
+    "title": {
+      "translate": "title.unsortedcannibals.bone_armor"
+    }
+  },
+  "requirements": [
+    [
+      "bone_armor"
+    ]
+  ],
+  "rewards": {
+    "experience": 75
+  }
+}

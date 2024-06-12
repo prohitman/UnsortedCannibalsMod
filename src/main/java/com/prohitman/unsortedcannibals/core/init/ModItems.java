@@ -39,4 +39,7 @@ public class ModItems {
     public static final RegistryObject<Item> YEARN_SPAWN_EGG = ITEMS.register("yearn_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.YEARN, 8880765, 2302754, new Item.Properties()));
     public static final RegistryObject<Item> FRENZY_SPAWN_EGG = ITEMS.register("frenzy_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.FRENZY, 8880765, 6056730, new Item.Properties()));
 
+    public static final RegistryObject<Item> LIVE_BAIT = ITEMS.register("live_bait", () -> new InventoryItem(new Item.Properties()));
+    public static final RegistryObject<Item> VISCERAL_PAIN = ITEMS.register("visceral_pain", () -> new InventoryItem(new Item.Properties()));
+
 }

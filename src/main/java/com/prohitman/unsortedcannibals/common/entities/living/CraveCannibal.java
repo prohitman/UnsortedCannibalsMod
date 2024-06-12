@@ -205,6 +205,19 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
     }
 
     @Override
+    public boolean shouldDropExperience() {
+        return true;
+    }
+
+    protected SoundEvent getSwimSound() {
+        return SoundEvents.HOSTILE_SWIM;
+    }
+
+    protected SoundEvent getSwimSplashSound() {
+        return SoundEvents.HOSTILE_SPLASH;
+    }
+
+    @Override
     public boolean canAttack(LivingEntity pTarget) {
         return (!(pTarget instanceof Player) || !this.isAlone()) && super.canAttack(pTarget);
     }

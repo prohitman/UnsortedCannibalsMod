@@ -202,6 +202,18 @@ public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
         }
 
     }
+    protected SoundEvent getSwimSound() {
+        return SoundEvents.HOSTILE_SWIM;
+    }
+
+    protected SoundEvent getSwimSplashSound() {
+        return SoundEvents.HOSTILE_SPLASH;
+    }
+
+    @Override
+    public boolean shouldDropExperience() {
+        return true;
+    }
 
     @Override
     protected float getStandingEyeHeight(Pose pPose, EntityDimensions pDimensions) {

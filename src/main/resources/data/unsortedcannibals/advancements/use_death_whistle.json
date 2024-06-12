@@ -1,0 +1,25 @@
+{
+  "parent": "unsortedcannibals:root",
+  "display": {
+    "icon": {
+      "item": "unsortedcannibals:death_whistle"
+    },
+    "title": "title.unsortedcannibals.death_whistle",
+    "description": "description.unsortedcannibals.death_whistle",
+    "frame": "task",
+    "announce_to_chat": false,
+    "hidden": true
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:using_item",
+      "conditions": {
+        "item": {
+          "items": [
+            "unsortedcannibals:death_whistle"
+          ]
+        }
+      }
+    }
+  }
+}

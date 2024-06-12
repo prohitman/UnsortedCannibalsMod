@@ -89,6 +89,17 @@ public class FrenzyCannibal extends PathfinderMob implements GeoEntity, RangedAt
         return 100;
     }
 
+    protected SoundEvent getSwimSound() {
+        return SoundEvents.HOSTILE_SWIM;
+    }
+
+    protected SoundEvent getSwimSplashSound() {
+        return SoundEvents.HOSTILE_SPLASH;
+    }
+    @Override
+    public boolean shouldDropExperience() {
+        return true;
+    }
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {

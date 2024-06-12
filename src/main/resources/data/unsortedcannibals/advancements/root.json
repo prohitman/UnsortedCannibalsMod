@@ -1,3 +1,21 @@
 {
-
+  "display": {
+    "icon": {
+      "item": "unsortedcannibals:bone_helmet"
+    },
+    "title": "title.unsortedcannibals.enter_world",
+    "description": "description.unsortedcannibals.enter_world",
+    "frame": "task",
+    "announce_to_chat": false,
+    "hidden": true,
+    "background": "minecraft:textures/block/jungle_log.png"
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:enter_block",
+      "conditions": {
+        "block": "minecraft:air"
+      }
+    }
+  }
 }

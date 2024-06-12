@@ -1,0 +1,23 @@
+{
+  "parent": "unsortedcannibals:root",
+  "display": {
+    "icon": {
+      "item": "unsortedcannibals:visceral_pain"
+    },
+    "title": "title.unsortedcannibals.visceral_pain",
+    "description": "advancements.husbandry.axolotl_in_a_bucket.description",
+    "frame": "goal",
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:effects_changed",
+      "conditions": {
+        "effects": {
+          "unsortedcannibals:visceral_pain": {}
+        }
+      }
+    }
+  }
+}

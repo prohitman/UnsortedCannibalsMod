@@ -6,6 +6,7 @@ import com.prohitman.unsortedcannibals.core.init.ModEffects;
 import com.prohitman.unsortedcannibals.core.init.ModEntities;
 import com.prohitman.unsortedcannibals.core.init.ModItems;
 import com.prohitman.unsortedcannibals.core.init.ModSounds;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -31,11 +32,20 @@ import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import java.util.List;
 
 @Mod.EventBusSubscriber(modid = UnsortedCannibalsMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class CommonForgeEvents {
+
+    @SubscribeEvent
+    public static void commonSetup(final FMLCommonSetupEvent event)
+    {
+        event.enqueueWork(() -> {
+
+        });
+    }
 
     @SubscribeEvent
     public static void livingTickEntity(LivingEvent.LivingTickEvent event){

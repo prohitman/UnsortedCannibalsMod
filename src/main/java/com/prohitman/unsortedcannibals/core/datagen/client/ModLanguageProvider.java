@@ -79,8 +79,34 @@ public class ModLanguageProvider extends LanguageProvider {
         add("item.tooltip.death_whistle", "\u00A77Causes panic to nearby creatures.");
         add("item.tooltip.press_shift", "\u00A7b[+SHIFT]");
 
-
         add("itemGroup.unsortedcannibals", "Unsorted Cannibals Mod");
+
+        addAdvancementTitle("death_whistle", "Echoes of Death");
+        addAdvancementDescription("death_whistle", "Blow the Death Whistle. Unleash the sound of terror.");
+
+        addAdvancementTitle("bone_armor", "Bones of Steel");
+        addAdvancementDescription("bone_armor", "Wear the full Bone Armor set and become immune to Visceral Pain.");
+
+        addAdvancementTitle("sinister_skull", "Shattering Evil");
+        addAdvancementDescription("sinister_skull", "Destroy the Sinister Skull. Beware of what follows.");
+
+        addAdvancementTitle("live_bait", "They are coming...");
+        addAdvancementDescription("live_bait", "Fall victim to hidden dangers.");
+
+        addAdvancementTitle("visceral_pain", "Don't Move!");
+        addAdvancementDescription("visceral_pain", "Experience the torment of Visceral Pain. Moving has never been so excruciating.");
+
+        addAdvancementTitle("severed_nose", "Bon appétit?");
+        addAdvancementDescription("severed_nose", "Snack on a severed nose.");
+
+        addAdvancementTitle("find_campsite", "Into the Den");
+        addAdvancementDescription("find_campsite", "Venture into a cannibal campsite. Tread carefully.");
+
+        addAdvancementTitle("enter_world", "The Cannibal's Domain");
+        addAdvancementDescription("enter_world", "Enter a world filled with Cannibals.");
+
+        addAdvancementTitle("reeking_flesh", "Ironic, isn't it?");
+        addAdvancementDescription("reeking_flesh", "Consume the flesh of a cannibal. Deliciously morbid.");
     }
 
     public void addEffect(RegistryObject<MobEffect> key){
@@ -97,5 +123,13 @@ public class ModLanguageProvider extends LanguageProvider {
 
     public void addSound(RegistryObject<SoundEvent> key){
         add("sounds." + key.getId().toLanguageKey(), StringUtils.capitaliseAllWords(key.getId().getPath().replaceAll("_", " ")));
+    }
+
+    public void addAdvancementTitle(String name, String title){
+        add("title." + UnsortedCannibalsMod.MODID + "." + name, title);
+    }
+
+    public void addAdvancementDescription(String name, String description){
+        add("description." + UnsortedCannibalsMod.MODID + "." + name, description);
     }
 }
