@@ -8,6 +8,7 @@ import com.prohitman.unsortedcannibals.core.init.ModEffects;
 import com.prohitman.unsortedcannibals.core.init.ModItems;
 import com.prohitman.unsortedcannibals.core.init.ModSounds;
 import net.minecraft.Util;
+import net.minecraft.advancements.critereon.LocationPredicate;
 import net.minecraft.client.resources.sounds.Sound;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -89,12 +90,12 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(1, new FollowCannibalGoal(this, 0.55D, 6.0F, 25f));
         this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 0.5D));
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(4, new CraveCannibal.CraveMeleeAttackGoal(this));
-        this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Mob.class, 0, true, false, (livingEntity -> {
+        this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Mob.class, 5, true, false, (livingEntity -> {
             if(livingEntity instanceof Player){
                 return !this.isAlone();
             }
@@ -203,6 +204,7 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
             }
         }
     }
+
 
     @Override
     public boolean shouldDropExperience() {

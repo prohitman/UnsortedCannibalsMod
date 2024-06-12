@@ -3,8 +3,12 @@
     "icon": {
       "item": "unsortedcannibals:bone_helmet"
     },
-    "title": "title.unsortedcannibals.enter_world",
-    "description": "description.unsortedcannibals.enter_world",
+    "title": {
+      "translate" : "title.unsortedcannibals.enter_world"
+    },
+    "description": {
+      "translate": "description.unsortedcannibals.enter_world"
+    },
     "frame": "task",
     "announce_to_chat": false,
     "hidden": true,

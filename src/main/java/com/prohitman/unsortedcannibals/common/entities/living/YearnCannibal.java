@@ -102,14 +102,14 @@ public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.0D, true));
         //this.goalSelector.addGoal(1, new FollowCannibalGoal(this, 0.85D, 6.0F, 12.0F));
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this, FrenzyCannibal.class, YearnCannibal.class, CraveCannibal.class));
         this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 0.5D));
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 5, 0.25f));
-        this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Mob.class, 0, true, false, (livingEntity -> {
+        this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Mob.class, 5, true, false, (livingEntity -> {
             if(livingEntity instanceof Mob mob){
                 return mob.getMobType() != ModMobTypes.CANNIBAL && !mob.isUnderWater();
             }

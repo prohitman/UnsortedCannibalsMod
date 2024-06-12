@@ -4,8 +4,12 @@
     "icon": {
       "item": "unsortedcannibals:live_bait"
     },
-    "title": "title.unsortedcannibals.live_bait",
-    "description": "description.unsortedcannibals.live_bait",
+    "title": {
+      "translate" : "title.unsortedcannibals.live_bait"
+    },
+    "description": {
+      "translate": "description.unsortedcannibals.live_bait"
+    },
     "frame": "goal",
     "announce_to_chat": true,
     "hidden": true

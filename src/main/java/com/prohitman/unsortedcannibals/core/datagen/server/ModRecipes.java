@@ -9,6 +9,7 @@ import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
 import java.util.function.Consumer;
@@ -60,6 +61,12 @@ public class ModRecipes extends RecipeProvider {
                 .pattern(" S ")
                 .pattern("S  ")
                 .unlockedBy("has_spearhead", has(ModItems.SERRATED_SPEARHEAD.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.FALL_TRAP.get()).define('M', Blocks.MANGROVE_PLANKS).define('G', Blocks.GRASS_BLOCK)
+                .pattern("GGG")
+                .pattern("MMM")
+                .unlockedBy("has_fall_trap", has(ModBlocks.FALL_TRAP.get()))
                 .save(consumer);
     }
 }

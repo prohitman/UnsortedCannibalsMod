@@ -4,8 +4,12 @@
     "icon": {
       "item": "unsortedcannibals:reeking_flesh"
     },
-    "title": "title.unsortedcannibals.reeking_flesh",
-    "description": "description.unsortedcannibals.reeking_flesh",
+    "title": {
+      "translate" : "title.unsortedcannibals.reeking_flesh"
+    },
+    "description": {
+      "translate": "description.unsortedcannibals.reeking_flesh"
+    },
     "frame": "task",
     "announce_to_chat": false,
     "hidden": true

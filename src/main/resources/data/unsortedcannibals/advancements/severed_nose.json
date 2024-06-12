@@ -4,8 +4,12 @@
     "icon": {
       "item": "unsortedcannibals:severed_nose"
     },
-    "title": "title.unsortedcannibals.severed_nose",
-    "description": "description.unsortedcannibals.severed_nose",
+    "title": {
+      "translate" : "title.unsortedcannibals.severed_nose"
+    },
+    "description": {
+      "translate": "description.unsortedcannibals.severed_nose"
+    },
     "frame": "task",
     "announce_to_chat": false,
     "hidden": true

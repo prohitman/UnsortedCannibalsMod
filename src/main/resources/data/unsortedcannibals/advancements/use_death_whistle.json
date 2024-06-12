@@ -4,8 +4,12 @@
     "icon": {
       "item": "unsortedcannibals:death_whistle"
     },
-    "title": "title.unsortedcannibals.death_whistle",
-    "description": "description.unsortedcannibals.death_whistle",
+    "title": {
+      "translate" : "title.unsortedcannibals.death_whistle"
+    },
+    "description": {
+      "translate": "description.unsortedcannibals.death_whistle"
+    },
     "frame": "task",
     "announce_to_chat": false,
     "hidden": true

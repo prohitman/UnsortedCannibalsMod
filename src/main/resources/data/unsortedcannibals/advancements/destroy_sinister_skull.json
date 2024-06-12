@@ -4,8 +4,12 @@
     "icon": {
       "item": "unsortedcannibals:sinister_skull"
     },
-    "title": "title.unsortedcannibals.sinister_skull",
-    "description": "description.unsortedcannibals.sinister_skull",
+    "title": {
+      "translate" : "title.unsortedcannibals.sinister_skull"
+    },
+    "description": {
+      "translate": "description.unsortedcannibals.sinister_skull"
+    },
     "frame": "goal",
     "announce_to_chat": true,
     "hidden": true

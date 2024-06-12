@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "minecraft:grass_block"
+    },
+    "M": {
+      "item": "minecraft:mangrove_planks"
+    }
+  },
+  "pattern": [
+    "GGG",
+    "MMM"
+  ],
+  "result": {
+    "item": "unsortedcannibals:fall_trap"
+  },
+  "show_notification": true
+}
