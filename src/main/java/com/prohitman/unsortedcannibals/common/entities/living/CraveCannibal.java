@@ -96,13 +96,10 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(4, new CraveCannibal.CraveMeleeAttackGoal(this));
         this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Mob.class, 5, true, false, (livingEntity -> {
-            if(livingEntity instanceof Player){
-                return !this.isAlone();
-            }
             if(livingEntity instanceof Mob mob){
                 return mob.getMobType() != ModMobTypes.CANNIBAL && !mob.isUnderWater();
             }
-            return false;
+            return !(this.getTarget() instanceof Player);
         })));
         this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 50, 0.75f));
         this.targetSelector.addGoal(9, new NearestAttackableTargetGoal<>(this, Player.class, 0, false, false, (livingEntity -> {
@@ -176,13 +173,6 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
             if(this.getTarget() instanceof Player){
                 this.setTarget(null);
                 this.setAggressive(false);
-                /*Vec3 vec3 = DefaultRandomPos.getPosAway(this, 16, 7, player.position());
-                if (vec3 != null && player.distanceToSqr(vec3.x, vec3.y, vec3.z) >= player.distanceToSqr(this)) {
-                    Path path = this.getNavigation().createPath(vec3.x, vec3.y, vec3.z, 0);
-                    if(path != null){
-                        this.getNavigation().moveTo(path, 1.1);
-                    }
-                }*/
             }
         } else {
             this.setAlone(false);
@@ -227,7 +217,9 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
     @Override
     public boolean doHurtTarget(Entity pEntity) {
         if(pEntity instanceof LivingEntity livingEntity && this.getItemBySlot(EquipmentSlot.MAINHAND).is(ModItems.SERRATED_SPEAR.get())){
-            livingEntity.addEffect(new MobEffectInstance(ModEffects.VISCERAL_PAIN.get(), 90 + random.nextInt(20)), livingEntity);
+            if(!(livingEntity.getUseItem().is(Items.SHIELD) && livingEntity.isUsingItem())){
+                livingEntity.addEffect(new MobEffectInstance(ModEffects.VISCERAL_PAIN.get(), 90 + random.nextInt(20)), livingEntity);
+            }
         }
         return super.doHurtTarget(pEntity);
     }

@@ -21,7 +21,7 @@ import software.bernie.geckolib.renderer.layer.BlockAndItemGeoLayer;
 import javax.annotation.Nullable;
 
 public class YearnRenderer extends DynamicGeoEntityRenderer<YearnCannibal> {
-    private static final String RIGHT_HAND = "Arm2";
+    private static final String RIGHT_HAND = "RightArm";
     protected ItemStack mainHandItem;
 
 

@@ -21,6 +21,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.attributes.DefaultAttributes;
 import net.minecraft.world.entity.ai.behavior.GoToWantedItem;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
@@ -36,6 +37,7 @@ import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -45,13 +47,22 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.example.client.renderer.entity.GremlinRenderer;
 import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.function.Predicate;
 
 public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
+    protected static final RawAnimation WALK_ANIM = RawAnimation.begin().thenLoop("Walk");
+    protected static final RawAnimation EATING_ANIM = RawAnimation.begin().thenPlayAndHold("Eating2");
+
     private static final EntityDataAccessor<Integer> EAT_COUNTER = SynchedEntityData.defineId(YearnCannibal.class, EntityDataSerializers.INT);
 
     public static final Ingredient FOOD_ITEMS = Ingredient.of(ModItems.REEKING_FLESH.get(), ModItems.SEVERED_NOSE.get());
@@ -62,6 +73,7 @@ public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
 
     public YearnCannibal(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
+        this.setMaxUpStep(1);
         this.setCanPickUpLoot(true);
     }
 
@@ -131,7 +143,7 @@ public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createLivingAttributes().add(Attributes.MAX_HEALTH, 100D)
-                .add(Attributes.MOVEMENT_SPEED, 0.25D)
+                .add(Attributes.MOVEMENT_SPEED, 0.2D)
                 .add(Attributes.FOLLOW_RANGE, 24D)
                 .add(Attributes.ARMOR_TOUGHNESS, 6f)
                 .add(Attributes.ATTACK_DAMAGE, 20f)
@@ -160,10 +172,15 @@ public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
             if (!this.level().isClientSide && this.getEatCounter() > 20 && this.random.nextInt(5) == 1) {
                 if (this.getEatCounter() > 45 && FOOD_ITEMS.test(this.getItemBySlot(EquipmentSlot.MAINHAND))) {
                     if (!this.level().isClientSide) {
+
+                        int num = this.getItemBySlot(EquipmentSlot.MAINHAND).getCount();
+                        this.heal(num);
+
                         this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
                         this.gameEvent(GameEvent.EAT);
 
                         this.eat(false);
+
                         return;
                     }
                 }
@@ -271,9 +288,18 @@ public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
         return ModSounds.YEARN_HURT.get();
     }
 
-    @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
 
+    @Override
+    public void registerControllers(final AnimatableManager.ControllerRegistrar controllers) {
+        //controllers.add(new AnimationController<>(this, "Walk", 0, this::walkAnimController).setAnimationSpeed(this.getSpeed()));
+    }
+
+
+    private <E extends YearnCannibal> PlayState walkAnimController(AnimationState<E> state) {
+        if (state.isMoving())
+            return state.setAndContinue(WALK_ANIM);
+
+        return PlayState.STOP;
     }
 
     @Override

@@ -44,8 +44,7 @@ public class FrenzyCannibal extends PathfinderMob implements GeoEntity, RangedAt
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new RangedFrenzyAttackGoal<>(this, 1.1D, 12, 8.5F));
-        //this.goalSelector.addGoal(1, new FollowCannibalGoal(this, 0.65D, 8.0F, 12.0F));
+        this.goalSelector.addGoal(1, new RangedFrenzyAttackGoal<>(this, 1.1D, 30, 8.5F));
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this, FrenzyCannibal.class, YearnCannibal.class, CraveCannibal.class));
         this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 0.5D));
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
