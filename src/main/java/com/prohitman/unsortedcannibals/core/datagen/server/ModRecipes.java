@@ -3,10 +3,7 @@ package com.prohitman.unsortedcannibals.core.datagen.server;
 import com.prohitman.unsortedcannibals.core.init.ModBlocks;
 import com.prohitman.unsortedcannibals.core.init.ModItems;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.*;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
@@ -67,6 +64,18 @@ public class ModRecipes extends RecipeProvider {
                 .pattern("GGG")
                 .pattern("MMM")
                 .unlockedBy("has_fall_trap", has(ModBlocks.FALL_TRAP.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, ModBlocks.REEKING_FLESH_BLOCK.get()).define('R', ModItems.REEKING_FLESH.get())
+                .pattern("RRR")
+                .pattern("RRR")
+                .pattern("RRR")
+                .unlockedBy("has_reeking_flesh", has(ModItems.REEKING_FLESH.get()))
+                .save(consumer);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ModItems.REEKING_FLESH.get(), 9)
+                .requires(ModBlocks.REEKING_FLESH_BLOCK.get())
+                .unlockedBy("has_reeking_flesh", has(ModItems.REEKING_FLESH.get()))
                 .save(consumer);
     }
 }

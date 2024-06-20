@@ -1,4 +1,4 @@
-// 1.20.1	2024-06-12T02:11:16.4504462	Item Models: unsortedcannibals
+// 1.20.1	2024-06-20T20:05:44.2378123	Item Models: unsortedcannibals
 81f5a431b1d96c88e018aa9631646bd5550c32b0 assets/unsortedcannibals/models/item/blow_dart.json
 fd692ec7867f083f384a2bd3fd3da4193ef57153 assets/unsortedcannibals/models/item/bone_barricade.json
 65e9cde60c30169001b8f7815386eb4550e58430 assets/unsortedcannibals/models/item/bone_chestplate.json
@@ -9,6 +9,7 @@ fd692ec7867f083f384a2bd3fd3da4193ef57153 assets/unsortedcannibals/models/item/bo
 ad18e39445264df8f95f93e3d2887368044f877e assets/unsortedcannibals/models/item/live_bait.json
 53e1f8b18f51b178d39e5715930308bd86a7337a assets/unsortedcannibals/models/item/razor_sword.json
 b5436d3dcd59aba8c9a50c17df65cd88d6367f97 assets/unsortedcannibals/models/item/reeking_flesh.json
+cf0ac2a8da39a9976ec11b4c43d9de93cbd380fa assets/unsortedcannibals/models/item/reeking_flesh_block.json
 e7711d693d1e78c084c44606dff86665e196c9cd assets/unsortedcannibals/models/item/serrated_spearhead.json
 ad8ca31e1303eda305f044a77036d52bd9efba1b assets/unsortedcannibals/models/item/severed_nose.json
 346d30f56c2a9f54391b224266286829690b3997 assets/unsortedcannibals/models/item/sharpened_bones.json

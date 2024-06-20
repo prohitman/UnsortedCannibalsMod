@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_reeking_flesh": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "unsortedcannibals:reeking_flesh"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "unsortedcannibals:reeking_flesh"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_reeking_flesh",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "unsortedcannibals:reeking_flesh"
+    ]
+  },
+  "sends_telemetry_event": false
+}

@@ -1,5 +1,6 @@
-// 1.20.1	2024-06-04T11:47:30.718549	Loot Tables
+// 1.20.1	2024-06-20T20:05:44.2398128	Loot Tables
 3c77866dcf6987b0c3af55c533ebdd76aa049053 data/unsortedcannibals/loot_tables/blocks/bone_barricade.json
 b91877d57fd55b7bb4538eef2ff57a291e499bd4 data/unsortedcannibals/loot_tables/blocks/fall_trap.json
+fa9089c8346545410e60874f6a3777e535127cd5 data/unsortedcannibals/loot_tables/blocks/reeking_flesh_block.json
 6a0c4ba075aa2a3d70d405680a68a31752d2fd15 data/unsortedcannibals/loot_tables/blocks/sharpened_bones.json
 18dca6aab6fab2a0ca6cbfce29f90e986c8eb70b data/unsortedcannibals/loot_tables/blocks/sinister_skull.json

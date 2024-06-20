@@ -34,6 +34,7 @@ public class ModBlocks {
     public static final RegistryObject<Block> FALL_TRAP = createRegistry("fall_trap", () -> new FallTrap(BlockBehaviour.Properties.of().sound(SoundType.BAMBOO_WOOD).noCollission()), new Item.Properties());
 
     public static final RegistryObject<Block> SINISTER_SKULL = createRegistry("sinister_skull", () -> new SinisterSkull(BlockBehaviour.Properties.of().lightLevel( (state) -> 15).strength(1.0F).sound(SoundType.BONE_BLOCK).pushReaction(PushReaction.DESTROY)), new Item.Properties().rarity(Rarity.EPIC));
+    public static final RegistryObject<Block> REEKING_FLESH_BLOCK = createRegistry("reeking_flesh_block", () -> new Block(BlockBehaviour.Properties.of().strength(0.5F).sound(SoundType.HONEY_BLOCK)), new Item.Properties());
 
     public static <T extends Block> RegistryObject<Block> createRegistry(String name, Supplier<T> block, Item.Properties properties) {
         RegistryObject<Block> object = BLOCKS.register(name, block);

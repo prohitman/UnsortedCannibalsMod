@@ -16,6 +16,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         createCrossBlock(ModBlocks.BONE_BARRICADE);
+        simpleBlock(ModBlocks.REEKING_FLESH_BLOCK.get());
     }
 
     private void createCrossBlock(RegistryObject<Block> block) {

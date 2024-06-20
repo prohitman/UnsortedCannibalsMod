@@ -18,6 +18,7 @@ public class ModLootTables extends VanillaBlockLoot {
     @Override
     protected void generate(){
         this.dropSelf(ModBlocks.SINISTER_SKULL.get());
+        this.dropSelf(ModBlocks.REEKING_FLESH_BLOCK.get());
         this.add(ModBlocks.FALL_TRAP.get(), noDrop());
         this.add(ModBlocks.SHARPENED_BONES.get(), noDrop());
         this.add(ModBlocks.BONE_BARRICADE.get(), (p_251149_) -> {

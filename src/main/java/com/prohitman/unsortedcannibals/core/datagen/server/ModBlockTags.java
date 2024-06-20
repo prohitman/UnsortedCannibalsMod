@@ -1,6 +1,7 @@
 package com.prohitman.unsortedcannibals.core.datagen.server;
 
 import com.prohitman.unsortedcannibals.UnsortedCannibalsMod;
+import com.prohitman.unsortedcannibals.core.init.ModBlocks;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
@@ -23,6 +24,6 @@ public class ModBlockTags extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
-
+        this.tag(BlockTags.SWORD_EFFICIENT).add(ModBlocks.REEKING_FLESH_BLOCK.get());
     }
 }

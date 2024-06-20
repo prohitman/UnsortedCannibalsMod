@@ -44,6 +44,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         createParent(ModBlocks.SHARPENED_BONES);
         createParent(ModBlocks.FALL_TRAP);
         createParent(ModBlocks.SINISTER_SKULL);
+        createParent(ModBlocks.REEKING_FLESH_BLOCK);
 
     }
 

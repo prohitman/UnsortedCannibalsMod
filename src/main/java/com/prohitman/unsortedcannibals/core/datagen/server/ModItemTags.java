@@ -23,7 +23,6 @@ public class ModItemTags extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
-        //tag(Tags.Items.TOOLS_TRIDENTS).add(ModItems.SERRATED_SPEAR.get());
         tag(Tags.Items.ARMORS_CHESTPLATES).add(ModItems.BONE_CHESTPLATE.get());
         tag(Tags.Items.ARMORS_HELMETS).add(ModItems.BONE_HELMET.get());
         tag(ItemTags.SWORDS).add(ModItems.RAZOR_SWORD.get());

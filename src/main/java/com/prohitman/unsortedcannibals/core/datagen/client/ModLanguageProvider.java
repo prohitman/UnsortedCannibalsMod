@@ -38,6 +38,7 @@ public class ModLanguageProvider extends LanguageProvider {
         addBlock(ModBlocks.SHARPENED_BONES);
         addBlock(ModBlocks.FALL_TRAP);
         addBlock(ModBlocks.SINISTER_SKULL);
+        addBlock(ModBlocks.REEKING_FLESH_BLOCK);
 
         addEffect(ModEffects.LIVE_BAIT);
         addEffect(ModEffects.VISCERAL_PAIN);
