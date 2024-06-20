@@ -3,7 +3,7 @@
   "biomes": "#unsortedcannibals:has_entities/crave_patrol_biomes",
   "spawners": {
     "type": "unsortedcannibals:crave",
-    "weight": 1,
+    "weight": 2,
     "minCount": 1,
     "maxCount": 2
   }

@@ -6,6 +6,10 @@ import com.prohitman.unsortedcannibals.common.entities.living.goals.RangedFrenzy
 import com.prohitman.unsortedcannibals.common.entities.projectile.BlowDart;
 import com.prohitman.unsortedcannibals.core.init.ModSounds;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
@@ -30,12 +34,24 @@ import net.minecraft.world.level.pathfinder.Path;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Range;
 import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
 
 public class FrenzyCannibal extends PathfinderMob implements GeoEntity, RangedAttackMob, Enemy {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private static final EntityDataAccessor<Boolean> IS_SHOOTING = SynchedEntityData.defineId(FrenzyCannibal.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> IS_RUNNING = SynchedEntityData.defineId(FrenzyCannibal.class, EntityDataSerializers.BOOLEAN);
+    protected static final RawAnimation SHOOTING_ANIM = RawAnimation.begin().thenLoop("Shoot");
+    protected static final RawAnimation WALK_ANIM = RawAnimation.begin().thenLoop("Walk");
+    protected static final RawAnimation RUN_ANIM = RawAnimation.begin().thenLoop("Run");
+    protected static final RawAnimation IDLE_ANIM = RawAnimation.begin().thenLoop("Idle");
+    public int shootAnimationTimeout = 0;
 
     public FrenzyCannibal(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -44,7 +60,7 @@ public class FrenzyCannibal extends PathfinderMob implements GeoEntity, RangedAt
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new RangedFrenzyAttackGoal<>(this, 1.1D, 30, 8.5F));
+        this.goalSelector.addGoal(1, new RangedFrenzyAttackGoal(this, 1.1D, 30, 8.5F));
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this, FrenzyCannibal.class, YearnCannibal.class, CraveCannibal.class));
         this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 0.5D));
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
@@ -68,6 +84,41 @@ public class FrenzyCannibal extends PathfinderMob implements GeoEntity, RangedAt
                 .add(Attributes.ATTACK_DAMAGE, 5f)
                 .add(Attributes.ATTACK_KNOCKBACK, 0.25f);
     }
+
+    public boolean isShooting() {
+        return this.entityData.get(IS_SHOOTING);
+    }
+
+    public void setIsShooting(boolean is_shooting) {
+        this.entityData.set(IS_SHOOTING, is_shooting);
+    }
+    public boolean isRunning() {
+        return this.entityData.get(IS_RUNNING);
+    }
+
+    public void setIsRunning(boolean is_running) {
+        this.entityData.set(IS_RUNNING, is_running);
+    }
+
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(IS_RUNNING, false);
+        this.entityData.define(IS_SHOOTING, false);
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag pCompound) {
+        super.addAdditionalSaveData(pCompound);
+        pCompound.putBoolean("is_shooting", this.entityData.get(IS_SHOOTING));
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag pCompound) {
+        super.readAdditionalSaveData(pCompound);
+        this.entityData.set(IS_SHOOTING, pCompound.getBoolean("is_shooting"));
+
+    }
+
     @Override
     public boolean isPersistenceRequired() {
         return true;//add despawning only when patrolling
@@ -117,8 +168,34 @@ public class FrenzyCannibal extends PathfinderMob implements GeoEntity, RangedAt
     }
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+    public void registerControllers(final AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController<>(this, "Walk/Run/Idle", 3, this::walkAnimController));
+        controllers.add(new AnimationController<>(this, "Shoot", 1, this::shootAnimController));
 
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if(!this.level().isClientSide){
+            this.setIsRunning(this.moveControl.getSpeedModifier() >= 0.75);
+        }
+    }
+
+    private PlayState walkAnimController(AnimationState<FrenzyCannibal> state) {
+        if(this.isRunning()){
+            return state.setAndContinue(RUN_ANIM);
+        }
+        else if (state.isMoving()){
+            return state.setAndContinue(WALK_ANIM);
+        }
+        else{
+            return state.setAndContinue(IDLE_ANIM);
+        }
+    }
+
+    private PlayState shootAnimController(AnimationState<FrenzyCannibal> state) {
+        return this.isShooting() ? state.setAndContinue(SHOOTING_ANIM) : PlayState.STOP;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.prohitman.unsortedcannibals.common.entities.living.goals;
 
+import com.prohitman.unsortedcannibals.common.entities.living.FrenzyCannibal;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -12,8 +13,8 @@ import net.minecraft.world.item.BowItem;
 
 import java.util.EnumSet;
 
-public class RangedFrenzyAttackGoal <T extends Mob & RangedAttackMob> extends Goal {
-    private final T mob;
+public class RangedFrenzyAttackGoal extends Goal {
+    private final FrenzyCannibal mob;
     private final double speedModifier;
     private int attackIntervalMin;
     private final float attackRadiusSqr;
@@ -24,11 +25,7 @@ public class RangedFrenzyAttackGoal <T extends Mob & RangedAttackMob> extends Go
     private boolean strafingBackwards;
     private int strafingTime = -1;
 
-    public <M extends Monster & RangedAttackMob> RangedFrenzyAttackGoal(M pMob, double pSpeedModifier, int pAttackIntervalMin, float pAttackRadius){
-        this((T) pMob, pSpeedModifier, pAttackIntervalMin, pAttackRadius);
-    }
-
-    public RangedFrenzyAttackGoal(T pMob, double pSpeedModifier, int pAttackIntervalMin, float pAttackRadius) {
+    public RangedFrenzyAttackGoal(FrenzyCannibal pMob, double pSpeedModifier, int pAttackIntervalMin, float pAttackRadius) {
         this.mob = pMob;
         this.speedModifier = pSpeedModifier;
         this.attackIntervalMin = pAttackIntervalMin;
@@ -74,6 +71,7 @@ public class RangedFrenzyAttackGoal <T extends Mob & RangedAttackMob> extends Go
         this.seeTime = 0;
         this.attackTime = -1;
         this.mob.stopUsingItem();
+        this.mob.setIsShooting(false);
     }
 
     public boolean requiresUpdateEveryTick() {
@@ -101,9 +99,11 @@ public class RangedFrenzyAttackGoal <T extends Mob & RangedAttackMob> extends Go
 
             if (!(d0 > (double)this.attackRadiusSqr) && this.seeTime >= 20) {
                 this.mob.getNavigation().stop();
+                this.mob.setIsShooting(true);
                 ++this.strafingTime;
             } else {
                 this.mob.getNavigation().moveTo(livingentity, this.speedModifier);
+                this.mob.setIsShooting(false);
                 this.strafingTime = -1;
             }
 

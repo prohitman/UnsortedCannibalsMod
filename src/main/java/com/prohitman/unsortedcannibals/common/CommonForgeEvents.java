@@ -7,11 +7,14 @@ import com.prohitman.unsortedcannibals.core.init.ModEntities;
 import com.prohitman.unsortedcannibals.core.init.ModItems;
 import com.prohitman.unsortedcannibals.core.init.ModSounds;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.critereon.LocationPredicate;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BiomeTags;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -23,13 +26,18 @@ import net.minecraft.world.entity.npc.Npc;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.StructureManager;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.structure.BuiltinStructures;
+import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
+import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -94,13 +102,44 @@ public class CommonForgeEvents {
 
     @SubscribeEvent
     public static void onCritHit(CriticalHitEvent event){
-        if(event.getTarget() instanceof LivingEntity livingEntity && event.isVanillaCritical() && event.getEntity().getMainHandItem().is(ModItems.CRUSHER_AXE.get())){
+        if(event.getTarget() instanceof LivingEntity livingEntity && event.isVanillaCritical() && event.getEntity().getMainHandItem().is(ModItems.CRUSHER_AXE.get()) && !event.getEntity().isCreative() && !event.getEntity().isSpectator()){
             livingEntity.addEffect(new MobEffectInstance(ModEffects.SHATTERED_BONES.get(), 100), livingEntity);
             event.getEntity().level().playSound(livingEntity, livingEntity.blockPosition(), SoundEvents.WITHER_BREAK_BLOCK, SoundSource.BLOCKS, 1, 1);
         }
     }
 
+    @SubscribeEvent
+    public static void onJumpEntity(LivingEvent.LivingJumpEvent event){
+        if(event.getEntity().hasEffect(ModEffects.SHATTERED_BONES.get())){
+                event.getEntity().setDeltaMovement(Vec3.ZERO);
+        }
+    }
 
+   /* @SubscribeEvent
+    public static void spawnCannibalsInCamp(MobSpawnEvent.FinalizeSpawn event){
+        StructureManager structureManager = event.getLevel().getLevel().structureManager();
+        if()
+
+    }
+SpawnPlacements
+
+    public static boolean isInNetherFortressBounds(BlockPos pPos, ServerLevel pLevel, MobCategory pCategory, StructureManager pStructureManager) {
+        if (pCategory == MobCategory.MONSTER && pLevel.getBlockState(pPos.below()).is(Blocks.NETHER_BRICKS)) {
+            Structure structure = pStructureManager.registryAccess().registryOrThrow(Registries.STRUCTURE).get(BuiltinStructures.FORTRESS);
+            return structure == null ? false : pStructureManager.getStructureAt(pPos, structure).isValid();
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean isInCampSiteBounds(BlockPos pPos, ServerLevel pLevel, MobCategory pCategory, StructureManager pStructureManager) {
+        if (pCategory == MobCategory.MONSTER && pLevel.getBlockState(pPos.below()).is(BlockTags.DIRT)) {
+            Structure structure = pStructureManager.registryAccess().registryOrThrow(Registries.STRUCTURE).get();
+            return structure == null ? false : pStructureManager.getStructureAt(pPos, structure).isValid();
+        } else {
+            return false;
+        }
+    }*/
 
     @SubscribeEvent
     public static void onLiveBaitExpire(MobEffectEvent.Expired event) {

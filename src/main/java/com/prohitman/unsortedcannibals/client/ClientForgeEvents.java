@@ -11,6 +11,7 @@ import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
@@ -22,8 +23,8 @@ import net.minecraftforge.fml.common.Mod;
 public class ClientForgeEvents {
 
 
-    @SubscribeEvent
-    public static void onKeyPressed(TickEvent.ClientTickEvent event){
+    //@SubscribeEvent
+    //public static void onKeyPressed(){
 
-    }
+   // }
 }

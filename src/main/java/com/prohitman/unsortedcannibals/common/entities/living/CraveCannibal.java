@@ -64,6 +64,8 @@ import java.util.function.Predicate;
 public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enemy {
     private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(CraveCannibal.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> IS_ALONE = SynchedEntityData.defineId(CraveCannibal.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> IS_RUNNING = SynchedEntityData.defineId(CraveCannibal.class, EntityDataSerializers.BOOLEAN);
+
     private static final Predicate<Mob> CANNIBAL_PREDICATE =
             mob -> mob != null && mob.getMobType() == ModMobTypes.CANNIBAL;
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
@@ -88,6 +90,12 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
         this.entityData.set(IS_ALONE, is_lonely);
     }
 
+    public boolean isRunning() {
+        return this.entityData.get(IS_RUNNING);
+    }
+    public void setIsRunning(boolean is_running) {
+        this.entityData.set(IS_RUNNING, is_running);
+    }
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
@@ -135,7 +143,6 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
     }
 
     protected void populateDefaultEquipmentSlots(RandomSource pRandom, DifficultyInstance pDifficulty) {
-
         this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(ModItems.SERRATED_SPEAR.get()));
     }
 
@@ -147,6 +154,7 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
         super.defineSynchedData();
         this.entityData.define(DATA_FLAGS_ID, (byte)0);
         this.entityData.define(IS_ALONE, false);
+        this.entityData.define(IS_RUNNING, false);
     }
 
     @Override
@@ -164,6 +172,7 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
         super.tick();
         if (!this.level().isClientSide) {
             this.setClimbing(this.horizontalCollision);
+            this.setIsRunning(this.moveControl.getSpeedModifier() > 0.75);
         }
 
         List<PathfinderMob> list = this.level().getEntitiesOfClass(PathfinderMob.class, this.getBoundingBox().inflate(20.0D), CANNIBAL_PREDICATE);
@@ -352,7 +361,7 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
         }
 
         protected double getAttackReachSqr(LivingEntity pAttackTarget) {
-           return super.getAttackReachSqr(pAttackTarget) + 3.0f;
+           return super.getAttackReachSqr(pAttackTarget) + 2.0f;
         }
     }
 }
