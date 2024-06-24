@@ -16,7 +16,6 @@
 					"pivot": [0, 17, 0],
 					"cubes": [
 						{"origin": [-12, 12, -10], "size": [24, 19, 18], "uv": [0, 0]},
-						{"origin": [-11, 1, -6], "size": [22, 11, 11], "uv": [0, 37]},
 						{"origin": [-2.5, 5.5, -7], "size": [5, 6, 0], "uv": [32, 69]}
 					]
 				},
@@ -31,7 +30,7 @@
 					]
 				},
 				{
-					"name": "LefLeg",
+					"name": "RightLeg",
 					"parent": "Body",
 					"pivot": [-6, 11, 0],
 					"cubes": [
@@ -39,15 +38,15 @@
 					]
 				},
 				{
-					"name": "LeftFoot",
-					"parent": "LefLeg",
+					"name": "RightFoot",
+					"parent": "RightLeg",
 					"pivot": [-6, 3, 0],
 					"cubes": [
 						{"origin": [-9, 0, -5], "size": [6, 2, 8], "uv": [32, 59]}
 					]
 				},
 				{
-					"name": "RightLeg",
+					"name": "LeftLeg",
 					"parent": "Body",
 					"pivot": [6, 11, 0],
 					"cubes": [
@@ -55,15 +54,15 @@
 					]
 				},
 				{
-					"name": "RightFoot",
-					"parent": "RightLeg",
+					"name": "LeftFoot",
+					"parent": "LeftLeg",
 					"pivot": [6, 3, 0],
 					"cubes": [
 						{"origin": [3, 0, -5], "size": [6, 2, 8], "uv": [32, 59], "mirror": true}
 					]
 				},
 				{
-					"name": "RightArm",
+					"name": "LeftArm",
 					"parent": "Body",
 					"pivot": [16, 28, 0],
 					"cubes": [
@@ -73,13 +72,29 @@
 					]
 				},
 				{
-					"name": "LeftArm",
+					"name": "RightArm",
 					"parent": "Body",
 					"pivot": [-16, 28, 0],
 					"cubes": [
 						{"origin": [-20, 2, -4], "size": [8, 28, 8], "uv": [0, 59], "mirror": true},
 						{"origin": [-20.5, 5.5, -4.5], "size": [5, 12, 9], "uv": [75, 46]},
 						{"origin": [-24.5, 5.5, 0], "size": [4, 12, 0], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "Item",
+					"parent": "RightArm",
+					"pivot": [-11, 5, -1],
+					"cubes": [
+						{"origin": [-12, 4, -2], "size": [2, 2, 2], "uv": [42, 69]}
+					]
+				},
+				{
+					"name": "Clothes",
+					"parent": "Body",
+					"pivot": [0, 17, 0],
+					"cubes": [
+						{"origin": [-11, 1, -6], "size": [22, 11, 11], "uv": [0, 37]}
 					]
 				}
 			]

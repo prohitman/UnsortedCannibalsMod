@@ -27,7 +27,7 @@ public class CannibalFollowItemGoal extends Goal {
         if (!cannibal.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty()) {
             return false;
         } else {
-            List<ItemEntity> list = cannibal.level().getEntitiesOfClass(ItemEntity.class, cannibal.getBoundingBox().inflate(8.0D, 8.0D, 8.0D), YearnCannibal.ALLOWED_ITEMS);
+            List<ItemEntity> list = cannibal.level().getEntitiesOfClass(ItemEntity.class, cannibal.getBoundingBox().inflate(10.0D, 10.0D, 10.0D), YearnCannibal.ALLOWED_ITEMS);
             return !list.isEmpty() && cannibal.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty();
         }
     }

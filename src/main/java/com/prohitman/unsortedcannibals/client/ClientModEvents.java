@@ -11,11 +11,9 @@ import com.prohitman.unsortedcannibals.client.renderer.entity.projectile.BlowDar
 import com.prohitman.unsortedcannibals.client.renderer.entity.projectile.ThrownSpearRenderer;
 import com.prohitman.unsortedcannibals.common.entities.living.CraveCannibal;
 import com.prohitman.unsortedcannibals.common.entities.living.DummyCannibal;
-import com.prohitman.unsortedcannibals.core.init.ModBlocks;
-import com.prohitman.unsortedcannibals.core.init.ModEffects;
-import com.prohitman.unsortedcannibals.core.init.ModEntities;
-import com.prohitman.unsortedcannibals.core.init.ModItems;
+import com.prohitman.unsortedcannibals.core.init.*;
 import net.minecraft.client.color.block.BlockColors;
+import net.minecraft.client.particle.SoulParticle;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.ScreenEffectRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -32,6 +30,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -67,6 +66,11 @@ public class ClientModEvents {
                 return living != null && living.isUsingItem() && living.getUseItem() == stack ? 1.0F : 0.0F;
             });
         });
+    }
+
+    @SubscribeEvent
+    public static void registerParticles(RegisterParticleProvidersEvent event){
+        event.registerSpriteSet(ModParticles.SINISTER_SKULL_PARTICLE.get(), SoulParticle.EmissiveProvider::new);
     }
 
     @SubscribeEvent

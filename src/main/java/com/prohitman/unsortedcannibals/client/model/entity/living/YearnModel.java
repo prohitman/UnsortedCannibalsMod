@@ -23,7 +23,7 @@ public class YearnModel extends DefaultedEntityGeoModel<YearnCannibal> {
 
         CoreGeoBone head = getAnimationProcessor().getBone("Head");
 
-        if (head != null) {
+        if (head != null && !animatable.isEating()) {
             EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
 
             head.setRotX(entityData.headPitch() * Mth.DEG_TO_RAD);

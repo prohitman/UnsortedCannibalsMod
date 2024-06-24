@@ -1,6 +1,7 @@
 package com.prohitman.unsortedcannibals.common.blocks;
 
 import com.prohitman.unsortedcannibals.core.init.ModEffects;
+import com.prohitman.unsortedcannibals.core.init.ModParticles;
 import com.prohitman.unsortedcannibals.core.init.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -35,8 +36,12 @@ public class SinisterSkull extends HorizontalDirectionalBlock {
         if(!state.getValue(PERSISTENT)){
             player.addEffect(new MobEffectInstance(ModEffects.LIVE_BAIT.get(), 600, 1), player);
             level.playSound(null, pos, ModSounds.SINISTER_SKULL.get(), SoundSource.HOSTILE, 1, 1);
-            for(int i=0; i<8; i++){
+            for(int i=0; i<6; i++){
                 level.addParticle(ParticleTypes.SOUL, pos.getX() + (level.random.nextDouble() - 0.2D), pos.getY() + 0.1D, pos.getZ()+ (level.random.nextDouble() - 0.2D), 0, 0.1D, 0);
+                level.addParticle(ParticleTypes.SMOKE, pos.getX() + (level.random.nextDouble() - 0.2D), pos.getY() + 0.1D, pos.getZ()+ (level.random.nextDouble() - 0.2D), 0, 0.1D, 0);
+                if(level.random.nextFloat() < 0.65){
+                    level.addParticle(ModParticles.SINISTER_SKULL_PARTICLE.get(), pos.getX() + (level.random.nextDouble() - 0.2D), pos.getY() + 0.1D, pos.getZ()+ (level.random.nextDouble() - 0.2D), 0, 0.1D, 0);
+                }
             }
         }
         return super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);

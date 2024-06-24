@@ -26,7 +26,7 @@ import software.bernie.geckolib.renderer.layer.BlockAndItemGeoLayer;
 import javax.annotation.Nullable;
 
 public class CraveRenderer extends GeoEntityRenderer<CraveCannibal> {
-    private static final String RIGHT_HAND = "RArm";
+    private static final String RIGHT_HAND = "Item";
     protected ItemStack mainHandItem;
 
     public CraveRenderer(EntityRendererProvider.Context renderManager) {
@@ -59,7 +59,7 @@ public class CraveRenderer extends GeoEntityRenderer<CraveCannibal> {
                                               MultiBufferSource bufferSource, float partialTick, int packedLight, int packedOverlay) {
                 if (stack == CraveRenderer.this.mainHandItem) {
                     poseStack.mulPose(Axis.XP.rotationDegrees(-90f));
-                    poseStack.translate(0.1, 0.2, -0.8);
+                    //poseStack.translate(0.1, 0.2, 0);
                 }
 
                 super.renderStackForBone(poseStack, bone, stack, animatable, bufferSource, partialTick, packedLight, packedOverlay);

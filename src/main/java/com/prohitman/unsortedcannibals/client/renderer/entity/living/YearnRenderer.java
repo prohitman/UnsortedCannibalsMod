@@ -21,7 +21,7 @@ import software.bernie.geckolib.renderer.layer.BlockAndItemGeoLayer;
 import javax.annotation.Nullable;
 
 public class YearnRenderer extends GeoEntityRenderer<YearnCannibal> {
-    private static final String RIGHT_HAND = "RightArm";
+    private static final String RIGHT_HAND = "Item";
     protected ItemStack mainHandItem;
 
 
@@ -56,8 +56,11 @@ public class YearnRenderer extends GeoEntityRenderer<YearnCannibal> {
             protected void renderStackForBone(PoseStack poseStack, GeoBone bone, ItemStack stack, YearnCannibal animatable,
                                               MultiBufferSource bufferSource, float partialTick, int packedLight, int packedOverlay) {
                 if (stack == YearnRenderer.this.mainHandItem) {
-                    poseStack.mulPose(Axis.XP.rotationDegrees(-90f));
-                    poseStack.translate(0, 0.175, -1.5);
+                    //if(animatable.isEating()){
+                        //poseStack.translate(0, -1.125, -1.25);
+
+                    //}
+                    //poseStack.mulPose(Axis.XP.rotationDegrees(-90f));
                 }
 
                 super.renderStackForBone(poseStack, bone, stack, animatable, bufferSource, partialTick, packedLight, packedOverlay);

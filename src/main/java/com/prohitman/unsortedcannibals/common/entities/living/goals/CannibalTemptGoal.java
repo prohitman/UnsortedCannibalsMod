@@ -22,7 +22,6 @@ public class CannibalTemptGoal extends Goal{
     private double pRotY;
     @Nullable
     protected Player player;
-    private boolean isRunning;
     private final Ingredient items;
     private final boolean canScare;
 
@@ -85,7 +84,6 @@ public class CannibalTemptGoal extends Goal{
         this.px = this.player.getX();
         this.py = this.player.getY();
         this.pz = this.player.getZ();
-        this.isRunning = true;
     }
 
     /**
@@ -94,7 +92,6 @@ public class CannibalTemptGoal extends Goal{
     public void stop() {
         this.player = null;
         this.mob.getNavigation().stop();
-        this.isRunning = false;
     }
 
     /**
@@ -102,18 +99,11 @@ public class CannibalTemptGoal extends Goal{
      */
     public void tick() {
         this.mob.getLookControl().setLookAt(this.player, (float)(this.mob.getMaxHeadYRot() + 20), (float)this.mob.getMaxHeadXRot());
-        if (this.mob.distanceToSqr(this.player) < 6.25D) {
+        if (this.mob.distanceToSqr(this.player) < 3.25D) {
             this.mob.getNavigation().stop();
         } else {
             this.mob.getNavigation().moveTo(this.player, this.speedModifier);
         }
 
-    }
-
-    /**
-     * @see #isRunning
-     */
-    public boolean isRunning() {
-        return this.isRunning;
     }
 }

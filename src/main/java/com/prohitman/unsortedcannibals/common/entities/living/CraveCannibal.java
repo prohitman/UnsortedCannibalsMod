@@ -38,9 +38,7 @@ import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.animal.Parrot;
 import net.minecraft.world.entity.animal.camel.Camel;
-import net.minecraft.world.entity.monster.Enemy;
-import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.monster.Pillager;
+import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.monster.piglin.PiglinBrute;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -55,6 +53,10 @@ import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +67,12 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
     private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(CraveCannibal.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> IS_ALONE = SynchedEntityData.defineId(CraveCannibal.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IS_RUNNING = SynchedEntityData.defineId(CraveCannibal.class, EntityDataSerializers.BOOLEAN);
+
+    protected static final RawAnimation WALK_ANIM = RawAnimation.begin().thenLoop("Walk");
+    protected static final RawAnimation IDLE_ANIM = RawAnimation.begin().thenLoop("Idle");
+    protected static final RawAnimation RUN_ANIM = RawAnimation.begin().thenLoop("Run");
+    protected static final RawAnimation ATTACK_ANIM = RawAnimation.begin().thenLoop("Attack");
+    protected static final RawAnimation CLIMB_ANIM = RawAnimation.begin().thenLoop("Climb3");
 
     private static final Predicate<Mob> CANNIBAL_PREDICATE =
             mob -> mob != null && mob.getMobType() == ModMobTypes.CANNIBAL;
@@ -103,7 +111,7 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
         this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 0.5D));
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(4, new CraveCannibal.CraveMeleeAttackGoal(this));
-        this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Mob.class, 5, true, false, (livingEntity -> {
+        this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Mob.class, 5, false, false, (livingEntity -> {
             if(livingEntity instanceof Mob mob){
                 return mob.getMobType() != ModMobTypes.CANNIBAL && !mob.isUnderWater();
             }
@@ -139,7 +147,11 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
 
     @Override
     public boolean isPersistenceRequired() {
-        return true;//add despawning only when patrolling
+        return !this.isPatrolling();
+    }
+
+    public boolean removeWhenFarAway(double pDistanceToClosestPlayer) {
+        return !this.isPersistenceRequired();
     }
 
     protected void populateDefaultEquipmentSlots(RandomSource pRandom, DifficultyInstance pDifficulty) {
@@ -346,8 +358,21 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
     }
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+    public void registerControllers(final AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController<>(this, "Walk", 3, this::walkAnimController));
+    }
 
+    private PlayState walkAnimController(AnimationState<CraveCannibal> state) {
+        if(this.isRunning() && state.isMoving()){
+            return state.setAndContinue(RUN_ANIM);
+        } else if (this.isClimbing()){
+            return state.setAndContinue(CLIMB_ANIM);
+        }
+        else if (state.isMoving()){
+            return state.setAndContinue(WALK_ANIM);
+        }
+
+        return state.setAndContinue(IDLE_ANIM);
     }
 
     @Override

@@ -60,6 +60,10 @@ import java.util.function.Predicate;
 public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
     protected static final RawAnimation WALK_ANIM = RawAnimation.begin().thenLoop("Walk");
     protected static final RawAnimation EATING_ANIM = RawAnimation.begin().thenLoop("Eating2");
+    protected static final RawAnimation IDLE_ANIM = RawAnimation.begin().thenLoop("Idle");
+    protected static final RawAnimation RUN_ANIM = RawAnimation.begin().thenLoop("Run");
+    protected static final RawAnimation ATTAK_ANIM = RawAnimation.begin().thenLoop("Attack");
+
     private static final EntityDataAccessor<Integer> EAT_COUNTER = SynchedEntityData.defineId(YearnCannibal.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> IS_RUNNING = SynchedEntityData.defineId(YearnCannibal.class, EntityDataSerializers.BOOLEAN);
 
@@ -308,14 +312,17 @@ public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
 
 
     private PlayState walkAnimController(AnimationState<YearnCannibal> state) {
-        if (state.isMoving()){
-            return state.setAndContinue(WALK_ANIM);
-        }
-        else if(this.isEating()){
+        if(this.isEating()){
             return state.setAndContinue(EATING_ANIM);
         }
+        else if(this.isRunning() && state.isMoving()){
+            return state.setAndContinue(RUN_ANIM);
+        }
+        else if (state.isMoving()){
+            return state.setAndContinue(WALK_ANIM);
+        }
 
-        return PlayState.STOP;
+        return state.setAndContinue(IDLE_ANIM);
     }
 
     private PlayState eatingAnimController(AnimationState<YearnCannibal> state) {

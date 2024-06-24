@@ -47,7 +47,7 @@ public class FrenzyCannibal extends PathfinderMob implements GeoEntity, RangedAt
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private static final EntityDataAccessor<Boolean> IS_SHOOTING = SynchedEntityData.defineId(FrenzyCannibal.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IS_RUNNING = SynchedEntityData.defineId(FrenzyCannibal.class, EntityDataSerializers.BOOLEAN);
-    protected static final RawAnimation SHOOTING_ANIM = RawAnimation.begin().thenLoop("Shoot");
+    protected static final RawAnimation SHOOTING_ANIM = RawAnimation.begin().thenLoop("Shoot2");
     protected static final RawAnimation WALK_ANIM = RawAnimation.begin().thenLoop("Walk");
     protected static final RawAnimation RUN_ANIM = RawAnimation.begin().thenLoop("Run");
     protected static final RawAnimation IDLE_ANIM = RawAnimation.begin().thenLoop("Idle");
@@ -183,7 +183,7 @@ public class FrenzyCannibal extends PathfinderMob implements GeoEntity, RangedAt
     }
 
     private PlayState walkAnimController(AnimationState<FrenzyCannibal> state) {
-        if(this.isRunning()){
+        if(this.isRunning() && state.isMoving()){
             return state.setAndContinue(RUN_ANIM);
         }
         else if (state.isMoving()){
