@@ -22,9 +22,4 @@ import net.minecraftforge.fml.common.Mod;
 
 public class ClientForgeEvents {
 
-
-    //@SubscribeEvent
-    //public static void onKeyPressed(){
-
-   // }
 }

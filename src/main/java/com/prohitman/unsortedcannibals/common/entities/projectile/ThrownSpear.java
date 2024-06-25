@@ -188,11 +188,6 @@ public class ThrownSpear extends AbstractArrow implements GeoAnimatable {
         return true;
     }
 
-   /* @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }*/
-
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
 

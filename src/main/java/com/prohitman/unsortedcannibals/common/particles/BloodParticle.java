@@ -18,8 +18,8 @@ public class BloodParticle extends TextureSheetParticle {
         this.xd = pXSpeed;
         this.yd = pYSpeed;
         this.zd = pZSpeed;
-        this.quadSize = 0.5F * (this.random.nextFloat() * this.random.nextFloat() * 1.0F + 1.0F);
-        this.lifetime = (int)(8.0D / ((double)this.random.nextFloat() * 0.8D + 0.2D)) + 4;
+        this.quadSize = 0.3F * (this.random.nextFloat() * this.random.nextFloat() * 1.0F + 1.0F);
+        this.lifetime = (int)(8.0D / ((double)this.random.nextFloat() * 0.8D + 0.2D)) + 8;
         this.setSpriteFromAge(pSprites);
         //this.setColor(0.6F, 0.0F, 0.0F); // Blood color
     }

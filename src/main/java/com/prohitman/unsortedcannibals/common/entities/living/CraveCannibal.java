@@ -2,14 +2,12 @@ package com.prohitman.unsortedcannibals.common.entities.living;
 
 import com.google.common.collect.Maps;
 import com.prohitman.unsortedcannibals.common.entities.ModMobTypes;
-import com.prohitman.unsortedcannibals.common.entities.living.goals.CraveAvoidPlayerGoal;
+import com.prohitman.unsortedcannibals.common.entities.living.goals.CraveMeleeAttackGoal;
 import com.prohitman.unsortedcannibals.common.entities.living.goals.FollowCannibalGoal;
 import com.prohitman.unsortedcannibals.core.init.ModEffects;
 import com.prohitman.unsortedcannibals.core.init.ModItems;
 import com.prohitman.unsortedcannibals.core.init.ModSounds;
 import net.minecraft.Util;
-import net.minecraft.advancements.critereon.LocationPredicate;
-import net.minecraft.client.resources.sounds.Sound;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -48,6 +46,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.CryingObsidianBlock;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
+import org.apache.commons.compress.archivers.sevenz.CLI;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -68,6 +67,8 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
     private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(CraveCannibal.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> IS_ALONE = SynchedEntityData.defineId(CraveCannibal.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IS_RUNNING = SynchedEntityData.defineId(CraveCannibal.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> IS_ATTACKING = SynchedEntityData.defineId(CraveCannibal.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> IS_MOVING = SynchedEntityData.defineId(CraveCannibal.class, EntityDataSerializers.BOOLEAN);
 
     protected static final RawAnimation WALK_ANIM = RawAnimation.begin().thenLoop("Walk");
     protected static final RawAnimation IDLE_ANIM = RawAnimation.begin().thenLoop("Idle");
@@ -105,13 +106,30 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
     public void setIsRunning(boolean is_running) {
         this.entityData.set(IS_RUNNING, is_running);
     }
+    public void setAttacking(boolean attacking) {
+        this.entityData.set(IS_ATTACKING, attacking);
+    }
+    public boolean isAttacking() {
+        return this.entityData.get(IS_ATTACKING);
+    }
+
+    public void setMoving(boolean moving) {
+        this.entityData.set(IS_MOVING, moving);
+    }
+    public boolean isMoving() {
+        return this.entityData.get(IS_MOVING);
+    }
+
+    public int attackAnimationTimeout = 0;
+    public boolean shouldStartAnim = false;
+
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
+        this.goalSelector.addGoal(1, new CraveMeleeAttackGoal(this, 0.9D, true, 12, 25, 3));
         this.goalSelector.addGoal(1, new FollowCannibalGoal(this, 0.55D, 6.0F, 25f));
         this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 0.5D));
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(4, new CraveCannibal.CraveMeleeAttackGoal(this));
         this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Mob.class, 5, false, false, (livingEntity -> {
             if(livingEntity instanceof Mob mob){
                 return mob.getMobType() != ModMobTypes.CANNIBAL && !mob.isUnderWater();
@@ -122,7 +140,6 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
         this.targetSelector.addGoal(9, new NearestAttackableTargetGoal<>(this, Player.class, 0, false, false, (livingEntity -> {
             return !livingEntity.isSpectator() && !((Player)livingEntity).isCreative() && !this.isAlone();
         })));
-        //this.goalSelector.addGoal(9, new CraveAvoidPlayerGoal(this));
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -164,6 +181,9 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
         this.entityData.define(DATA_FLAGS_ID, (byte)0);
         this.entityData.define(IS_ALONE, false);
         this.entityData.define(IS_RUNNING, false);
+        this.entityData.define(IS_ATTACKING, false);
+        this.entityData.define(IS_MOVING, false);
+
     }
 
     @Override
@@ -182,11 +202,14 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
         if (!this.level().isClientSide) {
             this.setClimbing(this.horizontalCollision);
             this.setIsRunning(this.moveControl.getSpeedModifier() > 0.75);
+            this.checkIsMoving();
+        } else {
+            this.setupAttackAnimation();
         }
 
         List<PathfinderMob> list = this.level().getEntitiesOfClass(PathfinderMob.class, this.getBoundingBox().inflate(20.0D), CANNIBAL_PREDICATE);
         list.remove(this);
-        if(list.isEmpty()){
+        if(list.isEmpty() && this.isPatrolling()){
             this.setAlone(true);
             if(this.getTarget() instanceof Player){
                 this.setTarget(null);
@@ -210,6 +233,19 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
                     }
                 }
             }
+        }
+    }
+
+    private void setupAttackAnimation() {
+        if(this.isAttacking() && attackAnimationTimeout <= 0) {
+            attackAnimationTimeout = 25;
+            shouldStartAnim = true;
+        } else {
+            --this.attackAnimationTimeout;
+        }
+
+        if(!this.isAttacking()) {
+            shouldStartAnim = false;
         }
     }
 
@@ -258,17 +294,11 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
 
     public static boolean imitateNearbyMobs(Level pLevel, Entity cannibal) {
         if (cannibal.isAlive() && ((CraveCannibal)cannibal).getTarget() == null && !cannibal.isSilent() && pLevel.random.nextInt(2) == 0) {
-            //List<Mob> list = pLevel.getEntitiesOfClass(Mob.class, pParrot.getBoundingBox().inflate(20.0D), NOT_PARROT_PREDICATE);
-            //if (!list.isEmpty()) {
-                //Mob mob = list.get(pLevel.random.nextInt(list.size()));
             int biome = getBiomeIn(cannibal);
 
             SoundEvent soundevent = getImitatedSound(biome, cannibal);
             pLevel.playSound((Player)null, cannibal.getX(), cannibal.getY(), cannibal.getZ(), soundevent, cannibal.getSoundSource(), 0.9F, 0.825F);
             return true;
-
-            //}
-
         } else {
             return false;
         }
@@ -295,10 +325,6 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
     @Override
     protected SoundEvent getHurtSound(DamageSource pDamageSource) {
         return ModSounds.CRAVE_HURT.get();
-    }
-
-    public static float getPitch(RandomSource pRandom) {
-        return  1.0F - (pRandom.nextFloat() - pRandom.nextFloat()) * 0.15F;
     }
 
     public static int getBiomeIn(Entity cannibal){
@@ -356,14 +382,18 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
 
     @Override
     public void registerControllers(final AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "Walk", 5, this::walkAnimController));
+        controllers.add(new AnimationController<>(this, "Walk", 4, this::walkAnimController));
     }
 
     private PlayState walkAnimController(AnimationState<CraveCannibal> state) {
-        if(this.isRunning() && state.isMoving()){
+        if(shouldStartAnim){
+            return state.setAndContinue(ATTACK_ANIM);
+        }
+        else if (this.isClimbing() && this.isMoving()){
+            return state.setAndContinue(CLIMB_ANIM);
+        }
+        else if(this.isRunning() && state.isMoving()){
             return state.setAndContinue(RUN_ANIM);
-        } else if (this.isClimbing() && !this.isMoving()){
-            return state.setAndContinue(CLIMB_ANIM);//Set a longer tick transition
         }
         else if (state.isMoving()){
             return state.setAndContinue(WALK_ANIM);
@@ -372,7 +402,7 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
         return state.setAndContinue(IDLE_ANIM);
     }
 
-    public boolean isMoving(){
+    public void checkIsMoving(){
         CompoundTag entityData = this.getPersistentData();
 
         CompoundTag position = entityData.getCompound("position");
@@ -390,29 +420,11 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
 
         entityData.put("position", position);
 
-        if(!currentPos.equals(oldPos)){
-            return true;
-        }
-
-        return false;
+        this.setMoving(!currentPos.equals(oldPos));
     }
-
-    //private PlayState climbAnimController(AnimationState<CraveCannibal> state){
-
-    //}
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return this.cache;
-    }
-
-    class CraveMeleeAttackGoal extends MeleeAttackGoal {
-        public CraveMeleeAttackGoal(CraveCannibal crave) {
-            super(crave, 1.0D, true);
-        }
-
-        protected double getAttackReachSqr(LivingEntity pAttackTarget) {
-           return super.getAttackReachSqr(pAttackTarget) + 2.0f;
-        }
     }
 }

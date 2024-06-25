@@ -30,18 +30,4 @@ public class FrenzyModel extends DefaultedEntityGeoModel<FrenzyCannibal> {
             head.setRotY((entityData.netHeadYaw()) * Mth.DEG_TO_RAD);
         }
     }
-/*@Override
-    public ResourceLocation getModelResource(CraveCannibal animatable) {
-        return new ResourceLocation(UnsortedCannibalsMod.MODID, "geo/entity/crave_cannibal.geo.json");
-    }
-
-    @Override
-    public ResourceLocation getTextureResource(CraveCannibal animatable) {
-        return new ResourceLocation(UnsortedCannibalsMod.MODID, "textures/entity/crave_cannibal.png");
-    }
-
-    @Override
-    public ResourceLocation getAnimationResource(CraveCannibal animatable) {
-        return new ResourceLocation(UnsortedCannibalsMod.MODID, "animations/entity/crave_cannibal.animation.json");
-    }*/
 }

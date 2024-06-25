@@ -38,13 +38,13 @@ public abstract class PatrollingCannibal extends PathfinderMob {
         return this.entityData.get(IS_PATROLLING);
     }
 
-    private void setPatrolling(boolean is_patrolling) {
+    public void setPatrolling(boolean is_patrolling) {
         this.entityData.set(IS_PATROLLING, is_patrolling);
     }
 
     @Nullable
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
-        if(pReason != MobSpawnType.STRUCTURE){
+        if(pReason != MobSpawnType.STRUCTURE && pReason != MobSpawnType.TRIGGERED){
             this.setPatrolling(true);
         } else {
             this.setPatrolling(false);

@@ -2,17 +2,12 @@ package com.prohitman.unsortedcannibals.core.init;
 
 import com.prohitman.unsortedcannibals.UnsortedCannibalsMod;
 import com.prohitman.unsortedcannibals.common.entities.living.CraveCannibal;
-import com.prohitman.unsortedcannibals.common.entities.living.DummyCannibal;
 import com.prohitman.unsortedcannibals.common.entities.living.FrenzyCannibal;
 import com.prohitman.unsortedcannibals.common.entities.living.YearnCannibal;
 import com.prohitman.unsortedcannibals.common.entities.projectile.BlowDart;
 import com.prohitman.unsortedcannibals.common.entities.projectile.ThrownSpear;
-import net.minecraft.client.particle.FireworkParticles;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.projectile.ThrownTrident;
-import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -35,7 +30,4 @@ public class ModEntities {
 
     public static final RegistryObject<EntityType<FrenzyCannibal>> FRENZY = ENTITY_TYPES.register("frenzy",
             () -> EntityType.Builder.of(FrenzyCannibal::new, MobCategory.MONSTER).sized(0.98F, 0.98F).clientTrackingRange(20).build("frenzy"));
-
-    public static final RegistryObject<EntityType<DummyCannibal>> DUMMY_CANNIBAL = ENTITY_TYPES.register("dummy_cannibal",
-            () -> EntityType.Builder.of(DummyCannibal::new, MobCategory.CREATURE).sized(1.5F, 1.5F).clientTrackingRange(4).updateInterval(20).build("dummy_cannibal"));
 }

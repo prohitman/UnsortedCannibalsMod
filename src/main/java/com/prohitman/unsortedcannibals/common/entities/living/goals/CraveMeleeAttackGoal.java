@@ -1,24 +1,23 @@
 package com.prohitman.unsortedcannibals.common.entities.living.goals;
 
+import com.prohitman.unsortedcannibals.common.entities.living.CraveCannibal;
 import com.prohitman.unsortedcannibals.common.entities.living.YearnCannibal;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
-import software.bernie.example.entity.ParasiteEntity;
-import software.bernie.geckolib.constant.DefaultAnimations;
 
-public class CannibalMeleeAttackGoal extends MeleeAttackGoal {
-    private final YearnCannibal entity;
+public class CraveMeleeAttackGoal extends MeleeAttackGoal {
+    private final CraveCannibal entity;
     private int attackDelay;
     private int attackDuration;
     private int ticksUntilNextAttack;
     private double attackReach;
     private boolean shouldCountTillNextAttack = false;
 
-    public CannibalMeleeAttackGoal(PathfinderMob pMob, double pSpeedModifier, boolean pFollowingTargetEvenIfNotSeen, int attackDelay, int attackDuration, double attackReach) {
+    public CraveMeleeAttackGoal(PathfinderMob pMob, double pSpeedModifier, boolean pFollowingTargetEvenIfNotSeen, int attackDelay, int attackDuration, double attackReach) {
         super(pMob, pSpeedModifier, pFollowingTargetEvenIfNotSeen);
-        entity = ((YearnCannibal) pMob);
+        entity = ((CraveCannibal) pMob);
         this.attackDuration = attackDuration;
         this.attackDelay = attackDelay;
         this.ticksUntilNextAttack = attackDuration - attackDelay;

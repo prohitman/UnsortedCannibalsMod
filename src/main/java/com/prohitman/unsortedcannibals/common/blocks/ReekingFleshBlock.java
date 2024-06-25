@@ -53,7 +53,7 @@ public class ReekingFleshBlock extends Block {
     }
 
     public void animateTick(BlockState p_221055_, Level p_221056_, BlockPos p_221057_, RandomSource p_221058_) {
-        if (p_221058_.nextInt(7) == 0) {
+        if (p_221058_.nextInt(4) == 0) {
             Direction direction = Direction.getRandom(p_221058_);
 
             if(direction != Direction.UP){

@@ -20,18 +20,16 @@ public class LiveBaitEffect extends MobEffect {
     @Override
     public void applyEffectTick(LivingEntity entity, int pAmplifier) {
         Level world = entity.level();
-        //if (world.isClientSide()) {
-            for (int i = 0; i < 5; i++) { // Number of particles
-                double offsetX = (world.random.nextDouble() - 0.5) * entity.getBbWidth();
-                double offsetY = world.random.nextDouble() * entity.getBbHeight();
-                double offsetZ = (world.random.nextDouble() - 0.5) * entity.getBbWidth();
-                world.addParticle(ParticleTypes.EFFECT,
-                        entity.getX() + offsetX,
-                        entity.getY() + offsetY,
-                        entity.getZ() + offsetZ,
-                        0, 0, 0);
+        for (int i = 0; i < 5; i++) {
+            double offsetX = (world.random.nextDouble() - 0.5) * entity.getBbWidth();
+            double offsetY = world.random.nextDouble() * entity.getBbHeight();
+            double offsetZ = (world.random.nextDouble() - 0.5) * entity.getBbWidth();
+            world.addParticle(ParticleTypes.EFFECT,
+                    entity.getX() + offsetX,
+                    entity.getY() + offsetY,
+                    entity.getZ() + offsetZ,
+                    0, 0, 0);
 
-            }
-        //}
+        }
     }
 }

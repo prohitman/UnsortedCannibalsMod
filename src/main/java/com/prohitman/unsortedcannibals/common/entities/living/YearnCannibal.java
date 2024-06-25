@@ -1,10 +1,7 @@
 package com.prohitman.unsortedcannibals.common.entities.living;
 
 import com.prohitman.unsortedcannibals.common.entities.ModMobTypes;
-import com.prohitman.unsortedcannibals.common.entities.living.goals.CannibalFollowItemGoal;
-import com.prohitman.unsortedcannibals.common.entities.living.goals.CannibalTemptGoal;
-import com.prohitman.unsortedcannibals.common.entities.living.goals.CraveAvoidPlayerGoal;
-import com.prohitman.unsortedcannibals.common.entities.living.goals.FollowCannibalGoal;
+import com.prohitman.unsortedcannibals.common.entities.living.goals.*;
 import com.prohitman.unsortedcannibals.core.init.ModEffects;
 import com.prohitman.unsortedcannibals.core.init.ModItems;
 import com.prohitman.unsortedcannibals.core.init.ModSounds;
@@ -62,8 +59,9 @@ public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
     protected static final RawAnimation EATING_ANIM = RawAnimation.begin().thenLoop("Eating2");
     protected static final RawAnimation IDLE_ANIM = RawAnimation.begin().thenLoop("Idle");
     protected static final RawAnimation RUN_ANIM = RawAnimation.begin().thenLoop("Run");
-    protected static final RawAnimation ATTAK_ANIM = RawAnimation.begin().thenLoop("Attack");
+    protected static final RawAnimation ATTACK_ANIM = RawAnimation.begin().thenLoop("Attack");
 
+    private static final EntityDataAccessor<Boolean> IS_ATTACKING = SynchedEntityData.defineId(YearnCannibal.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> EAT_COUNTER = SynchedEntityData.defineId(YearnCannibal.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> IS_RUNNING = SynchedEntityData.defineId(YearnCannibal.class, EntityDataSerializers.BOOLEAN);
 
@@ -72,6 +70,9 @@ public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
         return !itemEntity.hasPickUpDelay() && itemEntity.isAlive() && FOOD_ITEMS.test(itemEntity.getItem());
     };
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+
+    public int attackAnimationTimeout = 0;
+    public boolean shouldStartAnim = false;
 
     public YearnCannibal(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -97,7 +98,7 @@ public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
     }
     @Override
     public boolean isPersistenceRequired() {
-        return true;//add despawning only when patrolling
+        return true;
     }
 
 
@@ -117,16 +118,25 @@ public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
         this.entityData.set(EAT_COUNTER, pEatCounter);
     }
 
+    public void setAttacking(boolean attacking) {
+        this.entityData.set(IS_ATTACKING, attacking);
+    }
+
+    public boolean isAttacking() {
+        return this.entityData.get(IS_ATTACKING);
+    }
+
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(EAT_COUNTER, 0);
         this.entityData.define(IS_RUNNING, false);
+        this.entityData.define(IS_ATTACKING, false);
     }
 
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 0.8D, true));
+        this.goalSelector.addGoal(1, new CannibalMeleeAttackGoal(this, 0.8D, true, 14, 20, 0.5));
         //this.goalSelector.addGoal(1, new FollowCannibalGoal(this, 0.85D, 6.0F, 12.0F));
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this, FrenzyCannibal.class, YearnCannibal.class, CraveCannibal.class));
         this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 0.5D));
@@ -169,6 +179,21 @@ public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
 
         if(!this.level().isClientSide){
             this.setIsRunning(this.moveControl.getSpeedModifier() > 0.75);
+        } else {
+            this.setupAttackAnimation();
+        }
+    }
+
+    private void setupAttackAnimation() {
+        if(this.isAttacking() && attackAnimationTimeout <= 0) {
+            attackAnimationTimeout = 20;
+            shouldStartAnim = true;
+        } else {
+            --this.attackAnimationTimeout;
+        }
+
+        if(!this.isAttacking()) {
+            shouldStartAnim = false;
         }
     }
 
@@ -254,7 +279,7 @@ public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
     @Override
     public boolean doHurtTarget(Entity pEntity) {
         if(super.doHurtTarget(pEntity) && pEntity instanceof LivingEntity livingEntity){
-            if(pEntity.level().random.nextInt(5) == 0){
+            if(pEntity.level().random.nextInt(4) == 0){
                 livingEntity.addEffect(new MobEffectInstance(ModEffects.SHATTERED_BONES.get(), 45 + random.nextInt(20)), livingEntity);
                 livingEntity.level().playSound(livingEntity, livingEntity.blockPosition(), SoundEvents.WITHER_BREAK_BLOCK, SoundSource.BLOCKS, 1, 1);
             }
@@ -312,7 +337,10 @@ public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
 
 
     private PlayState walkAnimController(AnimationState<YearnCannibal> state) {
-        if(this.isEating()){
+        if(shouldStartAnim){
+            return state.setAndContinue(ATTACK_ANIM);
+        }
+        else if(this.isEating()){
             return state.setAndContinue(EATING_ANIM);
         }
         else if(this.isRunning() && state.isMoving()){
@@ -325,12 +353,15 @@ public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
         return state.setAndContinue(IDLE_ANIM);
     }
 
-    private PlayState eatingAnimController(AnimationState<YearnCannibal> state) {
-        if (this.isEating())
-            return state.setAndContinue(EATING_ANIM);
-
+    /*private PlayState attackAnimController(AnimationState<YearnCannibal> state) {
+        if (this.isAttacking() && this.attackAnimationTimeout <=0)
+            return state.setAndContinue(ATTACK_ANIM);
+        else {
+            --this.attackAnimationTimeout;
+        }
+        if()
         return PlayState.STOP;
-    }
+    }*/
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {

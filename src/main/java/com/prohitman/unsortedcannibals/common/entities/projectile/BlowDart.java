@@ -34,10 +34,6 @@ public class BlowDart extends AbstractArrow implements GeoAnimatable {
         super(ModEntities.BLOW_DART.get(), pShooter, pLevel);
     }
 
-    public BlowDart(Level pLevel, double pX, double pY, double pZ) {
-        super(ModEntities.BLOW_DART.get(), pX, pY, pZ, pLevel);
-    }
-
     @Override
     protected @NotNull SoundEvent getDefaultHitGroundSoundEvent() {
         return super.getDefaultHitGroundSoundEvent();

@@ -1,11 +1,9 @@
 package com.prohitman.unsortedcannibals.common;
 
 import com.prohitman.unsortedcannibals.UnsortedCannibalsMod;
+import com.prohitman.unsortedcannibals.common.entities.living.CraveCannibal;
 import com.prohitman.unsortedcannibals.common.items.armor.BoneArmorItem;
-import com.prohitman.unsortedcannibals.core.init.ModEffects;
-import com.prohitman.unsortedcannibals.core.init.ModEntities;
-import com.prohitman.unsortedcannibals.core.init.ModItems;
-import com.prohitman.unsortedcannibals.core.init.ModSounds;
+import com.prohitman.unsortedcannibals.core.init.*;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.critereon.LocationPredicate;
 import net.minecraft.core.BlockPos;
@@ -56,6 +54,15 @@ public class CommonForgeEvents {
             for(ItemStack itemStack : entity.getArmorSlots()){
                 if(itemStack.getItem() instanceof BoneArmorItem){
                     entity.removeEffect(ModEffects.VISCERAL_PAIN.get());
+                }
+            }
+
+            if(event.getEntity().level().random.nextInt(10) == 0){
+                for (int i = 0; i < 5; i++) {
+                    double offsetX = entity.getX() + (entity.level().random.nextDouble() - 0.5) * entity.getBbWidth();
+                    double offsetY = entity.getY() + entity.level().random.nextDouble() * entity.getBbHeight();
+                    double offsetZ = entity.getZ() + (entity.level().random.nextDouble() - 0.5) * entity.getBbWidth();
+                    entity.level().addParticle(ModParticles.BLOOD_PARTICLE.get(), offsetX, offsetY, offsetZ, 0.0D, -0.1D, 0.0D);
                 }
             }
         }
@@ -114,32 +121,6 @@ public class CommonForgeEvents {
                 event.getEntity().setDeltaMovement(Vec3.ZERO);
         }
     }
-
-   /* @SubscribeEvent
-    public static void spawnCannibalsInCamp(MobSpawnEvent.FinalizeSpawn event){
-        StructureManager structureManager = event.getLevel().getLevel().structureManager();
-        if()
-
-    }
-SpawnPlacements
-
-    public static boolean isInNetherFortressBounds(BlockPos pPos, ServerLevel pLevel, MobCategory pCategory, StructureManager pStructureManager) {
-        if (pCategory == MobCategory.MONSTER && pLevel.getBlockState(pPos.below()).is(Blocks.NETHER_BRICKS)) {
-            Structure structure = pStructureManager.registryAccess().registryOrThrow(Registries.STRUCTURE).get(BuiltinStructures.FORTRESS);
-            return structure == null ? false : pStructureManager.getStructureAt(pPos, structure).isValid();
-        } else {
-            return false;
-        }
-    }
-
-    public static boolean isInCampSiteBounds(BlockPos pPos, ServerLevel pLevel, MobCategory pCategory, StructureManager pStructureManager) {
-        if (pCategory == MobCategory.MONSTER && pLevel.getBlockState(pPos.below()).is(BlockTags.DIRT)) {
-            Structure structure = pStructureManager.registryAccess().registryOrThrow(Registries.STRUCTURE).get();
-            return structure == null ? false : pStructureManager.getStructureAt(pPos, structure).isValid();
-        } else {
-            return false;
-        }
-    }*/
 
     @SubscribeEvent
     public static void onLiveBaitExpire(MobEffectEvent.Expired event) {
@@ -203,7 +184,7 @@ SpawnPlacements
                 }
             }
             if(!level.isClientSide){
-                cannibal.finalizeSpawn((ServerLevel) level, level.getCurrentDifficultyAt(cannibal.blockPosition()), MobSpawnType.EVENT, null, null);
+                cannibal.finalizeSpawn((ServerLevel) level, level.getCurrentDifficultyAt(cannibal.blockPosition()), MobSpawnType.TRIGGERED, null, null);
             }
             level.addFreshEntity(cannibal);
         }
