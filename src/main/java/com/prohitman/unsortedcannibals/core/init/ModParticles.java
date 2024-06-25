@@ -12,4 +12,6 @@ public class ModParticles {
     public static final DeferredRegister<ParticleType<?>> PARTICLES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, UnsortedCannibalsMod.MODID);
 
     public static RegistryObject<SimpleParticleType> SINISTER_SKULL_PARTICLE = PARTICLES.register("sinister_skull_particle", () -> new SimpleParticleType(false));
+    public static RegistryObject<SimpleParticleType> BLOOD_PARTICLE = PARTICLES.register("blood_particle", () -> new SimpleParticleType(false));
+
 }

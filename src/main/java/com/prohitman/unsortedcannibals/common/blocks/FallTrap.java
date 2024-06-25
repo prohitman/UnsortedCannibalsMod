@@ -1,5 +1,6 @@
 package com.prohitman.unsortedcannibals.common.blocks;
 
+import com.sun.net.httpserver.Filter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -7,7 +8,9 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.ChainBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -35,5 +38,10 @@ public class FallTrap extends Block {
     public void entityInside(BlockState pState, Level pLevel, BlockPos pPos, Entity entity) {
         pLevel.playSound(entity, pPos, SoundEvents.WITHER_BREAK_BLOCK, SoundSource.BLOCKS, 1, 1);
         pLevel.destroyBlock(pPos, false);
+    }
+
+    @Override
+    public boolean isPathfindable(BlockState pState, BlockGetter pLevel, BlockPos pPos, PathComputationType pType) {
+        return false;
     }
 }

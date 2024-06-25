@@ -1,10 +1,8 @@
 package com.prohitman.unsortedcannibals.core.init;
 
 import com.prohitman.unsortedcannibals.UnsortedCannibalsMod;
-import com.prohitman.unsortedcannibals.common.blocks.BoneBarricade;
-import com.prohitman.unsortedcannibals.common.blocks.FallTrap;
-import com.prohitman.unsortedcannibals.common.blocks.SharpenedBones;
-import com.prohitman.unsortedcannibals.common.blocks.SinisterSkull;
+import com.prohitman.unsortedcannibals.common.blocks.*;
+import com.prohitman.unsortedcannibals.common.items.block.ReekingFleshBlockItem;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.world.entity.monster.PatrollingMonster;
 import net.minecraft.world.entity.monster.Pillager;
@@ -34,11 +32,18 @@ public class ModBlocks {
     public static final RegistryObject<Block> FALL_TRAP = createRegistry("fall_trap", () -> new FallTrap(BlockBehaviour.Properties.of().sound(SoundType.BAMBOO_WOOD).noCollission()), new Item.Properties());
 
     public static final RegistryObject<Block> SINISTER_SKULL = createRegistry("sinister_skull", () -> new SinisterSkull(BlockBehaviour.Properties.of().lightLevel( (state) -> 15).strength(1.0F).sound(SoundType.BONE_BLOCK).pushReaction(PushReaction.DESTROY)), new Item.Properties().rarity(Rarity.EPIC));
-    public static final RegistryObject<Block> REEKING_FLESH_BLOCK = createRegistry("reeking_flesh_block", () -> new Block(BlockBehaviour.Properties.of().strength(0.5F).sound(SoundType.HONEY_BLOCK)), new Item.Properties());
+    public static final RegistryObject<Block> REEKING_FLESH_BLOCK = createReekingFleshRegistry("reeking_flesh_block", () -> new ReekingFleshBlock(BlockBehaviour.Properties.of().strength(0.5F).sound(SoundType.HONEY_BLOCK).randomTicks()), new Item.Properties());
 
     public static <T extends Block> RegistryObject<Block> createRegistry(String name, Supplier<T> block, Item.Properties properties) {
         RegistryObject<Block> object = BLOCKS.register(name, block);
         ModItems.ITEMS.register(name, () -> new BlockItem(object.get(), properties));
+
+        return object;
+    }
+
+    public static <T extends Block> RegistryObject<Block> createReekingFleshRegistry(String name, Supplier<T> block, Item.Properties properties) {
+        RegistryObject<Block> object = BLOCKS.register(name, block);
+        ModItems.ITEMS.register(name, () -> new ReekingFleshBlockItem(object.get(), properties));
 
         return object;
     }

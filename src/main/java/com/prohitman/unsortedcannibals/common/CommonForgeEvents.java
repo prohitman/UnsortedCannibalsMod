@@ -67,7 +67,7 @@ public class CommonForgeEvents {
             }
         }
         if(entity instanceof Player player){
-            if(entity.level().random.nextFloat() < 0.0001f){
+            if(entity.level().random.nextFloat() < 0.00025f){
                 if(entity.level().getBiome(entity.blockPosition()).is(BiomeTags.IS_FOREST)){
                     player.playSound(ModSounds.CANNIBAL_AMBIENT_FOREST.get(), 0.5F + entity.level().random.nextInt(3)*0.2F, 1);
                 } else if(entity.level().getBiome(entity.blockPosition()).is(BiomeTags.IS_JUNGLE)){

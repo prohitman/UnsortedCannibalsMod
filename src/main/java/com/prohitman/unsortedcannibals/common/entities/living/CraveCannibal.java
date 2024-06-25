@@ -45,6 +45,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.CryingObsidianBlock;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
@@ -148,10 +149,6 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
     @Override
     public boolean isPersistenceRequired() {
         return !this.isPatrolling();
-    }
-
-    public boolean removeWhenFarAway(double pDistanceToClosestPlayer) {
-        return !this.isPersistenceRequired();
     }
 
     protected void populateDefaultEquipmentSlots(RandomSource pRandom, DifficultyInstance pDifficulty) {
@@ -359,14 +356,14 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
 
     @Override
     public void registerControllers(final AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "Walk", 3, this::walkAnimController));
+        controllers.add(new AnimationController<>(this, "Walk", 5, this::walkAnimController));
     }
 
     private PlayState walkAnimController(AnimationState<CraveCannibal> state) {
         if(this.isRunning() && state.isMoving()){
             return state.setAndContinue(RUN_ANIM);
-        } else if (this.isClimbing()){
-            return state.setAndContinue(CLIMB_ANIM);
+        } else if (this.isClimbing() && !this.isMoving()){
+            return state.setAndContinue(CLIMB_ANIM);//Set a longer tick transition
         }
         else if (state.isMoving()){
             return state.setAndContinue(WALK_ANIM);
@@ -374,6 +371,35 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
 
         return state.setAndContinue(IDLE_ANIM);
     }
+
+    public boolean isMoving(){
+        CompoundTag entityData = this.getPersistentData();
+
+        CompoundTag position = entityData.getCompound("position");
+
+        double oldX = position.getDouble("posX");
+        double oldY = position.getDouble("posY");
+        double oldZ = position.getDouble("posZ");
+
+        Vec3 oldPos = new Vec3(oldX, oldY, oldZ);
+        Vec3 currentPos = this.position();
+
+        position.putDouble("posX", this.position().x);
+        position.putDouble("posY", this.position().y);
+        position.putDouble("posZ", this.position().z);
+
+        entityData.put("position", position);
+
+        if(!currentPos.equals(oldPos)){
+            return true;
+        }
+
+        return false;
+    }
+
+    //private PlayState climbAnimController(AnimationState<CraveCannibal> state){
+
+    //}
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {

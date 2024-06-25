@@ -11,6 +11,7 @@ import com.prohitman.unsortedcannibals.client.renderer.entity.projectile.BlowDar
 import com.prohitman.unsortedcannibals.client.renderer.entity.projectile.ThrownSpearRenderer;
 import com.prohitman.unsortedcannibals.common.entities.living.CraveCannibal;
 import com.prohitman.unsortedcannibals.common.entities.living.DummyCannibal;
+import com.prohitman.unsortedcannibals.common.particles.BloodParticle;
 import com.prohitman.unsortedcannibals.core.init.*;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.particle.SoulParticle;
@@ -71,6 +72,8 @@ public class ClientModEvents {
     @SubscribeEvent
     public static void registerParticles(RegisterParticleProvidersEvent event){
         event.registerSpriteSet(ModParticles.SINISTER_SKULL_PARTICLE.get(), SoulParticle.EmissiveProvider::new);
+        event.registerSpriteSet(ModParticles.BLOOD_PARTICLE.get(), BloodParticle.Provider::new);
+
     }
 
     @SubscribeEvent
