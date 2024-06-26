@@ -3,7 +3,9 @@ package com.prohitman.unsortedcannibals;
 import com.prohitman.unsortedcannibals.common.CommonForgeEvents;
 import com.prohitman.unsortedcannibals.core.init.*;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(UnsortedCannibalsMod.MODID)
@@ -14,6 +16,8 @@ public class UnsortedCannibalsMod
     public UnsortedCannibalsMod()
     {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ModConfiguration.COMMON_CONFIG);
 
         ModItems.ITEMS.register(modEventBus);
         ModBlocks.BLOCKS.register(modEventBus);

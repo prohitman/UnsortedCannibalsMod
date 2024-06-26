@@ -1,5 +1,7 @@
 package com.prohitman.unsortedcannibals.common.entities.projectile;
 
+import com.prohitman.unsortedcannibals.common.entities.ModMobTypes;
+import com.prohitman.unsortedcannibals.common.entities.living.FrenzyCannibal;
 import com.prohitman.unsortedcannibals.core.init.ModEntities;
 import com.prohitman.unsortedcannibals.core.init.ModItems;
 import com.prohitman.unsortedcannibals.core.init.ModSounds;
@@ -11,6 +13,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.SpectralArrow;
@@ -50,6 +53,16 @@ public class BlowDart extends AbstractArrow implements GeoAnimatable {
     public void tick() {
         super.tick();
 
+    }
+
+    @Override
+    protected boolean canHitEntity(Entity entity) {
+        if(entity instanceof PathfinderMob mob){
+            if(mob.getMobType() == ModMobTypes.CANNIBAL && this.getOwner() instanceof FrenzyCannibal){
+                return false;
+            }
+        }
+        return super.canHitEntity(entity);
     }
 
     protected ItemStack getPickupItem() {

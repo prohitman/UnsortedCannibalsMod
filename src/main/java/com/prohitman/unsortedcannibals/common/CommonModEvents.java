@@ -2,6 +2,8 @@ package com.prohitman.unsortedcannibals.common;
 
 import com.prohitman.unsortedcannibals.UnsortedCannibalsMod;
 import com.prohitman.unsortedcannibals.common.entities.living.CraveCannibal;
+import com.prohitman.unsortedcannibals.common.entities.living.FrenzyCannibal;
+import com.prohitman.unsortedcannibals.common.entities.living.YearnCannibal;
 import com.prohitman.unsortedcannibals.core.init.ModEntities;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -11,13 +13,15 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.FileReader;
+
 @Mod.EventBusSubscriber(modid = UnsortedCannibalsMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class CommonModEvents {
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(ModEntities.CRAVE.get(), CraveCannibal.createAttributes().build());
-        event.put(ModEntities.YEARN.get(), CraveCannibal.createAttributes().build());
-        event.put(ModEntities.FRENZY.get(), CraveCannibal.createAttributes().build());
+        event.put(ModEntities.YEARN.get(), YearnCannibal.createAttributes().build());
+        event.put(ModEntities.FRENZY.get(), FrenzyCannibal.createAttributes().build());
     }
 
     @SubscribeEvent

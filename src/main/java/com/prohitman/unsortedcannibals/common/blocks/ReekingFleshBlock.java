@@ -2,6 +2,7 @@ package com.prohitman.unsortedcannibals.common.blocks;
 
 import com.prohitman.unsortedcannibals.common.entities.living.CraveCannibal;
 import com.prohitman.unsortedcannibals.common.entities.living.YearnCannibal;
+import com.prohitman.unsortedcannibals.core.init.ModConfiguration;
 import com.prohitman.unsortedcannibals.core.init.ModEntities;
 import com.prohitman.unsortedcannibals.core.init.ModParticles;
 import net.minecraft.core.BlockPos;
@@ -29,7 +30,7 @@ public class ReekingFleshBlock extends Block {
     public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
         super.randomTick(pState, pLevel, pPos, pRandom);
 
-        shouldSpawnCraves = true;
+        shouldSpawnCraves = ModConfiguration.SHOULD_SPAWN_CRAVES_FROM_FLESH.get();
 
         if(shouldSpawnCraves){
             if(pRandom.nextFloat() < 0.04){

@@ -74,11 +74,14 @@ public class CommonForgeEvents {
             }
         }
         if(entity instanceof Player player){
-            if(entity.level().random.nextFloat() < 0.00025f){
-                if(entity.level().getBiome(entity.blockPosition()).is(BiomeTags.IS_FOREST)){
-                    player.playSound(ModSounds.CANNIBAL_AMBIENT_FOREST.get(), 0.5F + entity.level().random.nextInt(3)*0.2F, 1);
-                } else if(entity.level().getBiome(entity.blockPosition()).is(BiomeTags.IS_JUNGLE)){
-                    player.playSound(ModSounds.CANNIBAL_AMBIENT_JUNGLE.get(), 0.5F + entity.level().random.nextInt(3)*0.2F, 1);
+            boolean shouldPlay = ModConfiguration.SHOULD_PLAY_CANNIBAL_AMBIENT_SOUNDS.get();
+            if(shouldPlay){
+                if(entity.level().random.nextFloat() < 0.00035f){
+                    if(entity.level().getBiome(entity.blockPosition()).is(BiomeTags.IS_FOREST)){
+                        player.playSound(ModSounds.CANNIBAL_AMBIENT_FOREST.get(), 0.5F + entity.level().random.nextInt(3)*0.2F, 1);
+                    } else if(entity.level().getBiome(entity.blockPosition()).is(BiomeTags.IS_JUNGLE)){
+                        player.playSound(ModSounds.CANNIBAL_AMBIENT_JUNGLE.get(), 0.5F + entity.level().random.nextInt(3)*0.2F, 1);
+                    }
                 }
             }
         }
@@ -128,12 +131,12 @@ public class CommonForgeEvents {
             Level level = event.getEntity().level();
             BlockPos playerPos = event.getEntity().blockPosition();
             RandomSource random = level.random;
-            int craveSize = 3 + random.nextInt(3);
-            int frenzySize = 2 + random.nextInt(2);
-            int yearnSize = 1 + random.nextInt(1);
+            int craveSize = ModConfiguration.MIN_CRAVE_SIZE.get() + random.nextInt(ModConfiguration.MAX_CRAVE_SIZE.get());
+            int frenzySize = ModConfiguration.MIN_FRENZY_SIZE.get() + random.nextInt(ModConfiguration.MAX_FRENZY_SIZE.get());
+            int yearnSize = ModConfiguration.MIN_YEARN_SIZE.get() + random.nextInt(ModConfiguration.MAX_YEARN_SIZE.get());
             boolean isFromSkull = event.getEffectInstance().getAmplifier() == 1;
-            int minDistance = 7;
-            int spawnRadius = 13;
+            int minDistance = ModConfiguration.MIN_SPAWN_DISTANCE.get();
+            int spawnRadius = ModConfiguration.MAX_SPAWN_DISTANCE.get();
 
             level.playSound(null, playerPos, ModSounds.LIVE_BAIT.get(), SoundSource.HOSTILE, 1.3F, 1.3F);
 
