@@ -136,8 +136,7 @@ public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new CannibalMeleeAttackGoal(this, 1.2D, true, 14, 20, 0.5));
-        //this.goalSelector.addGoal(1, new FollowCannibalGoal(this, 0.85D, 6.0F, 12.0F));
+        this.goalSelector.addGoal(1, new CannibalMeleeAttackGoal(this, 0.85D, true, 14, 20, 0.5));
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this, FrenzyCannibal.class, YearnCannibal.class, CraveCannibal.class));
         this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 0.5D));
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
@@ -158,14 +157,14 @@ public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
         this.targetSelector.addGoal(9, new NearestAttackableTargetGoal<>(this, Player.class, 0, false, false, (livingEntity -> {
             return !livingEntity.isSpectator() && !((Player)livingEntity).isCreative();
         })));
-        this.goalSelector.addGoal(9, new CannibalTemptGoal(this, 0.75D, FOOD_ITEMS, false));
+        this.goalSelector.addGoal(9, new CannibalTemptGoal(this, 0.65D, FOOD_ITEMS, false));
         this.goalSelector.addGoal(9, new CannibalFollowItemGoal(this));
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createLivingAttributes().add(Attributes.MAX_HEALTH, 55D)
+        return Animal.createLivingAttributes().add(Attributes.MAX_HEALTH, 65D)
                 .add(Attributes.MOVEMENT_SPEED, 0.45D)
-                .add(Attributes.FOLLOW_RANGE, 24D)
+                .add(Attributes.FOLLOW_RANGE, 30D)
                 .add(Attributes.ARMOR_TOUGHNESS, 3f)
                 .add(Attributes.ATTACK_DAMAGE, 20f)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1.0D)
@@ -178,7 +177,7 @@ public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
         this.handleEating();
 
         if(!this.level().isClientSide){
-            this.setIsRunning(this.moveControl.getSpeedModifier() >= 0.75);
+            this.setIsRunning(this.moveControl.getSpeedModifier() > 0.5);
         } else {
             this.setupAttackAnimation();
         }
@@ -208,6 +207,8 @@ public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
             this.addEatingParticles();
             this.getNavigation().stop();
             this.setZza(0);
+            this.setTarget(null);
+
             if (!this.level().isClientSide && this.getEatCounter() > 20 && this.random.nextInt(5) == 1) {
                 if (this.getEatCounter() > 45 && FOOD_ITEMS.test(this.getItemBySlot(EquipmentSlot.MAINHAND))) {
                     if (!this.level().isClientSide) {
@@ -337,9 +338,6 @@ public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
 
 
     private PlayState walkAnimController(AnimationState<YearnCannibal> state) {
-        if(state.isMoving()){
-            System.out.println("I am moving");
-        }
         if(shouldStartAnim){
             return state.setAndContinue(ATTACK_ANIM);
         }

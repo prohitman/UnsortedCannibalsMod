@@ -39,7 +39,7 @@ public class CannibalFollowItemGoal extends Goal {
         List<ItemEntity> list = cannibal.level().getEntitiesOfClass(ItemEntity.class, cannibal.getBoundingBox().inflate(8.0D, 8.0D, 8.0D), YearnCannibal.ALLOWED_ITEMS);
         ItemStack itemstack = cannibal.getItemBySlot(EquipmentSlot.MAINHAND);
         if (itemstack.isEmpty() && !list.isEmpty()) {
-            cannibal.getNavigation().moveTo(list.get(0), (double)1.015F);
+            cannibal.getNavigation().moveTo(list.get(0), (double)0.75F);
         }
 
     }
@@ -50,7 +50,7 @@ public class CannibalFollowItemGoal extends Goal {
     public void start() {
         List<ItemEntity> list = cannibal.level().getEntitiesOfClass(ItemEntity.class, cannibal.getBoundingBox().inflate(8.0D, 8.0D, 8.0D), YearnCannibal.ALLOWED_ITEMS);
         if (!list.isEmpty()) {
-            cannibal.getNavigation().moveTo(list.get(0), (double)1.015F);
+            cannibal.getNavigation().moveTo(list.get(0), (double)0.75F);
         }
 
     }
