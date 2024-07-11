@@ -41,7 +41,7 @@ public class ModConfiguration {
         CANNIBAL_SPAWN_ON_FLESH_CHANCE = COMMON_BUILDER.comment("Chance of Crave Cannibals spawning on reeking flesh blocks.")
                 .defineInRange("spawnChanceCraveFlesh", 0.2D, 0, 1D);
 
-        SHOULD_RESPAWN_CANNIBALS = COMMON_BUILDER.comment("Should respawn crave cannibals coninuously in the campsites.")
+        SHOULD_RESPAWN_CANNIBALS = COMMON_BUILDER.comment("Should respawn crave cannibals coninuously in campsites.")
                 .define("shouldRespawn", true);
 
         RESPAWN_CHANCE = COMMON_BUILDER.comment("Chance of Crave Cannibals respawning in campsites.")
