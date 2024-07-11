@@ -22,6 +22,16 @@
   "project_start_to_heightmap": "WORLD_SURFACE_WG",
 
   "spawn_overrides": {
-
+    "monster": {
+      "bounding_box": "piece",
+      "spawns": [
+        {
+          "type": "unsortedcannibals:crave",
+          "maxCount": 1,
+          "minCount": 1,
+          "weight": 1
+        }
+      ]
+    }
   }
 }

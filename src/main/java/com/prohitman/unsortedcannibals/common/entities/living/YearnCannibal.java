@@ -162,11 +162,11 @@ public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createLivingAttributes().add(Attributes.MAX_HEALTH, 65D)
+        return Animal.createLivingAttributes().add(Attributes.MAX_HEALTH, 60D)
                 .add(Attributes.MOVEMENT_SPEED, 0.45D)
                 .add(Attributes.FOLLOW_RANGE, 30D)
                 .add(Attributes.ARMOR_TOUGHNESS, 3f)
-                .add(Attributes.ATTACK_DAMAGE, 20f)
+                .add(Attributes.ATTACK_DAMAGE, 12f)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1.0D)
                 .add(Attributes.ATTACK_KNOCKBACK, 0.5f);
     }

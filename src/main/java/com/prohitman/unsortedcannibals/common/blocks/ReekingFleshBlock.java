@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class ReekingFleshBlock extends Block {
     private boolean shouldSpawnCraves;
+    private double spawnChance;
     public ReekingFleshBlock(Properties pProperties) {
         super(pProperties);
     }
@@ -31,9 +32,10 @@ public class ReekingFleshBlock extends Block {
         super.randomTick(pState, pLevel, pPos, pRandom);
 
         shouldSpawnCraves = ModConfiguration.SHOULD_SPAWN_CRAVES_FROM_FLESH.get();
+        spawnChance = ModConfiguration.CANNIBAL_SPAWN_ON_FLESH_CHANCE.get();
 
         if(shouldSpawnCraves){
-            if(pRandom.nextFloat() < 0.04){
+            if(pRandom.nextFloat() < spawnChance){
                 for(int i=1; i <=3; i++){
                     BlockPos blockPos = pPos.above(i);
                     if(!pLevel.getBlockState(blockPos).isAir()){

@@ -1,21 +1,28 @@
 package com.prohitman.unsortedcannibals.common;
 
 import com.prohitman.unsortedcannibals.UnsortedCannibalsMod;
+import com.prohitman.unsortedcannibals.common.entities.ModMobTypes;
 import com.prohitman.unsortedcannibals.common.entities.living.CraveCannibal;
 import com.prohitman.unsortedcannibals.common.items.armor.BoneArmorItem;
 import com.prohitman.unsortedcannibals.core.init.*;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.critereon.LocationPredicate;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.StructureTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.entity.animal.Animal;
@@ -37,14 +44,40 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Mod.EventBusSubscriber(modid = UnsortedCannibalsMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class CommonForgeEvents {
+
+    private static ResourceKey<Structure> CAMPSITE = ResourceKey.create(Registries.STRUCTURE, new ResourceLocation(UnsortedCannibalsMod.MODID, "campsite"));
+
+    @SubscribeEvent
+    public static void onSpawnEvent(MobSpawnEvent.PositionCheck event){
+        LivingEntity livingEntity = event.getEntity();
+        if(livingEntity.getMobType() == ModMobTypes.CANNIBAL && event.getSpawnType() == MobSpawnType.NATURAL){
+            BlockPos pos = livingEntity.blockPosition();
+            boolean hasStructure = hasStructure(event.getEntity().level().registryAccess(), CAMPSITE, ((ServerLevel)event.getEntity().level()).structureManager().getAllStructuresAt(pos).keySet());
+
+            if(hasStructure){
+                boolean shouldRespawn = ModConfiguration.SHOULD_RESPAWN_CANNIBALS.get();
+                double spawnChance = ModConfiguration.RESPAWN_CHANCE.get();
+
+                if(shouldRespawn){
+                    if(event.getEntity().getRandom().nextDouble() > spawnChance){
+                        System.out.println("Denying spawns");
+                        event.setResult(Event.Result.DENY);
+                    }
+                }
+            }
+        }
+    }
 
     @SubscribeEvent
     public static void livingTickEntity(LivingEvent.LivingTickEvent event){
@@ -76,7 +109,7 @@ public class CommonForgeEvents {
         if(entity instanceof Player player){
             boolean shouldPlay = ModConfiguration.SHOULD_PLAY_CANNIBAL_AMBIENT_SOUNDS.get();
             if(shouldPlay){
-                if(entity.level().random.nextFloat() < 0.00035f){
+                if(entity.level().random.nextFloat() < 0.0002f){
                     if(entity.level().getBiome(entity.blockPosition()).is(BiomeTags.IS_FOREST)){
                         player.playSound(ModSounds.CANNIBAL_AMBIENT_FOREST.get(), 0.5F + entity.level().random.nextInt(3)*0.2F, 1);
                     } else if(entity.level().getBiome(entity.blockPosition()).is(BiomeTags.IS_JUNGLE)){
@@ -192,4 +225,20 @@ public class CommonForgeEvents {
             level.addFreshEntity(cannibal);
         }
     }
+
+    private static boolean hasStructure(final RegistryAccess registryAccess, final ResourceKey<Structure> key, final Set<Structure> structures) {
+        final Registry<Structure> registry = registryAccess.registryOrThrow(Registries.STRUCTURE);
+        for(Structure structure : structures) {
+            // load structure resource key
+            Optional<ResourceKey<Structure>> resourceKey = registry.getResourceKey(structure);
+            if(resourceKey.isEmpty()) continue;
+            // check equality
+            if(resourceKey.get().equals(key)) {
+                return true;
+            }
+        }
+        // all checks failed
+        return false;
+    }
+
 }

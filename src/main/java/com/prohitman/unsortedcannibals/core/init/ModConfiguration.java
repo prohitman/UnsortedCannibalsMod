@@ -10,6 +10,10 @@ public class ModConfiguration {
 
     public static final ForgeConfigSpec.BooleanValue SHOULD_SPAWN_CRAVES_FROM_FLESH;
     public static final ForgeConfigSpec.BooleanValue SHOULD_PLAY_CANNIBAL_AMBIENT_SOUNDS;
+    public static final ForgeConfigSpec.DoubleValue CANNIBAL_SPAWN_ON_FLESH_CHANCE;
+    public static final ForgeConfigSpec.BooleanValue SHOULD_RESPAWN_CANNIBALS;
+    public static final ForgeConfigSpec.DoubleValue RESPAWN_CHANCE;
+    public static final ForgeConfigSpec.IntValue PATROL_WEIGHT;
 
     public static final ForgeConfigSpec.IntValue MIN_SPAWN_DISTANCE;
     public static final ForgeConfigSpec.IntValue MAX_SPAWN_DISTANCE;
@@ -27,11 +31,25 @@ public class ModConfiguration {
         ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
 
         COMMON_BUILDER.push("Misc. Configs");
+        PATROL_WEIGHT = COMMON_BUILDER.comment("Crave Patrol spawn weights. Restart your game to see changes.")
+                .worldRestart()
+                .defineInRange("patrolWeight", 2, 0, 20);
+
         SHOULD_SPAWN_CRAVES_FROM_FLESH = COMMON_BUILDER.comment("Should spawn Craves randomly from a Reeking Flesh Block when there is enough space.")
                 .define("shouldSpawnCraveInFlesh", true);
 
+        CANNIBAL_SPAWN_ON_FLESH_CHANCE = COMMON_BUILDER.comment("Chance of Crave Cannibals spawning on reeking flesh blocks.")
+                .defineInRange("spawnChanceCraveFlesh", 0.2D, 0, 1D);
+
+        SHOULD_RESPAWN_CANNIBALS = COMMON_BUILDER.comment("Should respawn crave cannibals coninuously in the campsites.")
+                .define("shouldRespawn", true);
+
+        RESPAWN_CHANCE = COMMON_BUILDER.comment("Chance of Crave Cannibals respawning in campsites.")
+                .defineInRange("respawnChance", 0.25D, 0, 1D);
+
         SHOULD_PLAY_CANNIBAL_AMBIENT_SOUNDS = COMMON_BUILDER.comment("Should play random cannibal ambient sounds in forests and jungles.")
                 .define("shouldPlayCannibalAmbientSounds", true);
+
         COMMON_BUILDER.pop();
 
         COMMON_BUILDER.push("Live Bait Configs");

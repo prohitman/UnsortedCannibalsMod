@@ -27,5 +27,6 @@ public class UnsortedCannibalsMod
         ModSounds.SOUND_EVENTS.register(modEventBus);
         ModParticles.PARTICLES.register(modEventBus);
         ModStructures.STRUCTURE_TYPES.register(modEventBus);
+        ModBiomeModifiers.BIOME_MODIFIER_SERIALIZERS.register(modEventBus);
     }
 }

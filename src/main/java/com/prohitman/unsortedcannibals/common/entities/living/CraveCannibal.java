@@ -131,13 +131,14 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
         this.goalSelector.addGoal(1, new FollowCannibalGoal(this, 0.55D, 6.0F, 25f));
         this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 0.5D));
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 50, 0.75f));
+
         this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Mob.class, 5, false, true, (livingEntity -> {
             if(livingEntity instanceof Mob mob){
                 return mob.getMobType() != ModMobTypes.CANNIBAL && !mob.isUnderWater();
             }
             return !(this.getTarget() instanceof Player);
         })));
-        this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 50, 0.75f));
         this.targetSelector.addGoal(9, new NearestAttackableTargetGoal<>(this, Player.class, 0, false, false, (livingEntity -> {
             return !livingEntity.isSpectator() && !((Player)livingEntity).isCreative() && !this.isAlone();
         })));
