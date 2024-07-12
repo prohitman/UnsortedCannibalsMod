@@ -27,5 +27,7 @@ public class CommonModEvents {
     @SubscribeEvent
     public static void registerSpawns(@NotNull SpawnPlacementRegisterEvent event) {
         event.register(ModEntities.CRAVE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, CraveCannibal::checkCraveSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+        event.register(ModEntities.YEARN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, YearnCannibal::checkYearnSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+        event.register(ModEntities.FRENZY.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, FrenzyCannibal::checkFrenzySpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
     }
 }

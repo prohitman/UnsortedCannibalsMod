@@ -3,10 +3,10 @@ package com.prohitman.unsortedcannibals.common;
 import com.prohitman.unsortedcannibals.UnsortedCannibalsMod;
 import com.prohitman.unsortedcannibals.common.entities.ModMobTypes;
 import com.prohitman.unsortedcannibals.common.entities.living.CraveCannibal;
+import com.prohitman.unsortedcannibals.common.entities.living.FrenzyCannibal;
+import com.prohitman.unsortedcannibals.common.entities.living.YearnCannibal;
 import com.prohitman.unsortedcannibals.common.items.armor.BoneArmorItem;
 import com.prohitman.unsortedcannibals.core.init.*;
-import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.advancements.critereon.LocationPredicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
@@ -17,12 +17,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BiomeTags;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.StructureTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.entity.animal.Animal;
@@ -31,14 +28,11 @@ import net.minecraft.world.entity.npc.Npc;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.StructureManager;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.levelgen.structure.BuiltinStructures;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
@@ -47,7 +41,6 @@ import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import java.util.List;
 import java.util.Optional;
@@ -67,17 +60,43 @@ public class CommonForgeEvents {
 
             if(hasStructure){
                 boolean shouldRespawn = ModConfiguration.SHOULD_RESPAWN_CANNIBALS.get();
-                double spawnChance = ModConfiguration.RESPAWN_CHANCE.get();
 
                 if(shouldRespawn){
-                    if(event.getEntity().getRandom().nextDouble() > spawnChance){
-                        System.out.println("Denying spawns");
-                        event.setResult(Event.Result.DENY);
+                    boolean shouldRespawnCraves = ModConfiguration.SHOULD_RESPAWN_CRAVE.get();
+                    boolean shouldRespawnYearns = ModConfiguration.SHOULD_RESPAWN_YEARN.get();
+                    boolean shouldRespawnFrenzy = ModConfiguration.SHOULD_RESPAWN_FRENZY.get();
+
+                    double craveRespawnChance = ModConfiguration.CRAVE_RESPAWN_CHANCE.get();
+                    double yearnRespawnChance = ModConfiguration.YEARN_RESPAWN_CHANCE.get();
+                    double frenzyRespawnChance = ModConfiguration.FRENZY_RESPAWN_CHANCE.get();
+
+                    if(event.getEntity() instanceof CraveCannibal craveCannibal){
+
+                        craveCannibal.setPatrolling(false);
+                        //System.out.println("We are called here:");
+                        //System.out.println("Current chance: " + craveRespawnChance + " " + checkShouldRespawn(livingEntity, shouldRespawnCraves, craveRespawnChance));
+                        //System.out.println("Is patrolling??" + craveCannibal.isPatrolling());
+                        event.setResult(checkShouldRespawn(livingEntity, shouldRespawnCraves, craveRespawnChance) ? Event.Result.DEFAULT : Event.Result.DENY);
+                    } else if(event.getEntity() instanceof YearnCannibal){
+                        event.setResult(checkShouldRespawn(livingEntity, shouldRespawnYearns, yearnRespawnChance) ? Event.Result.DEFAULT : Event.Result.DENY);
+                    } else if(event.getEntity() instanceof FrenzyCannibal){
+                        event.setResult(checkShouldRespawn(livingEntity, shouldRespawnFrenzy, frenzyRespawnChance) ? Event.Result.DEFAULT : Event.Result.DENY);
                     }
+
+                } else{
+                    event.setResult(Event.Result.DENY);
                 }
             }
         }
     }
+
+    public static boolean checkShouldRespawn(LivingEntity livingEntity, boolean shouldRespawn, double respawnChance){
+        if(!shouldRespawn){
+            return false;
+        }
+        else return !(livingEntity.getRandom().nextDouble() > respawnChance);
+    }
+
 
     @SubscribeEvent
     public static void livingTickEntity(LivingEvent.LivingTickEvent event){

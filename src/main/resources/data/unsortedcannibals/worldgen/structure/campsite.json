@@ -30,6 +30,18 @@
           "maxCount": 1,
           "minCount": 1,
           "weight": 1
+        },
+        {
+          "type": "unsortedcannibals:yearn",
+          "maxCount": 1,
+          "minCount": 1,
+          "weight": 1
+        },
+        {
+          "type": "unsortedcannibals:frenzy",
+          "maxCount": 1,
+          "minCount": 1,
+          "weight": 1
         }
       ]
     }

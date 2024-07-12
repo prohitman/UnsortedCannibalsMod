@@ -97,7 +97,7 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
         return this.entityData.get(IS_ALONE);
     }
 
-    private void setAlone(boolean is_lonely) {
+    public void setAlone(boolean is_lonely) {
         this.entityData.set(IS_ALONE, is_lonely);
     }
 

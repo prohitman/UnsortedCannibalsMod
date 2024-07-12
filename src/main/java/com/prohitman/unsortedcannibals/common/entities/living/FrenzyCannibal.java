@@ -12,7 +12,12 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -29,6 +34,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.Path;
 import org.jetbrains.annotations.Nullable;
@@ -119,6 +126,17 @@ public class FrenzyCannibal extends PathfinderMob implements GeoEntity, RangedAt
 
     }
 
+    public static boolean checkFrenzySpawnRules(EntityType<? extends FrenzyCannibal> pType, ServerLevelAccessor pLevel, MobSpawnType pSpawnType, BlockPos pPos, RandomSource pRandom) {
+        /*if(pSpawnType == MobSpawnType.NATURAL){
+            boolean isOnSpruce = pLevel.getBlockState(pPos.below()).is(Blocks.SPRUCE_STAIRS);
+            //boolean isOnSpruce = pLevel.getBlockState(pPos.below()).is(Blocks.SPRUCE_STAIRS);
+            boolean isUnderRoots = pLevel.getBlockState(pPos.above(2)).is(Blocks.HANGING_ROOTS);
+            System.out.println("Trying to spawn!" + isOnSpruce + pLevel.getBlockState(pPos).is(Blocks.SPRUCE_TRAPDOOR));
+            return isOnSpruce && pLevel.getDifficulty() != Difficulty.PEACEFUL && checkMobSpawnRules(pType, pLevel, pSpawnType, pPos, pRandom);
+        }*/
+        return (pLevel.getBlockState(pPos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON) || pLevel.getBlockState(pPos.below()).is(BlockTags.JUNGLE_LOGS)) && pLevel.getDifficulty() != Difficulty.PEACEFUL && checkMobSpawnRules(pType, pLevel, pSpawnType, pPos, pRandom);
+    }
+
     @Override
     public boolean isPersistenceRequired() {
         return true;
@@ -180,6 +198,8 @@ public class FrenzyCannibal extends PathfinderMob implements GeoEntity, RangedAt
         if(!this.level().isClientSide){
             this.setIsRunning(this.moveControl.getSpeedModifier() >= 0.75);
         }
+
+        //this.addEffect(new MobEffectInstance(MobEffects.GLOWING, 3, 1));
     }
 
     private PlayState walkAnimController(AnimationState<FrenzyCannibal> state) {

@@ -1,6 +1,5 @@
 package com.prohitman.unsortedcannibals.core.init;
 
-import com.google.common.collect.MinMaxPriorityQueue;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
@@ -11,9 +10,18 @@ public class ModConfiguration {
     public static final ForgeConfigSpec.BooleanValue SHOULD_SPAWN_CRAVES_FROM_FLESH;
     public static final ForgeConfigSpec.BooleanValue SHOULD_PLAY_CANNIBAL_AMBIENT_SOUNDS;
     public static final ForgeConfigSpec.DoubleValue CANNIBAL_SPAWN_ON_FLESH_CHANCE;
-    public static final ForgeConfigSpec.BooleanValue SHOULD_RESPAWN_CANNIBALS;
-    public static final ForgeConfigSpec.DoubleValue RESPAWN_CHANCE;
     public static final ForgeConfigSpec.IntValue PATROL_WEIGHT;
+    public static final ForgeConfigSpec.BooleanValue SHOULD_RESPAWN_CANNIBALS;
+
+    public static final ForgeConfigSpec.BooleanValue SHOULD_RESPAWN_CRAVE;
+    public static final ForgeConfigSpec.DoubleValue CRAVE_RESPAWN_CHANCE;
+
+    public static final ForgeConfigSpec.BooleanValue SHOULD_RESPAWN_YEARN;
+    public static final ForgeConfigSpec.DoubleValue YEARN_RESPAWN_CHANCE;
+
+    public static final ForgeConfigSpec.BooleanValue SHOULD_RESPAWN_FRENZY;
+    public static final ForgeConfigSpec.DoubleValue FRENZY_RESPAWN_CHANCE;
+
 
     public static final ForgeConfigSpec.IntValue MIN_SPAWN_DISTANCE;
     public static final ForgeConfigSpec.IntValue MAX_SPAWN_DISTANCE;
@@ -41,11 +49,23 @@ public class ModConfiguration {
         CANNIBAL_SPAWN_ON_FLESH_CHANCE = COMMON_BUILDER.comment("Chance of Crave Cannibals spawning on reeking flesh blocks.")
                 .defineInRange("spawnChanceCraveFlesh", 0.2D, 0, 1D);
 
-        SHOULD_RESPAWN_CANNIBALS = COMMON_BUILDER.comment("Should respawn crave cannibals coninuously in campsites.")
+        SHOULD_RESPAWN_CANNIBALS = COMMON_BUILDER.comment("Should respawn cannibals continuously in campsites. If false, all respawns are disabled.")
                 .define("shouldRespawn", true);
 
-        RESPAWN_CHANCE = COMMON_BUILDER.comment("Chance of Crave Cannibals respawning in campsites.")
-                .defineInRange("respawnChance", 0.25D, 0, 1D);
+        SHOULD_RESPAWN_CRAVE = COMMON_BUILDER.comment("Should respawn craves continuously in campsites.")
+                .define("shouldRespawnCrave", true);
+        CRAVE_RESPAWN_CHANCE = COMMON_BUILDER.comment("Chance of Crave Cannibals respawning in campsites.")
+                .defineInRange("craveRespawnChance", 0.35D, 0, 1D);
+
+        SHOULD_RESPAWN_YEARN = COMMON_BUILDER.comment("Should respawn yearns continuously in campsites.")
+                .define("shouldRespawnYearn", true);
+        YEARN_RESPAWN_CHANCE = COMMON_BUILDER.comment("Chance of Yearn Cannibals respawning in campsites.")
+                .defineInRange("yearnRespawnChance", 0.3D, 0, 1D);
+
+        SHOULD_RESPAWN_FRENZY = COMMON_BUILDER.comment("Should respawn frenzies continuously in campsites.")
+                .define("shouldRespawnFrenzy", true);
+        FRENZY_RESPAWN_CHANCE = COMMON_BUILDER.comment("Chance of Frenzy Cannibals respawning in campsites.")
+                .defineInRange("frenzyRespawnChance", 0.15D, 0, 1D);
 
         SHOULD_PLAY_CANNIBAL_AMBIENT_SOUNDS = COMMON_BUILDER.comment("Should play random cannibal ambient sounds in forests and jungles.")
                 .define("shouldPlayCannibalAmbientSounds", true);
