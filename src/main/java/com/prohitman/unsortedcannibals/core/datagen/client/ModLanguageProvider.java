@@ -79,6 +79,7 @@ public class ModLanguageProvider extends LanguageProvider {
         add("item.tooltip.serrated_spear", "\u00A77Inflicts \u00A7cVisceral Pain\u00A77.");
         add("item.tooltip.death_whistle", "\u00A77Causes panic to nearby creatures.");
         add("item.tooltip.reeking_flesh", "\u00A77Attracts Crave Cannibals.");
+        add("item.tooltip.yearn_food_item", "\u00A77One of Yearn's favourite food.");
 
         add("item.tooltip.press_shift", "\u00A7b[+SHIFT]");
 

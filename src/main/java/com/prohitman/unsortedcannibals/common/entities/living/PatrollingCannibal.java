@@ -62,6 +62,11 @@ public abstract class PatrollingCannibal extends PathfinderMob {
         if(list.isEmpty() && this.isPatrolling()){
             this.setIsLeader(true);
         }
+        if(!this.isLeader() && !list.isEmpty() && this.getTarget() == null){
+            if(list.get(0).getTarget() != null){
+                this.setTarget(list.get(0).getTarget());
+            }
+        }
         if(this.isLeader()){
            //this.addEffect(new MobEffectInstance(MobEffects.GLOWING, 3));
         }

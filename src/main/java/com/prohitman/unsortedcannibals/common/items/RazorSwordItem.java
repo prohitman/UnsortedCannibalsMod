@@ -38,7 +38,7 @@ public class RazorSwordItem extends SwordItem {
         float currentHealth = pTarget.getHealth();
         float healthRatio = currentHealth / maxHealth;
 
-        float additionalDamage = (1.0f - healthRatio) * 15.0f;
+        float additionalDamage = (1.0f - healthRatio) * 17f;
 
         pTarget.hurt(pTarget.damageSources().mobAttack(pAttacker), additionalDamage);
 

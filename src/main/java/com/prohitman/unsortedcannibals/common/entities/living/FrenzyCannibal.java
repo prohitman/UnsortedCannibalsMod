@@ -26,10 +26,8 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.camel.Camel;
-import net.minecraft.world.entity.monster.Enemy;
-import net.minecraft.world.entity.monster.RangedAttackMob;
-import net.minecraft.world.entity.monster.Skeleton;
-import net.minecraft.world.entity.monster.Vindicator;
+import net.minecraft.world.entity.monster.*;
+import net.minecraft.world.entity.monster.hoglin.Hoglin;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.level.Level;
@@ -62,6 +60,7 @@ public class FrenzyCannibal extends PathfinderMob implements GeoEntity, RangedAt
 
     public FrenzyCannibal(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
+        this.xpReward = 10;
     }
 
     @Override
@@ -72,7 +71,7 @@ public class FrenzyCannibal extends PathfinderMob implements GeoEntity, RangedAt
         this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 0.5D));
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 25, 0.35f));
-        this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Mob.class, 0, true, false, (livingEntity -> {
+        /*this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Mob.class, 0, true, false, (livingEntity -> {
             if(livingEntity instanceof Mob mob){
                 return mob.getMobType() != ModMobTypes.CANNIBAL && !mob.isUnderWater();
             }
@@ -80,6 +79,12 @@ public class FrenzyCannibal extends PathfinderMob implements GeoEntity, RangedAt
         })));
         this.targetSelector.addGoal(9, new NearestAttackableTargetGoal<>(this, Player.class, 0, false, false, (livingEntity -> {
             return !livingEntity.isSpectator() && !((Player)livingEntity).isCreative();
+        })));*/
+        this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 5, false, false, (livingEntity -> {
+            if(livingEntity instanceof Mob mob){
+                return mob.getMobType() != ModMobTypes.CANNIBAL && !mob.isUnderWater();
+            }
+            return true;
         })));
     }
 

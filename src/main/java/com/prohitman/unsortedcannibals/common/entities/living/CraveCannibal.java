@@ -91,6 +91,7 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
     public CraveCannibal(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.setMaxUpStep(1);
+        this.xpReward = 8;
     }
 
     public boolean isAlone() {
@@ -133,14 +134,15 @@ public class CraveCannibal extends PatrollingCannibal implements GeoEntity, Enem
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 50, 0.75f));
 
-        this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Mob.class, 5, false, true, (livingEntity -> {
+/*        this.targetSelector.addGoal(7, new NearestAttackableTargetGoal<>(this, Player.class, 0, false, false, (livingEntity -> {
+            return !livingEntity.isSpectator() && !((Player)livingEntity).isCreative() && !this.isAlone();
+        })));*/
+
+        this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 5, false, false, (livingEntity -> {
             if(livingEntity instanceof Mob mob){
                 return mob.getMobType() != ModMobTypes.CANNIBAL && !mob.isUnderWater();
             }
-            return !(this.getTarget() instanceof Player);
-        })));
-        this.targetSelector.addGoal(9, new NearestAttackableTargetGoal<>(this, Player.class, 0, false, false, (livingEntity -> {
-            return !livingEntity.isSpectator() && !((Player)livingEntity).isCreative() && !this.isAlone();
+            return true;
         })));
     }
 

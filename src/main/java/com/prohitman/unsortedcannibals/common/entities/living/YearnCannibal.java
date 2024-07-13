@@ -80,6 +80,7 @@ public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
 
     public YearnCannibal(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
+        this.xpReward = 15;
         this.setMaxUpStep(1);
         this.setCanPickUpLoot(true);
     }
@@ -145,12 +146,7 @@ public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
         this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 0.5D));
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 5, 0.25f));
-        this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Mob.class, 5, true, false, (livingEntity -> {
-            if(livingEntity instanceof Mob mob){
-                return mob.getMobType() != ModMobTypes.CANNIBAL && !mob.isUnderWater();
-            }
-            return false;
-        })));
+
         this.goalSelector.addGoal(7, new MoveToBlockGoal(this, 0.5F, 10, 3) {
             @Override
             protected boolean isValidTarget(LevelReader pLevel, BlockPos pPos) {
@@ -158,9 +154,22 @@ public class YearnCannibal extends PathfinderMob implements GeoEntity, Enemy {
                 return state.getLightEmission(pLevel, pPos) > 4 && this.mob.distanceToSqr(pPos.getX(), pPos.getY(), pPos.getZ()) > 16;
             }
         });
-        this.targetSelector.addGoal(9, new NearestAttackableTargetGoal<>(this, Player.class, 0, false, false, (livingEntity -> {
+        /*this.targetSelector.addGoal(9, new NearestAttackableTargetGoal<>(this, Player.class, 0, false, false, (livingEntity -> {
             return !livingEntity.isSpectator() && !((Player)livingEntity).isCreative();
         })));
+        this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Mob.class, 5, true, false, (livingEntity -> {
+            if(livingEntity instanceof Mob mob){
+                return mob.getMobType() != ModMobTypes.CANNIBAL && !mob.isUnderWater();
+            }
+            return false;
+        })));*/
+        this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 5, false, false, (livingEntity -> {
+            if(livingEntity instanceof Mob mob){
+                return mob.getMobType() != ModMobTypes.CANNIBAL && !mob.isUnderWater();
+            }
+            return true;
+        })));
+
         this.goalSelector.addGoal(9, new CannibalTemptGoal(this, 0.65D, FOOD_ITEMS, false));
         this.goalSelector.addGoal(9, new CannibalFollowItemGoal(this));
     }

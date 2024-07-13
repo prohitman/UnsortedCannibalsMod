@@ -233,8 +233,11 @@ public class CommonForgeEvents {
             float xRot = 0.0F;
 
             cannibal.moveTo(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), yRot, xRot);
+            cannibal.setYBodyRot(yRot);
+            cannibal.setXRot(xRot);
             if(target instanceof Player player){
                 if(!player.isSpectator() && !player.isCreative()){
+                    cannibal.setTarget(null);
                     cannibal.setTarget(target);
                 }
             }
